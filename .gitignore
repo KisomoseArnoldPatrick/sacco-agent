@@ -1,0 +1,15 @@
+# Never commit real secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node (if used later)
+node_modules/
+
+# OS/editor clutter
+.DS_Store
+.vscode/

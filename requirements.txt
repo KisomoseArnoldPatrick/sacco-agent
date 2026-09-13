@@ -1,0 +1,10 @@
+# Core dependencies for the SACCO Member-Case Preparation Agent
+# Install with: pip install -r requirements.txt
+
+requests>=2.31.0
+python-dotenv>=1.0.0
+
+# Add new dependencies below as the project grows, e.g.:
+# pandas>=2.0.0          # when analyzing eval results at scale (Week 2+)
+# langchain>=0.3.0        # when introducing agent orchestration (Week 4-5)
+# langgraph>=0.2.0        # when introducing the bounded agent loop (Week 5)

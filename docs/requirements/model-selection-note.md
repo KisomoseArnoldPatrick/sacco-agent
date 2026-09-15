@@ -1,22 +1,25 @@
 # Model Selection Note — SACCO Member-Case Preparation Agent
 
-
 ## Model Selection Decision
 
-The group will use **Google Gemini 3.8 Flash (`gemini-3.8-flash`)** as the initial model for the SACCO Member-Case Preparation Agent baseline.
+The group selected Google Gemini 3.6 Flash (`gemini-3.6-flash`) as the baseline model for the SACCO Member-Case Preparation Agent.
 
-Gemini 3.8 Flash was selected because it is a current Flash model designed for **long-horizon tasks, agentic tool use, and complex multi-step workflows**, which aligns well with the planned direction of the SACCO agent. The model provides API access for application integration and is available on a **free tier**, making it suitable for a student project with a strong preference for keeping development costs at zero.
+The group initially tested Gemini 3.8 Flash and Gemini 3.7 Flash, but both produced repeated `503 Service Unavailable` errors during baseline integration testing, including after retry and exponential-backoff handling. The team therefore selected Gemini 3.6 Flash as the primary baseline based on the observed availability during testing and its suitability for the project. Google lists Gemini 3.6 Flash as a stable model and describes it as a Flash model balancing speed and multimodal capabilities for general agentic and everyday tasks.
 
-According to Google's current Gemini API pricing information, Gemini 3.8 Flash has a **free tier with no charge for input or output tokens**. If the paid tier is required, the current standard price is **$0.75 per 1 million input tokens and $3.75 per 1 million output tokens through December 31, 2026** (rising to $1.50 / $7.50 from January 1, 2027).
+## Evaluation Against Selection Criteria
 
-## Evaluation Against Criteria
+**Capability:** Gemini 3.6 Flash supports text, image, video, audio and PDF inputs, with text output. It supports function calling, code execution, file search and structured outputs, which provide a suitable foundation for the project's later RAG, tool-use and agent functionality. It has a 1,048,576-token input limit and 65,536-token output limit.
 
-- **Capability:** Suitable for the baseline's needs — understanding policy instructions, following constraints, explaining procedures, and producing structured responses. Its agentic/multi-step support also gives a foundation for later RAG and agent work, though that is outside this baseline's scope.
-- **Cost:** Free tier covers development and testing within free-tier limits, matching the project's zero-cost priority. A small budget is available if paid usage later becomes necessary, but is not required for the baseline.
-- **Latency:** Not assumed from provider marketing. The team will measure actual response time on representative SACCO prompts during baseline testing and record the observed results.
-- **Privacy:** The project uses only synthetic member records and public/team-created policy documents. Google's documentation states free-tier content may be used to improve its products, while the paid tier is not used this way — so no real member data will be submitted at any point.
-- **Access:** Available via Google's API, allowing direct integration into the application rather than relying on the AI Studio chat interface alone.
+**Cost:** Gemini 3.6 Flash currently has a free tier with no charge for input or output tokens. Paid standard pricing is $0.75 per 1 million input tokens and $3.75 per 1 million output tokens through December 31, 2026, increasing to $1.50 and $7.50 respectively from January 1, 2027.
+
+**Latency/Reliability:** The team measures actual response time and availability rather than relying on provider claims. Transient 503 errors, like those observed during initial testing of Gemini 3.7/3.8 Flash, are documented by Google as errors for which retry/backoff can be used.
+
+**Privacy:** The project uses only synthetic member records and public/team-created policy documents. No real member or sensitive financial information will be submitted during development.
+
+**Access:** The model is available through the Gemini API, allowing direct integration into the application rather than relying only on the AI Studio interface. The stable model ID is `gemini-3.6-flash`.
 
 ## Evaluation Approach
 
-The model will be tested against the project's 10-case prompt evaluation set, covering instruction-following, procedure explanation, handling incomplete information, refusing staff-only decisions, respecting AI/system/human boundaries, output format, and avoidance of fabricated information. Expected behaviour is defined before testing; actual behaviour is then recorded and marked pass/fail. The model is only accepted as baseline if it performs adequately — if important cases fail, the prompt will be revised and retested, and if failures persist, an alternative model will be evaluated with the reason documented. This keeps the selection evidence-based rather than assumed from advertised capabilities.
+The selected model will be evaluated using the project's 10-case prompt evaluation set. Tests will cover instruction following, procedure explanation, incomplete information, staff-only decisions, AI/System/Human boundaries, output format and avoidance of fabricated information. Expected behaviour will be defined before testing, followed by recording actual behaviour and pass/fail results.
+
+If important failures occur, the prompt will be revised and retested. If the model continues to perform inadequately, an alternative model will be evaluated and the reason documented. This provides an evidence-based basis for the final model selection. (Source: Google Gemini API model and pricing documentation, checked September 2026.)

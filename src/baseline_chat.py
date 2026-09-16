@@ -38,7 +38,7 @@ def load_system_prompt(prompt_path: Path = DEFAULT_PROMPT_FILE) -> str:
 
 def call_gemini(user_message: str, system_prompt: str) -> str:
     api_key = os.environ["GEMINI_API_KEY"]
-    model = os.environ.get("GEMINI_MODEL", "gemini-3.8-flash")
+    model = os.environ.get("GEMINI_MODEL", "gemini-3.6-flash")
 
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
     response = requests.post(

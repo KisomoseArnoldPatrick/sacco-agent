@@ -1,5 +1,5 @@
 """
-Week 2 — Task 2: Working baseline model interaction (Gemini 3.8 Flash, free tier).
+Week 2 — Task 2: Working baseline model interaction (Gemini 3.5 Flash, free tier).
 
 Goal: prove the app can call Gemini's API and get a response back, using the
 system prompt loaded from prompts/vX.X.md.
@@ -38,7 +38,7 @@ def load_system_prompt(prompt_path: Path = DEFAULT_PROMPT_FILE) -> str:
 
 def call_gemini(user_message: str, system_prompt: str) -> str:
     api_key = os.environ["GEMINI_API_KEY"]
-    model = os.environ.get("GEMINI_MODEL", "gemini-3.8-flash")
+    model = os.environ.get("GEMINI_MODEL", "gemini-3.6-flash")
 
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
     response = requests.post(

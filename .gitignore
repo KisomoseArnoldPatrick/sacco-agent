@@ -4,7 +4,7 @@
 # Python
 __pycache__/
 *.pyc
-.venv/
+.venv-ubuntu/
 venv/
 
 # Node (if used later)
@@ -13,3 +13,5 @@ node_modules/
 # OS/editor clutter
 .DS_Store
 .vscode/
+
+.src/_pycache_

@@ -5,7 +5,7 @@
 
 ## 1. Work completed against the weekly objectives
 
-Weekly focus (from the brief): Problem framing and AI-native requirements. Choose a feasible
+Weekly focus: Problem framing and AI-native requirements. Choose a feasible
 problem, define users and success criteria, justify AI use, and set the boundaries of the agent.
 
 | Deliverable | Status (Done / Partial / Not started) |

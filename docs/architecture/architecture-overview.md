@@ -1,6 +1,6 @@
 # Initial Architecture / Context Diagram — Week 1
 
-![SACCO agent initial architecture](week1-context-diagram.png)
+![SACCO agent initial architecture](week1_context_diagram1.png)
 
 ## Description
 

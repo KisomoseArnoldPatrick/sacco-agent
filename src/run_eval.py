@@ -23,6 +23,7 @@ RESULTS_DIR = PROJECT_ROOT / "evaluation"
 
 DEFAULT_PROMPT_VERSION = "v1.0"
 TEMPERATURE = 0.2  # must match generationConfig in call_gemini
+DELAY_S = 13  # free tier allows 5 requests per minute
 
 # Evaluation test cases (keep identical across prompt versions)
 TEST_CASES = [
@@ -170,7 +171,7 @@ def run_evaluation(prompt_version=DEFAULT_PROMPT_VERSION):
             "pass_fail": "",      # fill in manually
             "review_notes": "",   # fill in manually
         })
-        time.sleep(1)  # be gentle with free-tier rate limits
+        time.sleep(DELAY_S)  # stay under the free-tier per-minute limit
     return results
 
 

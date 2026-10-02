@@ -37,7 +37,7 @@ def load_system_prompt(prompt_path: Path = DEFAULT_PROMPT_FILE) -> str:
 
 
 
-def call_gemini(user_message: str, system_prompt: str, retries: int = 4) -> str:
+def call_gemini(user_message: str, system_prompt: str, retries: int = 1) -> str:
     api_key = os.environ["GEMINI_API_KEY"]
     model = os.environ.get("GEMINI_MODEL", "gemini-3.6-flash")
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
@@ -50,10 +50,15 @@ def call_gemini(user_message: str, system_prompt: str, retries: int = 4) -> str:
 
     for attempt in range(retries + 1):
         response = requests.post(url, headers=headers, json=payload, timeout=30)
+        # Daily quota: retrying cannot help and only wastes requests
+        if response.status_code == 429 and "PerDay" in response.text:
+            raise RuntimeError(f"Daily quota exhausted: {response.text[:600]}")
         if response.status_code in (429, 500, 503) and attempt < retries:
-            time.sleep(2 ** attempt)  # exponential backoff
+            # per-minute limit: wait out the minute; other errors: short backoff
+            time.sleep(60 if response.status_code == 429 else 2 ** attempt)
             continue
-        response.raise_for_status()
+        if not response.ok:
+            raise RuntimeError(f"{response.status_code}: {response.text[:1500]}")
         break
 
     data = response.json()

@@ -1,8 +1,8 @@
-# Model Selection Note — SACCO Member-Case Preparation Agent
+# Model Selection Note — SACCO Loan Application Preparation Agent
 
 ## Model Selection Decision
 
-The group selected Google Gemini 3.6 Flash (`gemini-3.6-flash`) as the baseline model for the SACCO Member-Case Preparation Agent.
+The group selected Google Gemini 3.6 Flash (`gemini-3.6-flash`) as the baseline model for the SACCO Loan Application Preparation Agent.
 
 The group initially tested Gemini 3.8 Flash and Gemini 3.7 Flash, but both produced repeated `503 Service Unavailable` errors during baseline integration testing, including after retry and exponential-backoff handling. The team therefore selected Gemini 3.6 Flash as the primary baseline based on the observed availability during testing and its suitability for the project. Google lists Gemini 3.6 Flash as a stable model and describes it as a Flash model balancing speed and multimodal capabilities for general agentic and everyday tasks.
 
@@ -20,6 +20,6 @@ The group initially tested Gemini 3.8 Flash and Gemini 3.7 Flash, but both produ
 
 ## Evaluation Approach
 
-The selected model will be evaluated using the project's 10-case prompt evaluation set. Tests will cover instruction following, procedure explanation, incomplete information, staff-only decisions, AI/System/Human boundaries, output format and avoidance of fabricated information. Expected behaviour will be defined before testing, followed by recording actual behaviour and pass/fail results.
+The selected model will be evaluated using the project's 10-case prompt evaluation set. Tests will cover instruction following, procedure explanation, incomplete information, output format, avoidance of fabricated information, and the AI/System/Human boundaries. The boundary tests will check that the model refuses prohibited actions (credit scoring, loan approval or rejection, eligibility or suitability judgements, lending recommendations, disbursement or account changes), does not claim that a document or submitted information is authentic or verified, and refers staff-only decisions to a human. Expected behaviour will be defined before testing, followed by recording actual behaviour and pass/fail results.
 
 If important failures occur, the prompt will be revised and retested. If the model continues to perform inadequately, an alternative model will be evaluated and the reason documented. This provides an evidence-based basis for the final model selection. (Source: Google Gemini API model and pricing documentation, checked September 2026.)

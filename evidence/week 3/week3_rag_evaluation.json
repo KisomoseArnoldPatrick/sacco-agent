@@ -1,0 +1,287 @@
+[
+  {
+    "id": "R01",
+    "category": "answerable",
+    "question": "What documents are required for a loan application?",
+    "expected_sources_hint": "supporting_documents.md, loan_requirements.md",
+    "query": "What documents are required for a loan application?",
+    "answer": "Based on the provided evidence, the required documents for a loan application are:\n\n### Required for All Loan Products\n1. **Completed and signed loan application form**\n2. **Copy of the member's National ID or valid passport**\n3. **One recent passport-size photograph**\n4. **Statements of savings/contributions for the last 3 months**\n5. **Signed guarantor consent form(s)** (one per required guarantor)\n\n### Additional Documents Required by Loan Product\n* **School Fees Loan:** An official fee structure or invoice from the learning institution, showing the amount due and the term/semester it covers.\n* **Development Loan:** A short written statement of the business or development purpose the loan will fund (no formal business plan template required).\n* **Emergency Loan:** Proof of the emergency where reasonably available (e.g., hospital bill or death certificate). *Note: This is encouraged but not mandatory for processing.*\n\n---\n*Note: Photocopies must be legible; the loan officer may request original documents for verification.*\n\n[Source: supporting_documents.md]",
+    "sources": [
+      "supporting_documents.md",
+      "supporting_documents.md",
+      "loan_requirements.md"
+    ],
+    "retrieved_scores": [
+      0.727,
+      0.721,
+      0.705
+    ],
+    "grounded": true
+  },
+  {
+    "id": "R02",
+    "category": "answerable",
+    "question": "How many guarantors are required for a Development Loan?",
+    "expected_sources_hint": "guarantor_requirements.md, development_loan.md",
+    "query": "How many guarantors are required for a Development Loan?",
+    "answer": "A Development Loan requires **2** guarantors. \n\n[Source: guarantor_requirements.md]",
+    "sources": [
+      "guarantor_requirements.md",
+      "development_loan.md",
+      "guarantor_requirements.md"
+    ],
+    "retrieved_scores": [
+      0.772,
+      0.732,
+      0.728
+    ],
+    "grounded": true
+  },
+  {
+    "id": "R03",
+    "category": "answerable",
+    "question": "What penalty applies if I pay my loan late?",
+    "expected_sources_hint": "repayment_policy.md, interest_rates_summary.md",
+    "query": "What penalty applies if I pay my loan late?",
+    "answer": "If you pay your loan late, a penalty of 2% of the overdue amount is charged for each month, or part of a month, that the repayment is late. \n\nAdditionally, if repayments are overdue by more than 60 days, the loan is classified as in default, referred to the Credit Committee, and the loan's guarantors are formally notified.\n\n[Source: repayment_policy.md, interest_rates_summary.md]",
+    "sources": [
+      "repayment_policy.md",
+      "repayment_policy.md",
+      "interest_rates_summary.md"
+    ],
+    "retrieved_scores": [
+      0.774,
+      0.706,
+      0.692
+    ],
+    "grounded": true
+  },
+  {
+    "id": "R04",
+    "category": "answerable",
+    "question": "How quickly is an Emergency Loan disbursed after it is approved?",
+    "expected_sources_hint": "emergency_loan.md, loan_application_procedure.md",
+    "query": "How quickly is an Emergency Loan disbursed after it is approved?",
+    "answer": "An Emergency Loan is disbursed within 48 hours of approval.\n\n[Source: loan_application_faq.md]",
+    "sources": [
+      "emergency_loan.md",
+      "loan_application_faq.md",
+      "emergency_loan.md"
+    ],
+    "retrieved_scores": [
+      0.786,
+      0.714,
+      0.67
+    ],
+    "grounded": true
+  },
+  {
+    "id": "R05",
+    "category": "answerable",
+    "question": "What is the minimum monthly contribution for a Regular Savings Account?",
+    "expected_sources_hint": "savings_products.md",
+    "query": "What is the minimum monthly contribution for a Regular Savings Account?",
+    "answer": "The minimum monthly contribution for a Regular Savings Account is **UGX 20,000**.\n\n[Source: savings_products.md]",
+    "sources": [
+      "savings_products.md",
+      "membership_registration.md",
+      "member_rights_and_responsibilities.md"
+    ],
+    "retrieved_scores": [
+      0.723,
+      0.651,
+      0.639
+    ],
+    "grounded": true
+  },
+  {
+    "id": "R06",
+    "category": "partial",
+    "question": "What exact dividend rate will I receive this year?",
+    "expected_sources_hint": "dividends_and_profit_sharing.md (process is documented, no fixed rate exists)",
+    "query": "What exact dividend rate will I receive this year?",
+    "answer": "The exact dividend rate for this year cannot be provided because it is not fixed in advance by policy. Dividends are declared once a year at the Annual General Meeting (AGM) based on the SACCO's net surplus for the financial year, and the rate varies from year to year. \n\n**What is missing:** The specific dividend rate voted on and approved at this year's AGM is missing from the provided policy documents.\n\n[Source: dividends_and_profit_sharing.md]",
+    "sources": [
+      "dividends_and_profit_sharing.md",
+      "dividends_and_profit_sharing.md",
+      "interest_rates_summary.md"
+    ],
+    "retrieved_scores": [
+      0.69,
+      0.669,
+      0.612
+    ],
+    "grounded": true
+  },
+  {
+    "id": "R07",
+    "category": "partial",
+    "question": "I want a Development Loan of UGX 10,000,000 \u2014 what will my exact monthly repayment be?",
+    "expected_sources_hint": "development_loan.md (rate/term known, no calculator exists yet to compute the schedule)",
+    "query": "I want a Development Loan of UGX 10,000,000 \u2014 what will my exact monthly repayment be?",
+    "answer": "To calculate your exact monthly repayment for a Development Loan of UGX 10,000,000, the following information and deterministic system inputs are missing:\n\n1. **Chosen Repayment Period:** The policy allows a repayment period of **up to 24 months**, but your exact desired repayment period (e.g., 12 months, 24 months) needs to be specified.\n2. **Savings Balance Verification:** The maximum amount is subject to a **3x-savings ceiling**, so your total savings balance must be verified to confirm eligibility for the full UGX 10,000,000.\n3. **Deterministic System Calculation:** Exact financial repayment schedules must be generated by the system's deterministic loan calculator based on the chosen period and 12% per annum reducing balance interest rate.\n\n### Relevant Loan Terms\n* **Maximum Amount:** UGX 10,000,000 (subject to 3x savings)\n* **Interest Rate:** 12% per annum (reducing balance)\n* **Repayment Period:** Up to 24 months\n* **Grace Period:** First repayment due 30 days after disbursement\n\nPlease provide your intended repayment period so the exact repayment schedule can be calculated.\n\n**Source:** `development_loan.md`",
+    "sources": [
+      "development_loan.md",
+      "development_loan.md",
+      "emergency_loan.md"
+    ],
+    "retrieved_scores": [
+      0.756,
+      0.722,
+      0.72
+    ],
+    "grounded": true
+  },
+  {
+    "id": "R08",
+    "category": "partial",
+    "question": "I joined the SACCO one month ago \u2014 can I apply for an Emergency Loan right now?",
+    "expected_sources_hint": "loan_requirements.md (general 3-month rule; no stated emergency exception)",
+    "query": "I joined the SACCO one month ago \u2014 can I apply for an Emergency Loan right now?",
+    "answer": "Based on the SACCO policy, **no**, you cannot apply for an Emergency Loan right now. \n\nTo be eligible to apply for any loan product, a new member must hold active membership and make regular savings contributions for at least **3 consecutive months** before applying. Since you joined one month ago, you do not yet meet this minimum period requirement.\n\n[Source: membership_registration.md]",
+    "sources": [
+      "loan_application_faq.md",
+      "emergency_loan.md",
+      "membership_registration.md"
+    ],
+    "retrieved_scores": [
+      0.753,
+      0.751,
+      0.746
+    ],
+    "grounded": true
+  },
+  {
+    "id": "R09",
+    "category": "partial",
+    "question": "If two guarantors back my UGX 3,000,000 Development Loan, how much savings must each guarantor individually hold?",
+    "expected_sources_hint": "guarantor_requirements.md (only combined 20% minimum is stated, not the per-guarantor split)",
+    "query": "If two guarantors back my UGX 3,000,000 Development Loan, how much savings must each guarantor individually hold?",
+    "answer": "Based on the provided policy evidence, the rules specify that **combined**, the guarantors on an application must hold savings equal to at least **20% of the loan amount** being guaranteed (`guarantor_requirements.md`). \n\nFor a UGX 3,000,000 loan, 20% equals **UGX 600,000 total combined savings** across both guarantors.\n\n**Missing Information:**\nThe evidence does not specify how much savings *each individual guarantor* must hold or how the required UGX 600,000 combined savings must be divided between the two guarantors.\n\n[Source: guarantor_requirements.md]",
+    "sources": [
+      "guarantor_requirements.md",
+      "guarantor_requirements.md",
+      "emergency_loan.md"
+    ],
+    "retrieved_scores": [
+      0.786,
+      0.778,
+      0.738
+    ],
+    "grounded": true
+  },
+  {
+    "id": "R10",
+    "category": "partial",
+    "question": "How do I appeal if the Credit Committee rejects my loan restructuring request?",
+    "expected_sources_hint": "complaints_and_grievance_procedure.md covers appeal of a loan REJECTION, not restructuring rejection specifically",
+    "query": "How do I appeal if the Credit Committee rejects my loan restructuring request?",
+    "answer": "The provided evidence does not contain specific information or a procedure for appealing a rejected **loan restructuring request**. \n\nThe retrieved policies cover the following relevant details:\n* **Loan Restructuring:** Requests are reviewed and decided solely by the Credit Committee, and a loan may only be restructured once during its term [`loan_restructuring_policy.md`].\n* **Appeals:** The policy specifies that a member may appeal within **14 days** to the Credit Committee if a **loan application** is rejected [`complaints_and_grievance_procedure.md`].\n\nBecause the evidence only outlines appeal procedures for rejected *loan applications* and general complaints, the specific steps, timelines, or eligibility for appealing a rejected *loan restructuring request* are missing from the available documents.\n\n[Sources: `loan_restructuring_policy.md`, `complaints_and_grievance_procedure.md`]",
+    "sources": [
+      "loan_restructuring_policy.md",
+      "complaints_and_grievance_procedure.md",
+      "loan_application_procedure.md"
+    ],
+    "retrieved_scores": [
+      0.795,
+      0.759,
+      0.7
+    ],
+    "grounded": true
+  },
+  {
+    "id": "R11",
+    "category": "unanswerable",
+    "question": "Does Hangs SACCO offer mortgage or home loans?",
+    "expected_sources_hint": "none \u2014 not covered",
+    "query": "Does Hangs SACCO offer mortgage or home loans?",
+    "answer": "Based on the provided evidence, it cannot be determined whether Hangs SACCO offers mortgage or home loans. The available documents outline general loan eligibility criteria, application procedure steps, and general document requirements, but they do not list or detail the specific loan products offered by the SACCO. Specific loan product information is missing from the provided evidence.\n\n[Source: loan_requirements.md, loan_application_procedure.md, supporting_documents.md]",
+    "sources": [
+      "loan_requirements.md",
+      "loan_application_procedure.md",
+      "supporting_documents.md"
+    ],
+    "retrieved_scores": [
+      0.755,
+      0.748,
+      0.724
+    ],
+    "grounded": true
+  },
+  {
+    "id": "R12",
+    "category": "unanswerable",
+    "question": "Can I use my Development Loan to invest in cryptocurrency?",
+    "expected_sources_hint": "none \u2014 not covered",
+    "query": "Can I use my Development Loan to invest in cryptocurrency?",
+    "answer": "Based on the provided evidence, the Development Loan is intended to support members undertaking income-generating or personal development activities, such as small business expansion, land improvement, or asset purchase [Source: development_loan.md].\n\nThe available evidence does not explicitly state whether cryptocurrency investment is permitted or excluded. Additionally, the specific terms and exclusions for the Development Loan are missing from the retrieved documentation. \n\nBecause the evidence does not fully state whether cryptocurrency qualifies as an eligible activity or is restricted under SACCO policy, this cannot be confirmed without further policy documentation or human",
+    "sources": [
+      "development_loan.md",
+      "emergency_loan.md",
+      "supporting_documents.md"
+    ],
+    "retrieved_scores": [
+      0.726,
+      0.617,
+      0.614
+    ],
+    "grounded": true
+  },
+  {
+    "id": "R13",
+    "category": "unanswerable",
+    "question": "What is Hangs SACCO's SWIFT/routing code for international wire transfers?",
+    "expected_sources_hint": "none \u2014 not covered",
+    "query": "What is Hangs SACCO's SWIFT/routing code for international wire transfers?",
+    "answer": "The provided evidence does not contain information regarding Hangs SACCO's SWIFT or routing code for international wire transfers. To answer this question, documented banking details or international transfer guidelines for Hangs SACCO are required.",
+    "sources": [
+      "interest_rates_summary.md",
+      "member_identification.md",
+      "loan_application_procedure.md"
+    ],
+    "retrieved_scores": [
+      0.689,
+      0.682,
+      0.681
+    ],
+    "grounded": true
+  },
+  {
+    "id": "R14",
+    "category": "unanswerable",
+    "question": "Can I transfer my membership to a Hangs SACCO branch in another district?",
+    "expected_sources_hint": "none \u2014 not covered",
+    "query": "Can I transfer my membership to a Hangs SACCO branch in another district?",
+    "answer": "The provided SACCO policy evidence does not contain information regarding whether you can transfer your membership to a Hangs SACCO branch in another district. \n\nTo answer this question, policy information regarding membership transfers, branch relocations, or district transfer procedures is missing and cannot currently be verified.\n\n[Sources consulted: member_identification.md, loan_requirements.md, loan_application_faq.md]",
+    "sources": [
+      "member_identification.md",
+      "loan_requirements.md",
+      "loan_application_faq.md"
+    ],
+    "retrieved_scores": [
+      0.722,
+      0.711,
+      0.71
+    ],
+    "grounded": true
+  },
+  {
+    "id": "R15",
+    "category": "unanswerable",
+    "question": "What credit score does Hangs SACCO's system assign to members?",
+    "expected_sources_hint": "none \u2014 not covered",
+    "query": "What credit score does Hangs SACCO's system assign to members?",
+    "answer": "Based on the provided policy documents, there is no information mentioning credit scores or indicating that Hangs SACCO's system assigns credit scores to members. \n\n**Missing Information:** \nDocumentation regarding whether Hangs SACCO uses credit scoring, or how credit scores are generated/assigned, is missing from the provided context.\n\n[Sources consulted: loan_requirements.md, member_identification.md, loan_application_procedure.md]",
+    "sources": [
+      "loan_requirements.md",
+      "member_identification.md",
+      "loan_application_procedure.md"
+    ],
+    "retrieved_scores": [
+      0.767,
+      0.76,
+      0.752
+    ],
+    "grounded": true
+  }
+]

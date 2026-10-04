@@ -65,10 +65,11 @@ def call_gemini(user_message: str, system_prompt: str, retries: int = 1) -> str:
     candidates = data.get("candidates") or []
     if not candidates or "content" not in candidates[0]:
         raise RuntimeError(f"No usable reply: {data.get('promptFeedback') or candidates}")
+    parts = candidates[0]["content"].get("parts", [])
+    text = "".join(p.get("text", "") for p in parts if not p.get("thought"))
     finish = candidates[0].get("finishReason")
-    text = candidates[0]["content"]["parts"][0]["text"]
     if finish not in (None, "STOP"):
-        text += f"\n[WARNING: finishReason={finish}]"
+        text += f"\n[WARNING: finishReason={finish}, parts={len(parts)}]"
     return text
 
 

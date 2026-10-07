@@ -19,7 +19,7 @@ from baseline_chat import call_gemini, load_system_prompt
 # Paths
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PROMPTS_DIR = PROJECT_ROOT / "prompts"
-RESULTS_DIR = PROJECT_ROOT / "evaluation"
+RESULTS_DIR = PROJECT_ROOT / "docs/evaluation"
 
 DEFAULT_PROMPT_VERSION = "v1.0"
 TEMPERATURE = 0.2  # must match generationConfig in call_gemini

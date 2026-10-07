@@ -1,0 +1,58 @@
+{
+  "HS-2024-000101": {
+    "full_name": "Alice Namuli",
+    "membership_start_date": "2024-01-15",
+    "savings_balance_ugx": 2500000,
+    "share_capital_ugx": 100000,
+    "active_loan": null,
+    "guarantee_commitments": []
+  },
+  "HS-2026-000202": {
+    "full_name": "Brian Okello",
+    "membership_start_date": "2026-08-25",
+    "savings_balance_ugx": 100000,
+    "share_capital_ugx": 30000,
+    "active_loan": null,
+    "guarantee_commitments": []
+  },
+  "HS-2023-000303": {
+    "full_name": "Carol Atim",
+    "membership_start_date": "2023-03-10",
+    "savings_balance_ugx": 1200000,
+    "share_capital_ugx": 50000,
+    "active_loan": {
+      "loan_product": "Development Loan",
+      "principal_ugx": 4000000,
+      "outstanding_balance_ugx": 2500000,
+      "status": "current"
+    },
+    "guarantee_commitments": [
+      {"membership_number": "HS-2024-000101", "loan_product": "School Fees Loan"}
+    ]
+  },
+  "HS-2022-000404": {
+    "full_name": "David Ssekandi",
+    "membership_start_date": "2022-05-20",
+    "savings_balance_ugx": 3000000,
+    "share_capital_ugx": 80000,
+    "active_loan": {
+      "loan_product": "Emergency Loan",
+      "principal_ugx": 1500000,
+      "outstanding_balance_ugx": 1800000,
+      "status": "default",
+      "days_overdue": 75
+    },
+    "guarantee_commitments": []
+  },
+  "HS-2024-000505": {
+    "full_name": "Grace Nabirye",
+    "membership_start_date": "2024-11-02",
+    "savings_balance_ugx": 900000,
+    "share_capital_ugx": 60000,
+    "active_loan": null,
+    "guarantee_commitments": [
+      {"membership_number": "HS-2022-000404", "loan_product": "Emergency Loan"},
+      {"membership_number": "HS-2023-000303", "loan_product": "Development Loan"}
+    ]
+  }
+}

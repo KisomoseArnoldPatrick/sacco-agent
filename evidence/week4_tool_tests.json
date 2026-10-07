@@ -1,0 +1,193 @@
+[
+  {
+    "id": "T01",
+    "description": "Valid request: member retrieves their own record",
+    "call": null,
+    "expected": "success",
+    "result": {
+      "membership_number": "HS-2023-000303",
+      "full_name": "Carol Atim",
+      "membership_start_date": "2023-03-10",
+      "savings_balance_ugx": 1200000,
+      "share_capital_ugx": 50000,
+      "active_loan": {
+        "loan_product": "Development Loan",
+        "principal_ugx": 4000000,
+        "outstanding_balance_ugx": 2500000,
+        "status": "current"
+      },
+      "guarantee_commitments": [
+        {
+          "membership_number": "HS-2024-000101",
+          "loan_product": "School Fees Loan"
+        }
+      ]
+    },
+    "actual": "success",
+    "passed": true
+  },
+  {
+    "id": "T02",
+    "description": "Unauthorized: member tries to retrieve a different member's record",
+    "call": null,
+    "expected": "unauthorized",
+    "result": {
+      "error": "unauthorized",
+      "message": "A member may only retrieve their own membership record."
+    },
+    "actual": "unauthorized",
+    "passed": true
+  },
+  {
+    "id": "T03",
+    "description": "Authorized: officer retrieves any member's record",
+    "call": null,
+    "expected": "success",
+    "result": {
+      "membership_number": "HS-2024-000101",
+      "full_name": "Alice Namuli",
+      "membership_start_date": "2024-01-15",
+      "savings_balance_ugx": 2500000,
+      "share_capital_ugx": 100000,
+      "active_loan": null,
+      "guarantee_commitments": []
+    },
+    "actual": "success",
+    "passed": true
+  },
+  {
+    "id": "T04",
+    "description": "Missing parameter: no membership_number supplied",
+    "call": null,
+    "expected": "invalid_parameters",
+    "result": {
+      "error": "invalid_parameters",
+      "message": "membership_number is required."
+    },
+    "actual": "invalid_parameters",
+    "passed": true
+  },
+  {
+    "id": "T05",
+    "description": "Unknown role supplied",
+    "call": null,
+    "expected": "unauthorized",
+    "result": {
+      "error": "unauthorized",
+      "message": "Unknown requester role 'guest'."
+    },
+    "actual": "unauthorized",
+    "passed": true
+  },
+  {
+    "id": "T06",
+    "description": "Not found: well-formed but non-existent membership number",
+    "call": null,
+    "expected": "not_found",
+    "result": {
+      "error": "not_found",
+      "message": "No member record found for HS-2099-999999."
+    },
+    "actual": "not_found",
+    "passed": true
+  },
+  {
+    "id": "T07",
+    "description": "Valid calculation: Development Loan within policy limits",
+    "call": null,
+    "expected": "success",
+    "result": {
+      "loan_product": "Development Loan",
+      "principal_ugx": 5000000.0,
+      "annual_rate_percent": 12,
+      "method": "reducing_balance",
+      "term_months": 12,
+      "monthly_installment_ugx": 444243.94,
+      "total_interest_ugx": 330927.32,
+      "total_repayable_ugx": 5330927.32,
+      "policy_basis": "development_loan.md",
+      "illustrative": true
+    },
+    "actual": "success",
+    "passed": true
+  },
+  {
+    "id": "T08",
+    "description": "Policy violation: principal exceeds Development Loan maximum",
+    "call": null,
+    "expected": "exceeds_policy_limit",
+    "result": {
+      "error": "exceeds_policy_limit",
+      "message": "Requested principal exceeds the Development Loan maximum of UGX 10,000,000.",
+      "policy_basis": "development_loan.md"
+    },
+    "actual": "exceeds_policy_limit",
+    "passed": true
+  },
+  {
+    "id": "T09",
+    "description": "Policy violation: term exceeds Emergency Loan maximum",
+    "call": null,
+    "expected": "exceeds_policy_limit",
+    "result": {
+      "error": "exceeds_policy_limit",
+      "message": "Requested term exceeds the Emergency Loan maximum of 6 months.",
+      "policy_basis": "emergency_loan.md"
+    },
+    "actual": "exceeds_policy_limit",
+    "passed": true
+  },
+  {
+    "id": "T10",
+    "description": "Unknown product supplied",
+    "call": null,
+    "expected": "unknown_product",
+    "result": {
+      "error": "unknown_product",
+      "message": "'Mortgage Loan' is not a recognized loan product.",
+      "known_products": [
+        "Development Loan",
+        "Emergency Loan",
+        "School Fees Loan"
+      ]
+    },
+    "actual": "unknown_product",
+    "passed": true
+  },
+  {
+    "id": "T11",
+    "description": "Missing parameters: no principal or term supplied",
+    "call": null,
+    "expected": "invalid_parameters",
+    "result": {
+      "error": "invalid_parameters",
+      "message": "principal and term_months are both required."
+    },
+    "actual": "invalid_parameters",
+    "passed": true
+  },
+  {
+    "id": "T12",
+    "description": "Invalid parameters: negative principal",
+    "call": null,
+    "expected": "invalid_parameters",
+    "result": {
+      "error": "invalid_parameters",
+      "message": "principal and term_months must be positive."
+    },
+    "actual": "invalid_parameters",
+    "passed": true
+  },
+  {
+    "id": "T13",
+    "description": "Invalid parameters: non-numeric principal",
+    "call": null,
+    "expected": "invalid_parameters",
+    "result": {
+      "error": "invalid_parameters",
+      "message": "principal must be numeric and term_months an integer."
+    },
+    "actual": "invalid_parameters",
+    "passed": true
+  }
+]

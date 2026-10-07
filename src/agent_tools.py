@@ -19,7 +19,7 @@ from dotenv import load_dotenv
 sys.path.append(str(Path(__file__).resolve().parent / "src"))
 
 from baseline_chat import load_system_prompt
-from tools import get_member_record, calculate_repayment, PRODUCT_TERMS
+from src.agent.tools import get_member_record, calculate_repayment, PRODUCT_TERMS
 
 load_dotenv()
 

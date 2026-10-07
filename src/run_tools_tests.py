@@ -14,7 +14,7 @@ from pathlib import Path
 
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
-from tools import get_member_record, calculate_repayment
+from src.agent.tools import get_member_record, calculate_repayment
 
 TEST_CASES = [
     {

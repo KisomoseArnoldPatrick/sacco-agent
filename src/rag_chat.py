@@ -4,7 +4,7 @@ from pathlib import Path
 
 sys.path.append(str(Path(__file__).resolve().parent / "src"))
 
-from retrieval import retrieve_top_k
+from src.rag.retrieval import retrieve_top_k
 from baseline_chat import call_gemini, load_system_prompt
 
 MIN_CONFIDENCE = 0.55  # below this, treat as "no good evidence found"

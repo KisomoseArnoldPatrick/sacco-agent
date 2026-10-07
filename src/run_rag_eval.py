@@ -6,7 +6,7 @@ from pathlib import Path
 
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
-from rag import answer_question
+from src.rag import answer_question
 
 TEST_CASES = [
     # --- Answerable (evidence fully covers the question) ---

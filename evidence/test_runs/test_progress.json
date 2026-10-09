@@ -1,0 +1,96 @@
+{
+  "date": "2026-10-09",
+  "api_calls_used": 6,
+  "passed": {
+    "unknown_tool": {
+      "completed_at": "2026-10-09T10:16:27.195513+00:00",
+      "trace": "evidence/traces/unknown_tool.json",
+      "fingerprint": {
+        "loop.py": "1b2004b19536639214ad924770b48e634214218649c134054fd291aebf9e9f7f",
+        "agent_tools.py": "9492162e3d23e3cd32d5c4184777822b00cf31dae3681685146bf0fcba9d02ba",
+        "tools.py": "629617d4d777d4b9fe305fb91c254a0ba760e3774d3d22835d66f9a33321af2f",
+        "baseline_chat.py": "58f16cedd3b9baedac7ad96558b0396e7681f6a43a89d9bfdfdde6e78f22dd3a"
+      }
+    }
+  },
+  "failed": {
+    "normal_loan_case": {
+      "test_id": "normal_loan_case",
+      "test_name": "Normal loan-case request",
+      "passed": false,
+      "error": "Expected case_complete, got tool_failure:service_unavailable",
+      "completed_at": "2026-10-09T10:16:08.781473+00:00",
+      "fingerprint": {
+        "loop.py": "1b2004b19536639214ad924770b48e634214218649c134054fd291aebf9e9f7f",
+        "agent_tools.py": "9492162e3d23e3cd32d5c4184777822b00cf31dae3681685146bf0fcba9d02ba",
+        "tools.py": "629617d4d777d4b9fe305fb91c254a0ba760e3774d3d22835d66f9a33321af2f",
+        "baseline_chat.py": "58f16cedd3b9baedac7ad96558b0396e7681f6a43a89d9bfdfdde6e78f22dd3a"
+      }
+    },
+    "missing_repayment_term": {
+      "test_id": "missing_repayment_term",
+      "test_name": "Missing repayment term",
+      "passed": false,
+      "error": "Expected clarification_required, got tool_failure:service_unavailable",
+      "completed_at": "2026-10-09T10:16:17.583695+00:00",
+      "fingerprint": {
+        "loop.py": "1b2004b19536639214ad924770b48e634214218649c134054fd291aebf9e9f7f",
+        "agent_tools.py": "9492162e3d23e3cd32d5c4184777822b00cf31dae3681685146bf0fcba9d02ba",
+        "tools.py": "629617d4d777d4b9fe305fb91c254a0ba760e3774d3d22835d66f9a33321af2f",
+        "baseline_chat.py": "58f16cedd3b9baedac7ad96558b0396e7681f6a43a89d9bfdfdde6e78f22dd3a"
+      }
+    },
+    "unauthorized_member_record": {
+      "test_id": "unauthorized_member_record",
+      "test_name": "Member requests another member's record",
+      "passed": false,
+      "error": "'result'",
+      "completed_at": "2026-10-09T10:16:17.587788+00:00",
+      "fingerprint": {
+        "loop.py": "1b2004b19536639214ad924770b48e634214218649c134054fd291aebf9e9f7f",
+        "agent_tools.py": "9492162e3d23e3cd32d5c4184777822b00cf31dae3681685146bf0fcba9d02ba",
+        "tools.py": "629617d4d777d4b9fe305fb91c254a0ba760e3774d3d22835d66f9a33321af2f",
+        "baseline_chat.py": "58f16cedd3b9baedac7ad96558b0396e7681f6a43a89d9bfdfdde6e78f22dd3a"
+      }
+    },
+    "missing_policy_file": {
+      "test_id": "missing_policy_file",
+      "test_name": "Policy file missing",
+      "passed": false,
+      "error": "'result'",
+      "completed_at": "2026-10-09T10:16:17.592222+00:00",
+      "fingerprint": {
+        "loop.py": "1b2004b19536639214ad924770b48e634214218649c134054fd291aebf9e9f7f",
+        "agent_tools.py": "9492162e3d23e3cd32d5c4184777822b00cf31dae3681685146bf0fcba9d02ba",
+        "tools.py": "629617d4d777d4b9fe305fb91c254a0ba760e3774d3d22835d66f9a33321af2f",
+        "baseline_chat.py": "58f16cedd3b9baedac7ad96558b0396e7681f6a43a89d9bfdfdde6e78f22dd3a"
+      }
+    },
+    "prohibited_approval_request": {
+      "test_id": "prohibited_approval_request",
+      "test_name": "User requests loan approval",
+      "passed": false,
+      "error": "Expected prohibited_action_requested, got tool_failure:service_unavailable",
+      "completed_at": "2026-10-09T10:16:27.184341+00:00",
+      "fingerprint": {
+        "loop.py": "1b2004b19536639214ad924770b48e634214218649c134054fd291aebf9e9f7f",
+        "agent_tools.py": "9492162e3d23e3cd32d5c4184777822b00cf31dae3681685146bf0fcba9d02ba",
+        "tools.py": "629617d4d777d4b9fe305fb91c254a0ba760e3774d3d22835d66f9a33321af2f",
+        "baseline_chat.py": "58f16cedd3b9baedac7ad96558b0396e7681f6a43a89d9bfdfdde6e78f22dd3a"
+      }
+    },
+    "max_iterations": {
+      "test_id": "max_iterations",
+      "test_name": "Agent reaches iteration limit",
+      "passed": false,
+      "error": "Expected max_iterations_reached, got tool_failure:service_unavailable",
+      "completed_at": "2026-10-09T10:16:27.191323+00:00",
+      "fingerprint": {
+        "loop.py": "1b2004b19536639214ad924770b48e634214218649c134054fd291aebf9e9f7f",
+        "agent_tools.py": "9492162e3d23e3cd32d5c4184777822b00cf31dae3681685146bf0fcba9d02ba",
+        "tools.py": "629617d4d777d4b9fe305fb91c254a0ba760e3774d3d22835d66f9a33321af2f",
+        "baseline_chat.py": "58f16cedd3b9baedac7ad96558b0396e7681f6a43a89d9bfdfdde6e78f22dd3a"
+      }
+    }
+  }
+}

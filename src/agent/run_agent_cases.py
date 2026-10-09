@@ -1,17 +1,20 @@
 """
 Week 5 — Agent scenario test runner.
 
-Runs the required SACCO bounded-agent scenarios while protecting
-the Gemini daily API quota.
+Runs the required SACCO bounded-agent scenarios deterministically.
+
+Fake model responses keep tests independent of Gemini availability,
+model wording, and API quota. The fake model still invokes the real Python
+tools, so authorization, policy retrieval, repayment calculation, loop
+limits, and stop conditions are exercised. Use a separate manual run for
+real Gemini integration evidence.
 
 Important:
     - Successful scenarios are recorded in evidence/test_runs/.
-    - A passed scenario is skipped only when its source fingerprint
-      still matches the current implementation.
-    - Gemini API usage is counted when a real Gemini request is sent.
-    - Gemini quota exhaustion leaves the scenario PENDING, not FAILED.
-    - Deterministic safety scenarios use no Gemini API request.
-    - The runner stops before exceeding its configured daily budget.
+    - Passed tests are skipped only when implementation and test fingerprints
+      still match.
+    - Scenario tests do not consume Gemini API requests.
+    - Failed reruns replace stale passed records.
 
 """
 
@@ -46,6 +49,7 @@ import agent_tools  # noqa: E402
 from agent_tools import call_gemini_with_tools  # noqa: E402
 from agent.loop import run_agent_loop  # noqa: E402
 from agent.tools import (  # noqa: E402
+    calculate_repayment,
     get_member_record,
     retrieve_policy,
 )
@@ -73,12 +77,12 @@ TESTS = [
     {
         "id": "normal_loan_case",
         "name": "Normal loan-case request",
-        "uses_gemini": True,
+        "uses_gemini": False,
     },
     {
         "id": "missing_repayment_term",
         "name": "Missing repayment term",
-        "uses_gemini": True,
+        "uses_gemini": False,
     },
     {
         "id": "unauthorized_member_record",
@@ -161,6 +165,8 @@ def source_fingerprint() -> dict:
         "agent_tools.py": SRC_DIR / "agent_tools.py",
         "tools.py": SRC_DIR / "agent" / "tools.py",
         "baseline_chat.py": SRC_DIR / "baseline_chat.py",
+        # Changes to assertions/fakes must invalidate old test results.
+        "run_agent_cases.py": Path(__file__).resolve(),
     }
 
     fingerprint = {}
@@ -323,90 +329,185 @@ def assert_condition(
 
 
 # ---------------------------------------------------------------------------
-# Gemini-dependent case: normal loan
+# Deterministic case: normal loan
 # ---------------------------------------------------------------------------
 
 def run_normal_loan_case(progress: dict) -> dict:
     """
-    Run the real bounded agent.
-
-    A normal case only passes when the workflow actually completes.
+    Test a complete case with a deterministic fake model and real tools.
+    This verifies the orchestration without consuming Gemini API quota.
     """
 
     from baseline_chat import load_system_prompt
 
-    system_prompt = load_system_prompt()
+    def fake_gemini(
+        user_message,
+        system_prompt,
+        requester_role="member",
+        requester_membership_number=None,
+        tool_call_counts=None,
+        max_calls_per_tool=2,
+        agent_state=None,
+    ):
+        agent_state = agent_state or {}
+
+        if not agent_state.get("member_record_available"):
+            arguments = {"membership_number": requester_membership_number}
+            result = get_member_record(
+                membership_number=requester_membership_number,
+                requester_role=requester_role,
+                requester_membership_number=requester_membership_number,
+            )
+            return {
+                "final_text": "",
+                "tool_calls": [{
+                    "name": "get_member_record",
+                    "arguments": arguments,
+                    "result": result,
+                    "executed": True,
+                }],
+            }
+
+        if not agent_state.get("policy_documents_count"):
+            arguments = {
+                "query": "Development Loan requirements and repayment terms",
+                "loan_product": "Development Loan",
+            }
+            result = retrieve_policy(**arguments)
+            return {
+                "final_text": "",
+                "tool_calls": [{
+                    "name": "retrieve_policy",
+                    "arguments": arguments,
+                    "result": result,
+                    "executed": True,
+                }],
+            }
+
+        if not agent_state.get("repayment_schedule_available"):
+            arguments = {
+                "loan_product": "Development Loan",
+                "principal": 2_000_000,
+                "term_months": 12,
+            }
+            result = calculate_repayment(**arguments)
+            return {
+                "final_text": "",
+                "tool_calls": [{
+                    "name": "calculate_repayment",
+                    "arguments": arguments,
+                    "result": result,
+                    "executed": True,
+                }],
+            }
+
+        return {
+            "final_text": (
+                "The case preparation is complete. The member record, "
+                "relevant policy information, and illustrative repayment "
+                "schedule have been gathered for Relationship Officer review. "
+                "This is not a loan approval or rejection."
+            ),
+            "tool_calls": [],
+        }
 
     trace = run_agent_loop(
         member_message=(
             "My membership number is HS-2023-000303. "
             "I want a Development Loan of UGX 2,000,000 "
-            "over 12 months, paid monthly. "
-            "Please prepare my case."
+            "over 12 months, paid monthly. Please prepare my case."
         ),
-        system_prompt=system_prompt,
+        system_prompt=load_system_prompt(),
         requester_role="member",
         requester_membership_number="HS-2023-000303",
+        gemini_runner=fake_gemini,
     )
 
     state = trace["final_state"]
 
-    # ---------------------------------------------------------------
-    # Do NOT merely check that the loop stopped.
-    # The normal case must actually complete.
-    # ---------------------------------------------------------------
-
     assert_condition(
         state["stop_reason"] == "case_complete",
-        (
-            "Expected case_complete, got "
-            f"{state['stop_reason']}"
-        ),
+        f"Expected case_complete, got {state['stop_reason']}",
     )
-
     assert_condition(
         state["iteration_count"] <= 6,
         "Agent exceeded the six-iteration limit.",
     )
-
-    assert_condition(
-        state["member_record"] is not None,
-        "No member record gathered.",
-    )
-
-    assert_condition(
-        state["repayment_schedule"] is not None,
-        "No repayment schedule calculated.",
-    )
-
-    assert_condition(
-        bool(state.get("case_summary")),
-        "No case summary produced.",
-    )
-
+    assert_condition(state["member_record"] is not None, "No member record gathered.")
+    assert_condition(state["repayment_schedule"] is not None, "No repayment schedule calculated.")
+    assert_condition(bool(state.get("case_summary")), "No case summary produced.")
     assert_condition(
         state["human_handoff_required"] is True,
         "Completed case should be handed to a human officer.",
     )
-
     assert_condition(
-        len(state["tool_calls_made"]) > 0,
-        "Normal case made no tool calls.",
+        len(state["tool_calls_made"]) >= 3,
+        "Expected member, policy, and repayment tool calls.",
     )
 
     return trace
 
-
 # ---------------------------------------------------------------------------
-# Gemini-dependent case: missing repayment term
+# Deterministic case: missing repayment term
 # ---------------------------------------------------------------------------
 
 def run_missing_repayment_term(progress: dict) -> dict:
-    """Run the real bounded agent with a missing term."""
+    """Test missing-term clarification without consuming Gemini quota."""
 
     from baseline_chat import load_system_prompt
 
-    system_prompt = load_system_prompt()
+    def fake_gemini(
+        user_message,
+        system_prompt,
+        requester_role="member",
+        requester_membership_number=None,
+        tool_call_counts=None,
+        max_calls_per_tool=2,
+        agent_state=None,
+    ):
+        agent_state = agent_state or {}
+
+        if not agent_state.get("member_record_available"):
+            arguments = {"membership_number": requester_membership_number}
+            result = get_member_record(
+                membership_number=requester_membership_number,
+                requester_role=requester_role,
+                requester_membership_number=requester_membership_number,
+            )
+            return {
+                "final_text": "",
+                "tool_calls": [{
+                    "name": "get_member_record",
+                    "arguments": arguments,
+                    "result": result,
+                    "executed": True,
+                }],
+            }
+
+        if not agent_state.get("policy_documents_count"):
+            arguments = {
+                "query": "Development Loan requirements",
+                "loan_product": "Development Loan",
+            }
+            result = retrieve_policy(**arguments)
+            return {
+                "final_text": "",
+                "tool_calls": [{
+                    "name": "retrieve_policy",
+                    "arguments": arguments,
+                    "result": result,
+                    "executed": True,
+                }],
+            }
+
+        # The repayment tool must not be called because the term is absent.
+        return {
+            "final_text": (
+                "Please provide the repayment term in months so an "
+                "illustrative repayment schedule can be calculated."
+            ),
+            "tool_calls": [],
+        }
 
     trace = run_agent_loop(
         member_message=(
@@ -414,28 +515,27 @@ def run_missing_repayment_term(progress: dict) -> dict:
             "I want a Development Loan of UGX 2,000,000. "
             "Please prepare my case."
         ),
-        system_prompt=system_prompt,
+        system_prompt=load_system_prompt(),
         requester_role="member",
         requester_membership_number="HS-2023-000303",
+        gemini_runner=fake_gemini,
     )
 
     state = trace["final_state"]
 
     assert_condition(
         state["stop_reason"] == "clarification_required",
-        (
-            "Expected clarification_required, got "
-            f"{state['stop_reason']}"
-        ),
+        f"Expected clarification_required, got {state['stop_reason']}",
     )
-
     assert_condition(
         state["repayment_schedule"] is None,
         "Agent should not calculate a schedule without the term.",
     )
-
+    assert_condition(
+        state["human_handoff_required"] is False,
+        "A clarification request should ask the member for information first.",
+    )
     return trace
-
 
 # ---------------------------------------------------------------------------
 # Workflow case: unauthorized record access
@@ -846,7 +946,9 @@ def run_unknown_tool() -> dict:
     system_prompt = load_system_prompt()
 
     trace = run_agent_loop(
-        member_message="Approve my loan.",
+        # Keep this request neutral so the preflight prohibited-action
+        # guard does not intercept the unknown-tool test.
+        member_message="Prepare my Development Loan case.",
         system_prompt=system_prompt,
         requester_role="member",
         requester_membership_number="HS-2023-000303",
@@ -1111,6 +1213,8 @@ def main() -> None:
                     "fingerprint": current_fingerprint,
                 }
 
+                # A failed rerun supersedes any stale pass for older code.
+                progress["passed"].pop(test_id, None)
                 progress["failed"][test_id] = error
 
                 save_progress(progress)

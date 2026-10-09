@@ -441,9 +441,52 @@ def _record_tool_call_for_evidence(
                 False,
             ),
 
-            "result_summary": result_summary,
+            # "result" remains a compact summary for compatibility with
+            # scenario tests; it deliberately does not duplicate full
+            # member records or policy-document contents.
+            "result": copy.deepcopy(result_summary),
+            "result_summary": copy.deepcopy(result_summary),
         }
     )
+
+
+# ---------------------------------------------------------------------------
+# Preflight safety guard
+# ---------------------------------------------------------------------------
+
+def _is_prohibited_action_request(message: str) -> bool:
+    """
+    Detect explicit requests for the agent to make or execute a loan decision.
+
+    The guard is intentionally narrow: ordinary requests to prepare a loan
+    case are allowed, while direct requests to approve, reject, score, or
+    disburse a loan are routed to a human officer before Gemini is called.
+    """
+    text = " ".join((message or "").lower().split())
+
+    prohibited_phrases = (
+        "approve my loan",
+        "approve the loan",
+        "approve this loan",
+        "approve the application",
+        "approve my application",
+        "reject my loan",
+        "reject the loan",
+        "reject this loan",
+        "reject the application",
+        "score my loan",
+        "score the loan",
+        "score this loan",
+        "disburse my loan",
+        "disburse the loan",
+        "disburse this loan",
+        "release the loan funds",
+        "release my loan funds",
+        "make the loan decision",
+        "decide on my loan",
+    )
+
+    return any(phrase in text for phrase in prohibited_phrases)
 
 
 # ---------------------------------------------------------------------------
@@ -730,11 +773,36 @@ def run_agent_loop(
         "steps": [],
     }
 
-    # Normal production behavior.
+    # Normal production behavior. Tests can inject a deterministic fake.
     if gemini_runner is None:
         gemini_runner = call_gemini_with_tools
 
-    while state["iteration_count"] < MAX_ITERATIONS:
+    # Reject explicit requests for prohibited loan decisions before calling
+    # Gemini or executing any tool. This is deterministic and quota-free.
+    if _is_prohibited_action_request(member_message):
+        state["stop_reason"] = "prohibited_action_requested"
+        state["human_handoff_required"] = True
+        state["case_summary"] = _build_incomplete_case_packet(state)
+
+        trace["steps"].append(
+            {
+                "iteration": 0,
+                "event": "preflight_safety_guard",
+                "state_before": _make_trace_state_snapshot(state),
+                "model_state": None,
+                "tool_calls": [],
+                "final_text": (
+                    "This agent prepares cases only. "
+                    "A Relationship Officer must make loan decisions."
+                ),
+                "state_after": _make_trace_state_snapshot(state),
+            }
+        )
+
+    while (
+        state["iteration_count"] < MAX_ITERATIONS
+        and state["stop_reason"] is None
+    ):
 
         state["iteration_count"] += 1
 
@@ -776,6 +844,13 @@ def run_agent_loop(
             agent_state=model_state,
         )
 
+        if not isinstance(outcome, dict):
+            outcome = {
+                "final_text": "",
+                "tool_calls": [],
+                "error": "invalid_model_response",
+            }
+
         tool_calls = outcome.get(
             "tool_calls",
             [],
@@ -803,6 +878,22 @@ def run_agent_loop(
                 "",
             ),
         }
+
+        # ---------------------------------------------------------------
+        # Model/API returned an explicit top-level error.
+        # ---------------------------------------------------------------
+
+        if outcome.get("error") and not tool_calls:
+            error = str(outcome["error"])
+            state["stop_reason"] = (
+                error if error.startswith("tool_failure:")
+                else f"tool_failure:{error}"
+            )
+            state["human_handoff_required"] = True
+            state["case_summary"] = _build_incomplete_case_packet(state)
+            step_record["state_after"] = _make_trace_state_snapshot(state)
+            trace["steps"].append(step_record)
+            break
 
         # ---------------------------------------------------------------
         # Gemini returned final text instead of a tool call.
@@ -1087,21 +1178,18 @@ def run_agent_loop(
 
     else:
 
-        # while condition became false.
-
-        state["stop_reason"] = (
-            "max_iterations_reached"
-        )
-
-        state[
-            "human_handoff_required"
-        ] = True
-
-        state["case_summary"] = (
-            _build_incomplete_case_packet(
-                state
-            )
-        )
+        # The while condition became false without a break. This can happen
+        # because the iteration limit was reached, but it can also happen
+        # when a preflight guard already set a stop reason before the loop.
+        # Only label this as max_iterations_reached when the limit really
+        # caused the loop to finish; never overwrite an existing stop reason.
+        if (
+            state["stop_reason"] is None
+            and state["iteration_count"] >= MAX_ITERATIONS
+        ):
+            state["stop_reason"] = "max_iterations_reached"
+            state["human_handoff_required"] = True
+            state["case_summary"] = _build_incomplete_case_packet(state)
 
     # -------------------------------------------------------------------
     # Safety fallback.

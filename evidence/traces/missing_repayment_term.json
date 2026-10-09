@@ -1,0 +1,627 @@
+{
+  "started_at": "2026-10-09T19:12:30.362407+00:00",
+  "steps": [
+    {
+      "iteration": 1,
+      "state_before": {
+        "member_message": "My membership number is HS-2023-000303. I want a Development Loan of UGX 2,000,000. Please prepare my case.",
+        "requester_role": "member",
+        "requester_membership_number": "HS-2023-000303",
+        "member_record": null,
+        "policy_excerpts": [],
+        "repayment_schedule": null,
+        "missing_requirements": [],
+        "case_summary": null,
+        "tool_calls_made": [],
+        "tool_call_counts": {
+          "get_member_record": 0,
+          "retrieve_policy": 0,
+          "calculate_repayment": 0
+        },
+        "iteration_count": 1,
+        "stop_reason": null,
+        "human_handoff_required": false
+      },
+      "model_state": {
+        "member_message": "My membership number is HS-2023-000303. I want a Development Loan of UGX 2,000,000. Please prepare my case.",
+        "requester_role": "member",
+        "requester_membership_number": "HS-2023-000303",
+        "member_record_available": false,
+        "member_record_summary": null,
+        "policy_documents_retrieved": [],
+        "policy_documents_count": 0,
+        "policy_excerpts": [],
+        "repayment_schedule_available": false,
+        "repayment_summary": null,
+        "missing_requirements": [],
+        "case_summary_available": false,
+        "tool_call_counts": {
+          "get_member_record": 0,
+          "retrieve_policy": 0,
+          "calculate_repayment": 0
+        },
+        "iteration_count": 1,
+        "limits": {
+          "max_iterations": 6,
+          "max_calls_per_tool": 2
+        },
+        "human_handoff_required": false
+      },
+      "tool_calls": [
+        {
+          "name": "get_member_record",
+          "arguments": {
+            "membership_number": "HS-2023-000303"
+          },
+          "executed": true,
+          "result_summary": {
+            "record_available": true,
+            "membership_number": "HS-2023-000303"
+          }
+        }
+      ],
+      "final_text": "",
+      "state_after": {
+        "member_message": "My membership number is HS-2023-000303. I want a Development Loan of UGX 2,000,000. Please prepare my case.",
+        "requester_role": "member",
+        "requester_membership_number": "HS-2023-000303",
+        "member_record": {
+          "membership_number": "HS-2023-000303",
+          "full_name": "Carol Atim",
+          "membership_start_date": "2023-03-10",
+          "savings_balance_ugx": 1200000,
+          "share_capital_ugx": 50000,
+          "active_loan": {
+            "loan_product": "Development Loan",
+            "principal_ugx": 4000000,
+            "outstanding_balance_ugx": 2500000,
+            "status": "current"
+          },
+          "guarantee_commitments": [
+            {
+              "membership_number": "HS-2024-000101",
+              "loan_product": "School Fees Loan"
+            }
+          ]
+        },
+        "policy_excerpts": [],
+        "repayment_schedule": null,
+        "missing_requirements": [],
+        "case_summary": null,
+        "tool_calls_made": [
+          {
+            "name": "get_member_record",
+            "arguments": {
+              "membership_number": "HS-2023-000303"
+            },
+            "executed": true,
+            "result": {
+              "error": null,
+              "record_available": true
+            },
+            "result_summary": {
+              "error": null,
+              "record_available": true
+            }
+          }
+        ],
+        "tool_call_counts": {
+          "get_member_record": 1,
+          "retrieve_policy": 0,
+          "calculate_repayment": 0
+        },
+        "iteration_count": 1,
+        "stop_reason": null,
+        "human_handoff_required": false
+      }
+    },
+    {
+      "iteration": 2,
+      "state_before": {
+        "member_message": "My membership number is HS-2023-000303. I want a Development Loan of UGX 2,000,000. Please prepare my case.",
+        "requester_role": "member",
+        "requester_membership_number": "HS-2023-000303",
+        "member_record": {
+          "membership_number": "HS-2023-000303",
+          "full_name": "Carol Atim",
+          "membership_start_date": "2023-03-10",
+          "savings_balance_ugx": 1200000,
+          "share_capital_ugx": 50000,
+          "active_loan": {
+            "loan_product": "Development Loan",
+            "principal_ugx": 4000000,
+            "outstanding_balance_ugx": 2500000,
+            "status": "current"
+          },
+          "guarantee_commitments": [
+            {
+              "membership_number": "HS-2024-000101",
+              "loan_product": "School Fees Loan"
+            }
+          ]
+        },
+        "policy_excerpts": [],
+        "repayment_schedule": null,
+        "missing_requirements": [],
+        "case_summary": null,
+        "tool_calls_made": [
+          {
+            "name": "get_member_record",
+            "arguments": {
+              "membership_number": "HS-2023-000303"
+            },
+            "executed": true,
+            "result": {
+              "error": null,
+              "record_available": true
+            },
+            "result_summary": {
+              "error": null,
+              "record_available": true
+            }
+          }
+        ],
+        "tool_call_counts": {
+          "get_member_record": 1,
+          "retrieve_policy": 0,
+          "calculate_repayment": 0
+        },
+        "iteration_count": 2,
+        "stop_reason": null,
+        "human_handoff_required": false
+      },
+      "model_state": {
+        "member_message": "My membership number is HS-2023-000303. I want a Development Loan of UGX 2,000,000. Please prepare my case.",
+        "requester_role": "member",
+        "requester_membership_number": "HS-2023-000303",
+        "member_record_available": true,
+        "member_record_summary": {
+          "membership_number": "HS-2023-000303",
+          "guarantee_commitments": [
+            {
+              "membership_number": "HS-2024-000101",
+              "loan_product": "School Fees Loan"
+            }
+          ]
+        },
+        "policy_documents_retrieved": [],
+        "policy_documents_count": 0,
+        "policy_excerpts": [],
+        "repayment_schedule_available": false,
+        "repayment_summary": null,
+        "missing_requirements": [],
+        "case_summary_available": false,
+        "tool_call_counts": {
+          "get_member_record": 1,
+          "retrieve_policy": 0,
+          "calculate_repayment": 0
+        },
+        "iteration_count": 2,
+        "limits": {
+          "max_iterations": 6,
+          "max_calls_per_tool": 2
+        },
+        "human_handoff_required": false
+      },
+      "tool_calls": [
+        {
+          "name": "retrieve_policy",
+          "arguments": {
+            "query": "Development Loan requirements",
+            "loan_product": "Development Loan"
+          },
+          "executed": true,
+          "result_summary": {
+            "documents": [
+              "development_loan.md"
+            ],
+            "result_count": 1
+          }
+        }
+      ],
+      "final_text": "",
+      "state_after": {
+        "member_message": "My membership number is HS-2023-000303. I want a Development Loan of UGX 2,000,000. Please prepare my case.",
+        "requester_role": "member",
+        "requester_membership_number": "HS-2023-000303",
+        "member_record": {
+          "membership_number": "HS-2023-000303",
+          "full_name": "Carol Atim",
+          "membership_start_date": "2023-03-10",
+          "savings_balance_ugx": 1200000,
+          "share_capital_ugx": 50000,
+          "active_loan": {
+            "loan_product": "Development Loan",
+            "principal_ugx": 4000000,
+            "outstanding_balance_ugx": 2500000,
+            "status": "current"
+          },
+          "guarantee_commitments": [
+            {
+              "membership_number": "HS-2024-000101",
+              "loan_product": "School Fees Loan"
+            }
+          ]
+        },
+        "policy_excerpts": [
+          {
+            "document": "development_loan.md",
+            "matched_terms": [
+              "development",
+              "loan",
+              "requirements"
+            ],
+            "content": "# Development Loan\n\n## Purpose\n\nThe Development Loan supports members undertaking income-generating or\npersonal development activities, such as small business expansion, land\nimprovement, or asset purchase.\n\n## Terms\n\n| Feature             | Detail                                                                      |\n| ------------------- | --------------------------------------------------------------------------- |\n| Maximum amount      | UGX 10,000,000, subject to the 3x-savings ceiling in `loan_requirements.md` |\n| Interest rate       | 12% per annum, reducing balance                                             |\n| Repayment period    | Up to 24 months                                                             |\n| Guarantors required | 2 (see `guarantor_requirements.md`)                                         |\n| Grace period        | First repayment due 30 days after disbursement                              |\n\n## Additional requirements\n\n- A short written statement describing the business or development purpose\n  the loan will fund must accompany the application (see\n  `supporting_documents.md`).\n\n## Notes\n\n- Interest is calculated monthly on the outstanding principal (reducing\n  balance), so early repayment reduces total interest paid.\n"
+          }
+        ],
+        "repayment_schedule": null,
+        "missing_requirements": [],
+        "case_summary": null,
+        "tool_calls_made": [
+          {
+            "name": "get_member_record",
+            "arguments": {
+              "membership_number": "HS-2023-000303"
+            },
+            "executed": true,
+            "result": {
+              "error": null,
+              "record_available": true
+            },
+            "result_summary": {
+              "error": null,
+              "record_available": true
+            }
+          },
+          {
+            "name": "retrieve_policy",
+            "arguments": {
+              "query": "Development Loan requirements",
+              "loan_product": "Development Loan"
+            },
+            "executed": true,
+            "result": {
+              "error": null,
+              "documents": [
+                "development_loan.md"
+              ],
+              "result_count": 1
+            },
+            "result_summary": {
+              "error": null,
+              "documents": [
+                "development_loan.md"
+              ],
+              "result_count": 1
+            }
+          }
+        ],
+        "tool_call_counts": {
+          "get_member_record": 1,
+          "retrieve_policy": 1,
+          "calculate_repayment": 0
+        },
+        "iteration_count": 2,
+        "stop_reason": null,
+        "human_handoff_required": false
+      }
+    },
+    {
+      "iteration": 3,
+      "state_before": {
+        "member_message": "My membership number is HS-2023-000303. I want a Development Loan of UGX 2,000,000. Please prepare my case.",
+        "requester_role": "member",
+        "requester_membership_number": "HS-2023-000303",
+        "member_record": {
+          "membership_number": "HS-2023-000303",
+          "full_name": "Carol Atim",
+          "membership_start_date": "2023-03-10",
+          "savings_balance_ugx": 1200000,
+          "share_capital_ugx": 50000,
+          "active_loan": {
+            "loan_product": "Development Loan",
+            "principal_ugx": 4000000,
+            "outstanding_balance_ugx": 2500000,
+            "status": "current"
+          },
+          "guarantee_commitments": [
+            {
+              "membership_number": "HS-2024-000101",
+              "loan_product": "School Fees Loan"
+            }
+          ]
+        },
+        "policy_excerpts": [
+          {
+            "document": "development_loan.md",
+            "matched_terms": [
+              "development",
+              "loan",
+              "requirements"
+            ],
+            "content": "# Development Loan\n\n## Purpose\n\nThe Development Loan supports members undertaking income-generating or\npersonal development activities, such as small business expansion, land\nimprovement, or asset purchase.\n\n## Terms\n\n| Feature             | Detail                                                                      |\n| ------------------- | --------------------------------------------------------------------------- |\n| Maximum amount      | UGX 10,000,000, subject to the 3x-savings ceiling in `loan_requirements.md` |\n| Interest rate       | 12% per annum, reducing balance                                             |\n| Repayment period    | Up to 24 months                                                             |\n| Guarantors required | 2 (see `guarantor_requirements.md`)                                         |\n| Grace period        | First repayment due 30 days after disbursement                              |\n\n## Additional requirements\n\n- A short written statement describing the business or development purpose\n  the loan will fund must accompany the application (see\n  `supporting_documents.md`).\n\n## Notes\n\n- Interest is calculated monthly on the outstanding principal (reducing\n  balance), so early repayment reduces total interest paid.\n"
+          }
+        ],
+        "repayment_schedule": null,
+        "missing_requirements": [],
+        "case_summary": null,
+        "tool_calls_made": [
+          {
+            "name": "get_member_record",
+            "arguments": {
+              "membership_number": "HS-2023-000303"
+            },
+            "executed": true,
+            "result": {
+              "error": null,
+              "record_available": true
+            },
+            "result_summary": {
+              "error": null,
+              "record_available": true
+            }
+          },
+          {
+            "name": "retrieve_policy",
+            "arguments": {
+              "query": "Development Loan requirements",
+              "loan_product": "Development Loan"
+            },
+            "executed": true,
+            "result": {
+              "error": null,
+              "documents": [
+                "development_loan.md"
+              ],
+              "result_count": 1
+            },
+            "result_summary": {
+              "error": null,
+              "documents": [
+                "development_loan.md"
+              ],
+              "result_count": 1
+            }
+          }
+        ],
+        "tool_call_counts": {
+          "get_member_record": 1,
+          "retrieve_policy": 1,
+          "calculate_repayment": 0
+        },
+        "iteration_count": 3,
+        "stop_reason": null,
+        "human_handoff_required": false
+      },
+      "model_state": {
+        "member_message": "My membership number is HS-2023-000303. I want a Development Loan of UGX 2,000,000. Please prepare my case.",
+        "requester_role": "member",
+        "requester_membership_number": "HS-2023-000303",
+        "member_record_available": true,
+        "member_record_summary": {
+          "membership_number": "HS-2023-000303",
+          "guarantee_commitments": [
+            {
+              "membership_number": "HS-2024-000101",
+              "loan_product": "School Fees Loan"
+            }
+          ]
+        },
+        "policy_documents_retrieved": [
+          "development_loan.md"
+        ],
+        "policy_documents_count": 1,
+        "policy_excerpts": [
+          {
+            "document": "development_loan.md",
+            "matched_terms": [
+              "development",
+              "loan",
+              "requirements"
+            ],
+            "content": "# Development Loan\n\n## Purpose\n\nThe Development Loan supports members undertaking income-generating or\npersonal development activities, such as small business expansion, land\nimprovement, or asset purchase.\n\n## Terms\n\n| Feature             | Detail                                                                      |\n| ------------------- | --------------------------------------------------------------------------- |\n| Maximum amount      | UGX 10,000,000, subject to the 3x-savings ceiling in `loan_requirements.md` |\n| Interest rate       | 12% per annum, reducing balance                                             |\n| Repayment period    | Up to 24 months                                                             |\n| Guarantors required | 2 (see `guarantor_requirements.md`)                                         |\n| Grace period        | First repayment due 30 days after disbursement                              |\n\n## Additional requirements\n\n- A short written statement describing the business or development purpose\n  the loan will fund must accompany the application (see\n  `supporting_documents.md`).\n\n## Notes\n\n- Interest is calculated monthly on the outstanding principal (reducing\n  balance), so early repayment reduces total interest paid.\n"
+          }
+        ],
+        "repayment_schedule_available": false,
+        "repayment_summary": null,
+        "missing_requirements": [],
+        "case_summary_available": false,
+        "tool_call_counts": {
+          "get_member_record": 1,
+          "retrieve_policy": 1,
+          "calculate_repayment": 0
+        },
+        "iteration_count": 3,
+        "limits": {
+          "max_iterations": 6,
+          "max_calls_per_tool": 2
+        },
+        "human_handoff_required": false
+      },
+      "tool_calls": [],
+      "final_text": "Please provide the repayment term in months so an illustrative repayment schedule can be calculated.",
+      "state_after": {
+        "member_message": "My membership number is HS-2023-000303. I want a Development Loan of UGX 2,000,000. Please prepare my case.",
+        "requester_role": "member",
+        "requester_membership_number": "HS-2023-000303",
+        "member_record": {
+          "membership_number": "HS-2023-000303",
+          "full_name": "Carol Atim",
+          "membership_start_date": "2023-03-10",
+          "savings_balance_ugx": 1200000,
+          "share_capital_ugx": 50000,
+          "active_loan": {
+            "loan_product": "Development Loan",
+            "principal_ugx": 4000000,
+            "outstanding_balance_ugx": 2500000,
+            "status": "current"
+          },
+          "guarantee_commitments": [
+            {
+              "membership_number": "HS-2024-000101",
+              "loan_product": "School Fees Loan"
+            }
+          ]
+        },
+        "policy_excerpts": [
+          {
+            "document": "development_loan.md",
+            "matched_terms": [
+              "development",
+              "loan",
+              "requirements"
+            ],
+            "content": "# Development Loan\n\n## Purpose\n\nThe Development Loan supports members undertaking income-generating or\npersonal development activities, such as small business expansion, land\nimprovement, or asset purchase.\n\n## Terms\n\n| Feature             | Detail                                                                      |\n| ------------------- | --------------------------------------------------------------------------- |\n| Maximum amount      | UGX 10,000,000, subject to the 3x-savings ceiling in `loan_requirements.md` |\n| Interest rate       | 12% per annum, reducing balance                                             |\n| Repayment period    | Up to 24 months                                                             |\n| Guarantors required | 2 (see `guarantor_requirements.md`)                                         |\n| Grace period        | First repayment due 30 days after disbursement                              |\n\n## Additional requirements\n\n- A short written statement describing the business or development purpose\n  the loan will fund must accompany the application (see\n  `supporting_documents.md`).\n\n## Notes\n\n- Interest is calculated monthly on the outstanding principal (reducing\n  balance), so early repayment reduces total interest paid.\n"
+          }
+        ],
+        "repayment_schedule": null,
+        "missing_requirements": [],
+        "case_summary": "Please provide the repayment term in months so an illustrative repayment schedule can be calculated.",
+        "tool_calls_made": [
+          {
+            "name": "get_member_record",
+            "arguments": {
+              "membership_number": "HS-2023-000303"
+            },
+            "executed": true,
+            "result": {
+              "error": null,
+              "record_available": true
+            },
+            "result_summary": {
+              "error": null,
+              "record_available": true
+            }
+          },
+          {
+            "name": "retrieve_policy",
+            "arguments": {
+              "query": "Development Loan requirements",
+              "loan_product": "Development Loan"
+            },
+            "executed": true,
+            "result": {
+              "error": null,
+              "documents": [
+                "development_loan.md"
+              ],
+              "result_count": 1
+            },
+            "result_summary": {
+              "error": null,
+              "documents": [
+                "development_loan.md"
+              ],
+              "result_count": 1
+            }
+          }
+        ],
+        "tool_call_counts": {
+          "get_member_record": 1,
+          "retrieve_policy": 1,
+          "calculate_repayment": 0
+        },
+        "iteration_count": 3,
+        "stop_reason": "clarification_required",
+        "human_handoff_required": false
+      }
+    }
+  ],
+  "ended_at": "2026-10-09T19:12:30.372711+00:00",
+  "final_state": {
+    "member_message": "My membership number is HS-2023-000303. I want a Development Loan of UGX 2,000,000. Please prepare my case.",
+    "requester_role": "member",
+    "requester_membership_number": "HS-2023-000303",
+    "member_record": {
+      "membership_number": "HS-2023-000303",
+      "full_name": "Carol Atim",
+      "membership_start_date": "2023-03-10",
+      "savings_balance_ugx": 1200000,
+      "share_capital_ugx": 50000,
+      "active_loan": {
+        "loan_product": "Development Loan",
+        "principal_ugx": 4000000,
+        "outstanding_balance_ugx": 2500000,
+        "status": "current"
+      },
+      "guarantee_commitments": [
+        {
+          "membership_number": "HS-2024-000101",
+          "loan_product": "School Fees Loan"
+        }
+      ]
+    },
+    "policy_excerpts": [
+      {
+        "document": "development_loan.md",
+        "matched_terms": [
+          "development",
+          "loan",
+          "requirements"
+        ],
+        "content": "# Development Loan\n\n## Purpose\n\nThe Development Loan supports members undertaking income-generating or\npersonal development activities, such as small business expansion, land\nimprovement, or asset purchase.\n\n## Terms\n\n| Feature             | Detail                                                                      |\n| ------------------- | --------------------------------------------------------------------------- |\n| Maximum amount      | UGX 10,000,000, subject to the 3x-savings ceiling in `loan_requirements.md` |\n| Interest rate       | 12% per annum, reducing balance                                             |\n| Repayment period    | Up to 24 months                                                             |\n| Guarantors required | 2 (see `guarantor_requirements.md`)                                         |\n| Grace period        | First repayment due 30 days after disbursement                              |\n\n## Additional requirements\n\n- A short written statement describing the business or development purpose\n  the loan will fund must accompany the application (see\n  `supporting_documents.md`).\n\n## Notes\n\n- Interest is calculated monthly on the outstanding principal (reducing\n  balance), so early repayment reduces total interest paid.\n"
+      }
+    ],
+    "repayment_schedule": null,
+    "missing_requirements": [],
+    "case_summary": "Please provide the repayment term in months so an illustrative repayment schedule can be calculated.",
+    "tool_calls_made": [
+      {
+        "name": "get_member_record",
+        "arguments": {
+          "membership_number": "HS-2023-000303"
+        },
+        "executed": true,
+        "result": {
+          "error": null,
+          "record_available": true
+        },
+        "result_summary": {
+          "error": null,
+          "record_available": true
+        }
+      },
+      {
+        "name": "retrieve_policy",
+        "arguments": {
+          "query": "Development Loan requirements",
+          "loan_product": "Development Loan"
+        },
+        "executed": true,
+        "result": {
+          "error": null,
+          "documents": [
+            "development_loan.md"
+          ],
+          "result_count": 1
+        },
+        "result_summary": {
+          "error": null,
+          "documents": [
+            "development_loan.md"
+          ],
+          "result_count": 1
+        }
+      }
+    ],
+    "tool_call_counts": {
+      "get_member_record": 1,
+      "retrieve_policy": 1,
+      "calculate_repayment": 0
+    },
+    "iteration_count": 3,
+    "stop_reason": "clarification_required",
+    "human_handoff_required": false
+  },
+  "test_id": "missing_repayment_term",
+  "test_name": "Missing repayment term",
+  "passed": true,
+  "completed_at": "2026-10-09T19:12:30.372840+00:00",
+  "source_fingerprint": {
+    "loop.py": "7a0e63bab2410aef219d6a4e6fe1cb6c4c667b9b9c3abc2be786f164c4231267",
+    "agent_tools.py": "f285d33aa20366ee5fe30637fb9197debac4de6422c0b4f31d87018cba7e9a81",
+    "tools.py": "a0b15486457e91ac90ca0ef1671d93b019b854b2c48819947e21d5dd4b80b032",
+    "baseline_chat.py": "c415f116cffc7610ae2d1f2f58ff2234127325989720acc98d7f932fd957a887",
+    "run_agent_cases.py": "12ac0ed94bb1e5c7253a23e7e9cd328cf5c2c5727077fdc62c924a9f88bbf98c"
+  }
+}

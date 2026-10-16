@@ -1,0 +1,44 @@
+{
+  "manual-development-loan-demo": {
+    "state_version": 1,
+    "case_id": "manual-development-loan-demo",
+    "owner_membership_number": "HS-2023-000303",
+    "created_at": "2026-10-16T12:27:24.522321+00:00",
+    "updated_at": "2026-10-16T12:27:51.749660+00:00",
+    "status": "waiting_for_member",
+    "requester_role": "member",
+    "member_message": "My membership number is HS-2023-000303. I want a Development Loan of UGX 2,000,000 over 12 months, paid monthly. Please prepare my case.",
+    "workflow": {
+      "current_stage": "stopped",
+      "iteration_count": 4,
+      "max_iterations": 6,
+      "tool_call_counts": {
+        "get_member_record": 1,
+        "retrieve_policy": 1,
+        "calculate_repayment": 1
+      },
+      "max_calls_per_tool": 2,
+      "stop_reason": "clarification_required",
+      "human_handoff_required": true
+    },
+    "preparation": {
+      "member_record_retrieved": true,
+      "policy_documents": [
+        "development_loan.md"
+      ],
+      "repayment_calculated": true,
+      "missing_requirements": [
+        "Verify the member's savings balance against the 3x savings ceiling.",
+        "Provide and verify the details and eligibility of the 2 required guarantors.",
+        "Submit and review the written statement explaining the loan purpose.",
+        "Identify and provide any required supporting documents."
+      ],
+      "summary_status": "needs_clarification"
+    },
+    "memory_metadata": {
+      "purpose": "resume and review case preparation",
+      "contains_raw_member_record": false,
+      "contains_full_policy_text": false
+    }
+  }
+}

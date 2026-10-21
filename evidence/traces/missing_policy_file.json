@@ -1,5 +1,5 @@
 {
-  "started_at": "2026-10-09T19:12:30.437729+00:00",
+  "started_at": "2026-10-21T09:32:15.479467+00:00",
   "steps": [
     {
       "iteration": 1,
@@ -103,7 +103,7 @@
       }
     }
   ],
-  "ended_at": "2026-10-09T19:12:30.438443+00:00",
+  "ended_at": "2026-10-21T09:32:15.479688+00:00",
   "final_state": {
     "member_message": "Prepare my Development Loan case using the loan policy.",
     "requester_role": "member",
@@ -142,14 +142,29 @@
     "stop_reason": "tool_failure:service_unavailable",
     "human_handoff_required": true
   },
+  "run_id": "run-103ad08f4697",
+  "scenario_id": null,
+  "events": [
+    {
+      "timestamp": "2026-10-21T09:32:15.479727+00:00",
+      "offset_ms": 0.28,
+      "event_type": "run_completed",
+      "details": {
+        "stop_reason": "tool_failure:service_unavailable",
+        "human_handoff_required": true,
+        "elapsed_ms": 0.27
+      }
+    }
+  ],
+  "elapsed_ms": 0.27,
   "test_id": "missing_policy_file",
   "test_name": "Policy file missing",
   "passed": true,
-  "completed_at": "2026-10-09T19:12:30.438599+00:00",
+  "completed_at": "2026-10-21T09:32:15.479773+00:00",
   "source_fingerprint": {
-    "loop.py": "7a0e63bab2410aef219d6a4e6fe1cb6c4c667b9b9c3abc2be786f164c4231267",
-    "agent_tools.py": "f285d33aa20366ee5fe30637fb9197debac4de6422c0b4f31d87018cba7e9a81",
-    "tools.py": "a0b15486457e91ac90ca0ef1671d93b019b854b2c48819947e21d5dd4b80b032",
+    "loop.py": "2b7aeadaa32ad112ca822c2b7010ec123f445ee4401664cfac5089e33881d35f",
+    "agent_tools.py": "4398f3e439b488fc945642ea1cea176e251cb12ba05ad9aee843efab573576dd",
+    "tools.py": "ea3010b5b82a905b94c69705a28d4f8941615fb1956439727a842e423ebc960f",
     "baseline_chat.py": "c415f116cffc7610ae2d1f2f58ff2234127325989720acc98d7f932fd957a887",
     "run_agent_cases.py": "12ac0ed94bb1e5c7253a23e7e9cd328cf5c2c5727077fdc62c924a9f88bbf98c"
   }

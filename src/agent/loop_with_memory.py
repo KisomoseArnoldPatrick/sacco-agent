@@ -55,6 +55,19 @@ from agent.state import (  # noqa: E402
     update_stage,
     now as workflow_now,
 )
+from agent.guardrails import (  # noqa: E402
+    validate_input_request,
+    detect_prohibited_action,
+    detect_prompt_injection,
+    validate_agent_output,
+    validate_tool_allowlist,
+)
+from agent.observability import (  # noqa: E402
+    AgentTracer,
+    sanitize_member_record,
+    sanitize_trace_state,
+    now_utc_iso,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -374,13 +387,15 @@ def _summarize_repayment(repayment: dict) -> dict:
 
 def _make_trace_state_snapshot(state: dict) -> dict:
     """
-    Create an immutable-at-that-time evidence snapshot.
+    Create an immutable-at-that-time evidence snapshot with PII safely redacted.
 
     deepcopy is important because lists such as policy_excerpts and
     tool_calls_made continue changing as the agent runs.
     """
-
-    return copy.deepcopy(state)
+    snapshot = copy.deepcopy(state)
+    if snapshot.get("member_record"):
+        snapshot["member_record"] = sanitize_member_record(snapshot["member_record"])
+    return snapshot
 
 
 def _record_tool_call_for_evidence(
@@ -477,6 +492,10 @@ def _is_prohibited_action_request(message: str) -> bool:
     case are allowed, while direct requests to approve, reject, score, or
     disburse a loan are routed to a human officer before Gemini is called.
     """
+    is_prohibited, _ = detect_prohibited_action(message)
+    if is_prohibited:
+        return True
+
     text = " ".join((message or "").lower().split())
 
     prohibited_phrases = (
@@ -564,6 +583,11 @@ def _classify_final_response(
         "cannot modify",
         "can't modify",
     ]
+
+    # Output guardrail: check for autonomous decision claims in output text
+    is_valid_output, output_violation = validate_agent_output(text)
+    if not is_valid_output:
+        return "prohibited_action_in_output", True
 
     if any(
         phrase in text_lower
@@ -1061,6 +1085,8 @@ def run_agent_loop(
     resume_saved_case: bool = False,
     authorized_member_numbers: set[str] | None = None,
     persist_memory: bool = True,
+    scenario_id: str | None = None,
+    run_id: str | None = None,
 ) -> dict:
     """
     Run one bounded SACCO case-preparation request.
@@ -1081,7 +1107,101 @@ def run_agent_loop(
         resume_saved_case: load existing history when case_id is supplied.
         authorized_member_numbers: trusted authorization results for officers.
         persist_memory: set False to disable persistence for a test/run.
+
+    Week 7 observability options:
+        scenario_id: stable evaluation scenario ID.
+        run_id: unique run execution identifier.
     """
+
+    tracer = AgentTracer(scenario_id=scenario_id, run_id=run_id)
+
+    # Week 7 Guardrail: Deterministic Input Validation (Defect F-01 remediation)
+    val_res = validate_input_request(
+        member_message=member_message,
+        requester_role=requester_role,
+        requester_membership_number=requester_membership_number,
+    )
+    if not val_res["valid"]:
+        state = new_state(
+            member_message=str(member_message or ""),
+            requester_role=str(requester_role),
+            requester_membership_number=requester_membership_number,
+        )
+        state["stop_reason"] = f"validation_error:{val_res['error']}"
+        state["human_handoff_required"] = True
+        state["case_summary"] = (
+            f"Input validation rejected: {val_res['message']} "
+            "Please review the request parameters with a Relationship Officer."
+        )
+        tracer.record_event("validation_failed", {"error": val_res["error"], "message": val_res["message"]})
+        step_rec = {
+            "iteration": 0,
+            "event": "input_validation_guardrail",
+            "state_before": _make_trace_state_snapshot(state),
+            "model_state": None,
+            "tool_calls": [],
+            "final_text": state["case_summary"],
+            "state_after": _make_trace_state_snapshot(state),
+        }
+        tracer.end_run(
+            stop_reason=state["stop_reason"],
+            human_handoff_required=True,
+            final_state=state,
+            final_output=state["case_summary"],
+        )
+        return {
+            "run_id": tracer.run_id,
+            "scenario_id": scenario_id,
+            "started_at": tracer.start_wall_time,
+            "ended_at": now_utc_iso(),
+            "elapsed_ms": tracer.elapsed_ms,
+            "steps": [step_rec],
+            "events": tracer.events,
+            "memory": {"enabled": False, "status": "validation_failed"},
+            "final_state": _make_trace_state_snapshot(state),
+        }
+
+    # Week 7 Guardrail: Prompt Injection Detection in Input Request
+    is_inj, inj_pat = detect_prompt_injection(member_message)
+    if is_inj:
+        state = new_state(
+            member_message=member_message,
+            requester_role=requester_role,
+            requester_membership_number=requester_membership_number,
+        )
+        state["stop_reason"] = "adversarial_prompt_rejected"
+        state["human_handoff_required"] = True
+        state["case_summary"] = (
+            f"Security Alert: Disallowed instruction override pattern detected ('{inj_pat}'). "
+            "Autonomous execution blocked. The request has been flagged for Relationship Officer review."
+        )
+        tracer.record_event("prompt_injection_blocked", {"pattern": inj_pat})
+        step_rec = {
+            "iteration": 0,
+            "event": "prompt_injection_guardrail",
+            "state_before": _make_trace_state_snapshot(state),
+            "model_state": None,
+            "tool_calls": [],
+            "final_text": state["case_summary"],
+            "state_after": _make_trace_state_snapshot(state),
+        }
+        tracer.end_run(
+            stop_reason=state["stop_reason"],
+            human_handoff_required=True,
+            final_state=state,
+            final_output=state["case_summary"],
+        )
+        return {
+            "run_id": tracer.run_id,
+            "scenario_id": scenario_id,
+            "started_at": tracer.start_wall_time,
+            "ended_at": now_utc_iso(),
+            "elapsed_ms": tracer.elapsed_ms,
+            "steps": [step_rec],
+            "events": tracer.events,
+            "memory": {"enabled": False, "status": "adversarial_prompt_rejected"},
+            "final_state": _make_trace_state_snapshot(state),
+        }
 
     if requester_role == "officer" and resume_saved_case and not case_owner_membership_number:
         raise ValueError(
@@ -1584,6 +1704,28 @@ def run_agent_loop(
             tool_result=tool_result,
         )
 
+        # Week 7 Guardrail: Detect prompt injection embedded within retrieved documents
+        if tool_name == "retrieve_policy" and isinstance(tool_result, dict):
+            for res_item in tool_result.get("results", []):
+                if isinstance(res_item, dict):
+                    content = res_item.get("content", "")
+                    doc_name = res_item.get("document", "unknown")
+                    has_inj, inj_pat = detect_prompt_injection(content)
+                    if has_inj:
+                        state["stop_reason"] = "policy_injection_detected"
+                        state["human_handoff_required"] = True
+                        state["case_summary"] = (
+                            f"Security Notice: Retrieved policy document '{doc_name}' contains "
+                            f"untrusted instruction override markers ('{inj_pat}'). "
+                            "Workflow safely halted. Escalation to SACCO Relationship Officer required."
+                        )
+                        tracer.record_event("policy_injection_blocked", {"document": doc_name, "pattern": inj_pat})
+                        step_record["state_after"] = _make_trace_state_snapshot(state)
+                        trace["steps"].append(step_record)
+                        break
+            if state["stop_reason"] == "policy_injection_detected":
+                break
+
         # Persist progress after each successful tool observation so a later
         # interruption does not lose all progress from this run.
         if memory.get("enabled") and memory.get("can_write") and memory.get("memory_state"):
@@ -1687,6 +1829,17 @@ def run_agent_loop(
             state
         )
     )
+
+    tracer.end_run(
+        stop_reason=str(state.get("stop_reason")),
+        human_handoff_required=bool(state.get("human_handoff_required")),
+        final_state=state,
+        final_output=state.get("case_summary"),
+    )
+    trace["run_id"] = tracer.run_id
+    trace["scenario_id"] = scenario_id
+    trace["events"] = tracer.events
+    trace["elapsed_ms"] = tracer.elapsed_ms
 
     return trace
 

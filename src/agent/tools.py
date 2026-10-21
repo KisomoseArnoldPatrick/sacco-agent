@@ -101,10 +101,10 @@ def get_member_record(
     This function does not modify any data.
     """
 
-    if not membership_number:
+    if not membership_number or not isinstance(membership_number, str):
         return {
             "error": "invalid_parameters",
-            "message": "membership_number is required.",
+            "message": "membership_number is required and must be a string.",
         }
 
     if requester_role not in ("member", "officer"):
@@ -399,6 +399,15 @@ def calculate_repayment(
             "error": "invalid_parameters",
             "message": (
                 "principal and term_months are both required."
+            ),
+        }
+
+    # Defect F-05 remediation: bool is a subclass of int in Python; reject boolean values explicitly
+    if isinstance(principal, bool) or isinstance(term_months, bool):
+        return {
+            "error": "invalid_parameters",
+            "message": (
+                "principal and term_months must be numeric, not boolean."
             ),
         }
 

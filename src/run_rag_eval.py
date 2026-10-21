@@ -4,9 +4,13 @@ import sys
 import time
 from pathlib import Path
 
-sys.path.append(str(Path(__file__).resolve().parent.parent))
+SRC_DIR = Path(__file__).resolve().parent
+REPO_ROOT = SRC_DIR.parent
+for directory in (REPO_ROOT, SRC_DIR):
+    if str(directory) not in sys.path:
+        sys.path.insert(0, str(directory))
 
-from src.rag import answer_question
+from rag_chat import answer_question
 
 TEST_CASES = [
     # --- Answerable (evidence fully covers the question) ---

@@ -8,6 +8,7 @@ Covers:
 - Sensitive PII redaction (name masking, data minimization).
 - JSON and JSON Lines (.jsonl) trace output generation.
 - Trace generation on successful, failed, and blocked execution paths.
+- Fault-tolerant model invocation and secret redaction (_call_model_safely).
 """
 
 import json
@@ -30,7 +31,10 @@ from agent.observability import (
     sanitize_trace_state,
     now_utc_iso,
 )
-from agent.loop_with_memory import run_agent_loop
+from agent.loop_with_memory import run_agent_loop, _call_model_safely
+
+
+SECRET = "AQ.TEST-SECRET-KEY"
 
 
 class TestObservability(unittest.TestCase):
@@ -140,7 +144,42 @@ class TestObservability(unittest.TestCase):
         self.assertIn("events", trace)
         self.assertTrue(any(e["event_type"] == "validation_failed" for e in trace["events"]))
 
+    def test_10_safe_model_call_catches_exception_and_redacts_api_key(self):
+        def failing(*a, **k):
+            raise RuntimeError(f"503 Server Error for url: https://example.test/m:generate?key={SECRET}")
+        outcome, latency, error = _call_model_safely(failing, "msg", "prompt")
+        self.assertEqual(outcome["error"], "model_unavailable")
+        self.assertEqual(outcome["tool_calls"], [])
+        self.assertGreaterEqual(latency, 0.0)
+        self.assertNotIn(SECRET, outcome["final_text"])
+        self.assertNotIn(SECRET, error)
+        self.assertIn("key=REDACTED", error)
+
+    def test_11_failing_model_stops_safely_and_leaks_no_secrets(self):
+        def failing(*a, **k):
+            raise RuntimeError(f"503 Server Error: connection failure for url: https://example.test/x?key={SECRET}")
+        trace = run_agent_loop(
+            "Prepare my Development Loan case.",
+            "test system prompt",
+            "member",
+            "HS-2024-000101",
+            gemini_runner=failing,
+            persist_memory=False,
+        )
+        state = trace["final_state"]
+        self.assertEqual(state["stop_reason"], "tool_failure:model_unavailable")
+        self.assertTrue(state["human_handoff_required"])
+        self.assertNotIn(SECRET, json.dumps(trace, default=str))
+
+    def test_12_successful_model_call_measures_latency_and_returns_clean_result(self):
+        def successful(*a, **k):
+            return {"final_text": "Case summary for officer.", "tool_calls": []}
+        outcome, latency, error = _call_model_safely(successful, "msg", "prompt")
+        self.assertEqual(outcome["final_text"], "Case summary for officer.")
+        self.assertEqual(outcome["tool_calls"], [])
+        self.assertIsNone(error)
+        self.assertGreaterEqual(latency, 0.0)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
-

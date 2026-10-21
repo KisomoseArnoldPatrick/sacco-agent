@@ -1,10 +1,13 @@
-
 import sys
 from pathlib import Path
 
-sys.path.append(str(Path(__file__).resolve().parent / "src"))
+SRC_DIR = Path(__file__).resolve().parent
+REPO_ROOT = SRC_DIR.parent
+for directory in (REPO_ROOT, SRC_DIR):
+    if str(directory) not in sys.path:
+        sys.path.insert(0, str(directory))
 
-from src.rag.retrieval import retrieve_top_k
+from rag.retrieval import retrieve_top_k
 from baseline_chat import call_gemini, load_system_prompt
 
 MIN_CONFIDENCE = 0.55  # below this, treat as "no good evidence found"
@@ -54,8 +57,9 @@ def answer_question(query: str, k: int = 3) -> dict:
         "answer": answer,
         "sources": [c["source"] for c in strong_chunks],
         "retrieved_scores": [round(c["score"], 3) for c in chunks],
-        "retrieval_confidence_met": bool(strong_chunks),  # was "grounded" — score-threshold only
-        "self_reported_gap": self_reported_gap,             # model itself flagged missing/unsupported info
+        "grounded": bool(strong_chunks),
+        "retrieval_confidence_met": bool(strong_chunks),  # score-threshold metric
+        "self_reported_gap": self_reported_gap,            # model flagged missing/unsupported info
     }
 
 

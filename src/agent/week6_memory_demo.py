@@ -45,9 +45,20 @@ def main():
             print("PASS: another member cannot read this case")
         else:
             raise AssertionError("Unauthorized read was allowed")
-        assert store.delete_case_state("demo-case-001", owner_actor)
-        assert store.load_case_state("demo-case-001", owner_actor) is None
-        print("PASS: owner can delete saved case")
+        # Demonstrate deletion on a dedicated case so demo-case-001 remains intact for post-run inspection.
+        state_to_delete = new_workflow_state(
+            owner, "member",
+            "Temporary draft to verify deletion functionality.",
+            "demo-case-to-delete",
+        )
+        store.save_case_state(state_to_delete, owner_actor)
+        assert store.load_case_state("demo-case-to-delete", owner_actor) is not None
+        assert store.delete_case_state("demo-case-to-delete", owner_actor)
+        assert store.load_case_state("demo-case-to-delete", owner_actor) is None
+        # Verify primary case remains intact
+        assert store.load_case_state("demo-case-001", owner_actor) is not None
+        print("PASS: owner can delete saved case without affecting active cases")
+        print("PASS: primary case demo-case-001 remains preserved in memory")
         print("PASS: temporary synthetic-data demo completed")
 
 

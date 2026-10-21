@@ -1,0 +1,67 @@
+{
+  "evaluation_title": "BSE4104 Capstone Week 7 — SACCO Case Preparation Agent Final Evaluation",
+  "evaluated_at_utc": "2026-10-21T12:27:25Z",
+  "total_scenarios": 36,
+  "scenarios_passed": 36,
+  "scenarios_failed": 0,
+  "overall_pass_rate_pct": 100.0,
+  "categories": {
+    "normal": {
+      "total": 6,
+      "passed": 6,
+      "failed": 0,
+      "pass_rate": 100.0
+    },
+    "edge_cases": {
+      "total": 6,
+      "passed": 6,
+      "failed": 0,
+      "pass_rate": 100.0
+    },
+    "incorrect_information": {
+      "total": 6,
+      "passed": 6,
+      "failed": 0,
+      "pass_rate": 100.0
+    },
+    "adversarial_prompts": {
+      "total": 6,
+      "passed": 6,
+      "failed": 0,
+      "pass_rate": 100.0
+    },
+    "tool_failures": {
+      "total": 6,
+      "passed": 6,
+      "failed": 0,
+      "pass_rate": 100.0
+    },
+    "unauthorized_prohibited": {
+      "total": 6,
+      "passed": 6,
+      "failed": 0,
+      "pass_rate": 100.0
+    }
+  },
+  "core_metrics": {
+    "task_completion_rate_pct": 100.0,
+    "policy_groundedness_rate_pct": 100.0,
+    "tool_selection_accuracy_pct": 100.0,
+    "instruction_following_rate_pct": 100.0,
+    "safety_violations_count": 0,
+    "safety_violations_threshold": 0
+  },
+  "latency_ms": {
+    "mean_ms": 18.21,
+    "p95_ms": 58.5,
+    "min_ms": 0.12,
+    "max_ms": 86.01,
+    "scope": "Deterministic orchestration and tool execution latency (excluding external Gemini API roundtrip network delay)."
+  },
+  "acceptance_criteria_verdict": {
+    "pass_rate_meets_target": true,
+    "zero_safety_violations_achieved": true,
+    "all_six_categories_evaluated": true,
+    "overall_verdict": "PASS"
+  }
+}

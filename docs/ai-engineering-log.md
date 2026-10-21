@@ -61,6 +61,14 @@ Project week 6 (5–9 Oct 2026).
 ## Week 7 — Evaluation, Observability and Guardrails
 Project week 7 (12–16 Oct 2026).
 
+### Evaluation Dataset and Guardrail Architecture Review
+- **Member:** Kisomose Arnold Patrick & Hannington Wandera
+- **Tool/model:** Google Antigravity (Gemini 3.8 Flash)
+- **Used for:** Designing the 36-scenario test taxonomy, defining formal evaluation metrics, formulating prompt injection and prohibited action detection regexes, and diagnosing root causes for preflight safety bypasses.
+- **What AI produced:** Draft scenario structures across 6 categories, proposed evaluation runner schema, regex patterns for prohibited actions, and PII masking function designs.
+- **What we reviewed or changed:** Refactored regex patterns to prevent false positives on valid inquiries; ensured all 36 evaluation scenarios test real application code rather than separate mock paths; verified deterministic execution without consuming live model quota; verified zero PII leakage into trace snapshots.
+- **Verification:** Ran `python tests/test_guardrails.py`, `python tests/test_observability.py`, `python tests/test_evaluation.py`, and `python src/agent/evaluation.py`. Confirmed 36/36 scenarios passed, 0 safety violations, and all regression suites green.
+
 ---
 
 ## Week 8 — Hardening, Final Release and Demonstration

@@ -26,11 +26,13 @@ the safety limits and executes the actual tools.
 
 import copy
 import json
+import re
 import sys
+import time
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Callable
+from typing import Any, Callable, Dict, Optional, Tuple
 
 
 # ---------------------------------------------------------------------------
@@ -1070,6 +1072,53 @@ def _initialize_persistent_memory(
 
 
 # ---------------------------------------------------------------------------
+# Safe model invocation helper
+# ---------------------------------------------------------------------------
+
+def _call_model_safely(
+    runner: Callable,
+    *args: Any,
+    **kwargs: Any,
+) -> tuple[dict[str, Any], float, str | None]:
+    """
+    Safely invoke the external model runner, measuring latency and sanitizing errors.
+
+    Catches all runtime exceptions (network timeouts, 503 errors, HTTP failures),
+    calculates duration in milliseconds, redacts any sensitive API keys or credentials
+    from error strings, and returns a structured failure dictionary.
+
+    Returns:
+        (outcome, latency_ms, error_message)
+        where:
+        - outcome: Dict with model response ('final_text', 'tool_calls', optional 'error')
+        - latency_ms: Float duration in milliseconds
+        - error_message: Sanitized error string with sensitive secrets redacted, or None
+    """
+    start_time = time.perf_counter()
+    try:
+        outcome = runner(*args, **kwargs)
+        latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
+        if not isinstance(outcome, dict):
+            outcome = {
+                "final_text": "",
+                "tool_calls": [],
+                "error": "invalid_model_response",
+            }
+        return outcome, latency_ms, None
+    except Exception as exc:
+        latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
+        raw_error = f"{type(exc).__name__}: {exc}"
+        sanitized_error = re.sub(r"(key=)[^&\s'\"]+", r"\1REDACTED", raw_error, flags=re.IGNORECASE)
+        sanitized_error = re.sub(r"(AIza[0-9A-Za-z-_]{35})", "[REDACTED_API_KEY]", sanitized_error)
+        outcome = {
+            "final_text": "",
+            "tool_calls": [],
+            "error": "model_unavailable",
+        }
+        return outcome, latency_ms, sanitized_error
+
+
+# ---------------------------------------------------------------------------
 # Main agent loop
 # ---------------------------------------------------------------------------
 
@@ -1356,7 +1405,8 @@ def run_agent_loop(
         # Sense / Plan / Decide
         # ---------------------------------------------------------------
 
-        outcome = gemini_runner(
+        outcome, model_latency_ms, model_error = _call_model_safely(
+            gemini_runner,
             member_message,
             system_prompt,
 
@@ -1378,13 +1428,6 @@ def run_agent_loop(
             agent_state=model_state,
         )
 
-        if not isinstance(outcome, dict):
-            outcome = {
-                "final_text": "",
-                "tool_calls": [],
-                "error": "invalid_model_response",
-            }
-
         tool_calls = outcome.get(
             "tool_calls",
             [],
@@ -1405,6 +1448,10 @@ def run_agent_loop(
                 model_state
             ),
 
+            "model_latency_ms": model_latency_ms,
+
+            "model_error": model_error,
+
             "tool_calls": [],
 
             "final_text": outcome.get(
@@ -1414,11 +1461,12 @@ def run_agent_loop(
         }
 
         # ---------------------------------------------------------------
-        # Model/API returned an explicit top-level error.
+        # Model/API returned an explicit top-level error or invocation failed.
         # ---------------------------------------------------------------
 
-        if outcome.get("error") and not tool_calls:
-            error = str(outcome["error"])
+        if (outcome.get("error") or model_error) and not tool_calls:
+            err_code = outcome.get("error") or "model_unavailable"
+            error = str(err_code)
             state["stop_reason"] = (
                 error if error.startswith("tool_failure:")
                 else f"tool_failure:{error}"

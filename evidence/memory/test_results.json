@@ -148,5 +148,255 @@
     "scenario": "strict_state_validation",
     "result": "PASS",
     "details": "Boolean counter and unapproved tool name were rejected."
+  },
+  {
+    "scenario": "write_and_read_in_new_session",
+    "result": "PASS",
+    "details": "Saved case and preparation context restored using a new store instance."
+  },
+  {
+    "scenario": "unauthorized_access_denied",
+    "result": "PASS",
+    "details": "Unauthorized read, delete, and save attempts were denied."
+  },
+  {
+    "scenario": "officer_access_control",
+    "result": "PASS",
+    "details": "Authorized officer read succeeded; unauthorized read and officer write were denied."
+  },
+  {
+    "scenario": "owner_deletion",
+    "result": "PASS",
+    "details": "Owner deleted case history; subsequent retrieval returned None."
+  },
+  {
+    "scenario": "workflow_limits",
+    "result": "PASS",
+    "details": "Validation rejected excessive iteration and tool-call counts."
+  },
+  {
+    "scenario": "data_minimization",
+    "result": "PASS",
+    "details": "State excludes raw member records and full policy text."
+  },
+  {
+    "scenario": "decision_boundary",
+    "result": "PASS",
+    "details": "State validation rejected a prohibited loan-decision field."
+  },
+  {
+    "scenario": "public_memory_contract",
+    "result": "PASS",
+    "details": "Save, load, owner-only listing, and delete methods worked."
+  },
+  {
+    "scenario": "owner_only_listing",
+    "result": "PASS",
+    "details": "Member listing did not expose another member's case."
+  },
+  {
+    "scenario": "strict_state_validation",
+    "result": "PASS",
+    "details": "Boolean counter and unapproved tool name were rejected."
+  },
+  {
+    "scenario": "write_and_read_in_new_session",
+    "result": "PASS",
+    "details": "Saved case and preparation context restored using a new store instance."
+  },
+  {
+    "scenario": "unauthorized_access_denied",
+    "result": "PASS",
+    "details": "Unauthorized read, delete, and save attempts were denied."
+  },
+  {
+    "scenario": "officer_access_control",
+    "result": "PASS",
+    "details": "Authorized officer read succeeded; unauthorized read and officer write were denied."
+  },
+  {
+    "scenario": "owner_deletion",
+    "result": "PASS",
+    "details": "Owner deleted case history; subsequent retrieval returned None."
+  },
+  {
+    "scenario": "workflow_limits",
+    "result": "PASS",
+    "details": "Validation rejected excessive iteration and tool-call counts."
+  },
+  {
+    "scenario": "data_minimization",
+    "result": "PASS",
+    "details": "State excludes raw member records and full policy text."
+  },
+  {
+    "scenario": "decision_boundary",
+    "result": "PASS",
+    "details": "State validation rejected a prohibited loan-decision field."
+  },
+  {
+    "scenario": "public_memory_contract",
+    "result": "PASS",
+    "details": "Save, load, owner-only listing, and delete methods worked."
+  },
+  {
+    "scenario": "owner_only_listing",
+    "result": "PASS",
+    "details": "Member listing did not expose another member's case."
+  },
+  {
+    "scenario": "strict_state_validation",
+    "result": "PASS",
+    "details": "Boolean counter and unapproved tool name were rejected."
+  },
+  {
+    "scenario": "write_and_read_in_new_session",
+    "result": "PASS",
+    "details": "Saved case and preparation context restored using a new store instance."
+  },
+  {
+    "scenario": "unauthorized_access_denied",
+    "result": "PASS",
+    "details": "Unauthorized read, delete, and save attempts were denied."
+  },
+  {
+    "scenario": "officer_access_control",
+    "result": "PASS",
+    "details": "Authorized officer read succeeded; unauthorized read and officer write were denied."
+  },
+  {
+    "scenario": "owner_deletion",
+    "result": "PASS",
+    "details": "Owner deleted case history; subsequent retrieval returned None."
+  },
+  {
+    "scenario": "workflow_limits",
+    "result": "PASS",
+    "details": "Validation rejected excessive iteration and tool-call counts."
+  },
+  {
+    "scenario": "data_minimization",
+    "result": "PASS",
+    "details": "State excludes raw member records and full policy text."
+  },
+  {
+    "scenario": "decision_boundary",
+    "result": "PASS",
+    "details": "State validation rejected a prohibited loan-decision field."
+  },
+  {
+    "scenario": "public_memory_contract",
+    "result": "PASS",
+    "details": "Save, load, owner-only listing, and delete methods worked."
+  },
+  {
+    "scenario": "owner_only_listing",
+    "result": "PASS",
+    "details": "Member listing did not expose another member's case."
+  },
+  {
+    "scenario": "strict_state_validation",
+    "result": "PASS",
+    "details": "Boolean counter and unapproved tool name were rejected."
+  },
+  {
+    "scenario": "write_and_read_in_new_session",
+    "result": "PASS",
+    "details": "Saved case and preparation context restored using a new store instance."
+  },
+  {
+    "scenario": "unauthorized_access_denied",
+    "result": "PASS",
+    "details": "Unauthorized read, delete, and save attempts were denied."
+  },
+  {
+    "scenario": "officer_access_control",
+    "result": "PASS",
+    "details": "Authorized officer read succeeded; unauthorized read and officer write were denied."
+  },
+  {
+    "scenario": "owner_deletion",
+    "result": "PASS",
+    "details": "Owner deleted case history; subsequent retrieval returned None."
+  },
+  {
+    "scenario": "workflow_limits",
+    "result": "PASS",
+    "details": "Validation rejected excessive iteration and tool-call counts."
+  },
+  {
+    "scenario": "data_minimization",
+    "result": "PASS",
+    "details": "State excludes raw member records and full policy text."
+  },
+  {
+    "scenario": "decision_boundary",
+    "result": "PASS",
+    "details": "State validation rejected a prohibited loan-decision field."
+  },
+  {
+    "scenario": "public_memory_contract",
+    "result": "PASS",
+    "details": "Save, load, owner-only listing, and delete methods worked."
+  },
+  {
+    "scenario": "owner_only_listing",
+    "result": "PASS",
+    "details": "Member listing did not expose another member's case."
+  },
+  {
+    "scenario": "strict_state_validation",
+    "result": "PASS",
+    "details": "Boolean counter and unapproved tool name were rejected."
+  },
+  {
+    "scenario": "write_and_read_in_new_session",
+    "result": "PASS",
+    "details": "Saved case and preparation context restored using a new store instance."
+  },
+  {
+    "scenario": "unauthorized_access_denied",
+    "result": "PASS",
+    "details": "Unauthorized read, delete, and save attempts were denied."
+  },
+  {
+    "scenario": "officer_access_control",
+    "result": "PASS",
+    "details": "Authorized officer read succeeded; unauthorized read and officer write were denied."
+  },
+  {
+    "scenario": "owner_deletion",
+    "result": "PASS",
+    "details": "Owner deleted case history; subsequent retrieval returned None."
+  },
+  {
+    "scenario": "workflow_limits",
+    "result": "PASS",
+    "details": "Validation rejected excessive iteration and tool-call counts."
+  },
+  {
+    "scenario": "data_minimization",
+    "result": "PASS",
+    "details": "State excludes raw member records and full policy text."
+  },
+  {
+    "scenario": "decision_boundary",
+    "result": "PASS",
+    "details": "State validation rejected a prohibited loan-decision field."
+  },
+  {
+    "scenario": "public_memory_contract",
+    "result": "PASS",
+    "details": "Save, load, owner-only listing, and delete methods worked."
+  },
+  {
+    "scenario": "owner_only_listing",
+    "result": "PASS",
+    "details": "Member listing did not expose another member's case."
+  },
+  {
+    "scenario": "strict_state_validation",
+    "result": "PASS",
+    "details": "Boolean counter and unapproved tool name were rejected."
   }
 ]

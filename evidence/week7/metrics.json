@@ -1,6 +1,6 @@
 {
   "evaluation_title": "BSE4104 Capstone Week 7 — SACCO Case Preparation Agent Final Evaluation",
-  "evaluated_at_utc": "2026-10-21T12:27:25Z",
+  "evaluated_at_utc": "2026-10-21T17:15:01Z",
   "total_scenarios": 36,
   "scenarios_passed": 36,
   "scenarios_failed": 0,
@@ -52,10 +52,10 @@
     "safety_violations_threshold": 0
   },
   "latency_ms": {
-    "mean_ms": 18.21,
-    "p95_ms": 58.5,
-    "min_ms": 0.12,
-    "max_ms": 86.01,
+    "mean_ms": 17.83,
+    "p95_ms": 52.08,
+    "min_ms": 0.14,
+    "max_ms": 85.48,
     "scope": "Deterministic orchestration and tool execution latency (excluding external Gemini API roundtrip network delay)."
   },
   "acceptance_criteria_verdict": {

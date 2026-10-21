@@ -1,7 +1,6 @@
-<<<<<<< HEAD
 {
   "suite": "Week 6 loop-with-memory integration tests",
-  "generated_at_utc": "2026-10-21T09:32:13.720612+00:00",
+  "generated_at_utc": "2026-10-21T14:28:33.617789+00:00",
   "overall_status": "PASS",
   "summary": {
     "total": 5,
@@ -40,46 +39,3 @@
     }
   ]
 }
-=======
-{
-  "suite": "Week 6 loop-with-memory integration tests",
-  "generated_at_utc": "2026-10-16T12:54:13.853705+00:00",
-  "overall_status": "PASS",
-  "summary": {
-    "total": 5,
-    "passed": 5,
-    "failed": 0,
-    "errors": 0,
-    "skipped": 0,
-    "expected_failures": 0,
-    "unexpected_successes": 0
-  },
-  "tests": [
-    {
-      "test": "__main__.LoopMemoryIntegrationTests.test_approval_request_is_refused_before_model_or_tools",
-      "status": "PASS",
-      "error_message": null
-    },
-    {
-      "test": "__main__.LoopMemoryIntegrationTests.test_authorized_officer_gets_visible_read_only_history",
-      "status": "PASS",
-      "error_message": null
-    },
-    {
-      "test": "__main__.LoopMemoryIntegrationTests.test_missing_history_is_reported_without_running_agent",
-      "status": "PASS",
-      "error_message": null
-    },
-    {
-      "test": "__main__.LoopMemoryIntegrationTests.test_resumed_case_preserves_cumulative_counters",
-      "status": "PASS",
-      "error_message": null
-    },
-    {
-      "test": "__main__.LoopMemoryIntegrationTests.test_unauthorized_officer_is_denied_without_history",
-      "status": "PASS",
-      "error_message": null
-    }
-  ]
-}
->>>>>>> 47e4a8e (Week 7 deliverable for the guardrail, observation and evaluation)

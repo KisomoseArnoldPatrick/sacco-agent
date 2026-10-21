@@ -520,6 +520,10 @@ def call_gemini_with_tools(
         requester_membership_number=requester_membership_number,
     )
 
+    executed = True
+    if isinstance(tool_result, dict) and tool_result.get("error") == "unknown_tool":
+        executed = False
+
     return {
         "final_text": "",
         "tool_calls": [
@@ -527,7 +531,7 @@ def call_gemini_with_tools(
                 "name": tool_name,
                 "arguments": tool_args,
                 "result": tool_result,
-                "executed": True,
+                "executed": executed,
             }
         ],
     }

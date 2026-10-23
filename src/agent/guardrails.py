@@ -24,9 +24,11 @@ VALID_ROLES = {"member", "officer"}
 # Patterns that indicate a user or model is attempting a prohibited financial or decision action.
 PROHIBITED_ACTION_PATTERNS = [
     # Loan decisions
-    r"\bapprove\s+(?:the\s+|my\s+|this\s+|our\s+)?(?:loan|application)\b",
+    # An optional possessive ("this member's loan", "HS-2024-000101's loan")
+    # may sit between the determiner and the object.
+    r"\bapprove\s+(?:the\s+|my\s+|this\s+|our\s+|his\s+|her\s+|their\s+)?(?:[\w-]+['’]s\s+)?(?:loan|application)\b",
     r"\b(?:please\s+)?approve\s+(?:immediately|my\s+request|this\s+case)\b",
-    r"\b(?:reject|decline)\s+(?:the\s+|my\s+|this\s+|our\s+)?(?:loan|application)\b",
+    r"\b(?:reject|decline)\s+(?:the\s+|my\s+|this\s+|our\s+|his\s+|her\s+|their\s+)?(?:[\w-]+['’]s\s+)?(?:loan|application)\b",
     r"\b(?:make|render|issue)\s+(?:the\s+|a\s+)?(?:loan\s+)?decision\b",
     r"\bscore\s+(?:the\s+|my\s+|this\s+)?(?:loan|credit|application)\b",
     r"\bcredit\s+decision\b",

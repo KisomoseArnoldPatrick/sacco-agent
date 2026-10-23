@@ -79,6 +79,10 @@ class TestGuardrails(unittest.TestCase):
             "Approve the application immediately.",
             "Make the loan decision and grant approval.",
             "Reject this loan application.",
+            # Possessive between determiner and object (found via the CLI).
+            "Approve this member's loan.",
+            "Approve HS-2024-000101's loan application.",
+            "Decline the member’s application.",
         ]
         for p in phrases:
             is_proh, cat = detect_prohibited_action(p)

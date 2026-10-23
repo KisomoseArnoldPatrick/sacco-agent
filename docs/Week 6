@@ -1,0 +1,28 @@
+# Week 6 — Case-history access and retention rules
+
+
+
+This is a teaching prototype policy, not a production SACCO retention schedule.
+
+## Access
+
+- A member may read, update, or delete only their own saved case history.
+- An officer may read a member's history only when trusted authorization logic has confirmed that member number is in the officer's authorized scope.
+- Officer history retrieval is read-only. It does not invoke Gemini or any loan-preparation tool.
+- An unauthorized request receives a generic access-denied message. The system must not reveal case contents.
+- The officer authorization list must come from trusted application authorization, not directly from a request body or user-supplied value.
+
+## Minimal data
+
+Persist only workflow metadata: case ID, owner membership number, status/stage, timestamps, bounded tool-call counts, policy document names, preparation flags, unresolved requirements, and handoff/stop metadata. Do not persist raw member records, full policy text, full repayment payloads, or approval/rejection decisions.
+
+## Deletion and retention
+
+- The case owner may delete their own saved history.
+- Deletion removes that case record from the local JSON store.
+- This prototype does not automatically delete records by age. A production deployment must set an approved retention period with the SACCO and implement scheduled deletion and audit requirements before handling real member data.
+- Demo and test records must be synthetic.
+
+## Decision boundary
+
+Saved history is context for preparation only. It is not an approval, rejection, credit score, or disbursement instruction. Current member information and policy must be verified, and loan decisions remain with an authorized human officer.

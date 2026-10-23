@@ -15,9 +15,9 @@
 | **Test Suite Normalization & Regression Verification** (49/49 canonical tests pass) | **Done** | `tests/`<br>`tests/test_observability.py` |
 | **Evaluation Suite Verification** (36/36 scenarios pass, 0 safety violations) | **Done** | `src/agent/evaluation.py`<br>`data/evaluation/scenarios.json` |
 | **Final Engineering Report (10 Required Sections, ~10.0 Pages)** | **Done** | `docs/week8/final-engineering-report.md` |
-| **Presentation Deck & Live Demonstration Guide (12–15 min)** | **Done** | `docs/week8/presentation-demo-plan.md`<br>`docs/week8/presentation-deck.pptx` |
+| **Presentation Deck** | **Done** | `docs/week8/presentation-demo-plan.md`<br>`docs/week8/presentation-deck.pptx` |
 | **Release Tagging Readiness & Reproducibility Verification** (`v1.0.0`) | **Done** | `README.md`<br>`pyproject.toml`<br>`docs/week8/` |
-| **Week 8 Progress Report** (this document) | **Done** | `docs/weekly-reports/week8.md`<br>`docs/week8/progress-report.md` |
+| **Week 8 Progress Report** (this document) | **Done** | `docs/weekly-reports/week8.md` |
 
 ---
 
@@ -144,7 +144,7 @@ All 9 identified defects across Weeks 7 and 8 have been remediated and verified 
 |---|---|---|---|
 | **Kisomose Arnold Patrick** | Requirements & Evaluation Lead | Led Week 8 final audit against BSE4104 brief; verified 36-scenario evaluation suite; authored Sections 1 and 5 of Final Report. | `docs/week8/final-audit.md`<br>`src/agent/evaluation.py` |
 | **Hannington Wandera** | AI Engineering Lead | Implemented `_call_model_safely` error handling and API key masking; normalized RAG evaluation proxy; authored Sections 2 and 3 of Final Report. | `src/agent/loop_with_memory.py`<br>`src/rag/__init__.py` |
-| **Kukiriza Sinai Jose** | Integration Lead | Validated structured tracing and telemetry; authored Sections 4 and 6 of Final Report; co-authored Live Demonstration guide. | `src/agent/observability.py`<br>`docs/week8/presentation-demo-plan.md` |
+| **Kukiriza Sinai Jose** | Integration Lead | Validated structured tracing and telemetry; authored Sections 4 and 6 of Final Report;| `src/agent/observability.py`|
 | **Mugisha Modern** | Quality & Security Lead | Hardened regression tests (49/49 pass); authored Sections 7 and 8 (Guardrails & Failure Catalogue); generated PPTX slide deck. | `tests/test_observability.py`<br>`docs/week8/presentation-deck.pptx` |
 | **Kabalebe Joshua** | Documentation Lead | Authored Sections 9 and 10 (Socio-Technical Analysis & Future Roadmap); compiled Week 8 Progress Report and final release documentation. | `docs/week8/final-engineering-report.md`<br>`docs/weekly-reports/week8.md` |
 

@@ -73,3 +73,42 @@ Project week 7 (12–16 Oct 2026).
 
 ## Week 8 — Hardening, Final Release and Demonstration
 Project week 8 (19–23 Oct 2026).
+### Unified CLI entry point
+- **Member:** Kisomose Arnold Patrick
+- **Tool/model:** Claude Code (Claude Opus 5.5)
+- **Used for:** inspecting the codebase to decide whether an entry point already existed, then
+  integrating the existing components into one interactive CLI
+- **What AI produced:** `src/main.py` (a thin wrapper around `run_agent_loop` in
+  `loop_with_memory.py`; live per-iteration display through the existing `gemini_runner` hook;
+  per-run JSON traces in `evidence/traces/cli_runs/` using the existing trace format and
+  `write_trace_events`), and `tests/test_main_cli.py` (5 tests: success, prohibited request,
+  model failure, unauthorized record, non-overwriting traces)
+- **What we reviewed or changed:** [e.g. reviewed that main.py does not duplicate retrieval,
+  tool calls or guardrails; ran the CLI ourselves with our own requests]
+- **Verification:** `python -m unittest discover -s tests -p "test_*.py"` (54/54); 36/36
+  evaluation scenarios, 0 safety violations; live Gemini runs of a Development Loan case and a
+  prohibited request; invalid-API-key run stopped with `tool_failure:model_unavailable`
+
+### Guardrail gap found during CLI testing
+- **Member:** Kisomose Arnold Patrick
+- **Tool/model:** Claude Code (Claude Opus 5.5)
+- **Used for:** diagnosing why "Approve this member's loan." was not blocked by the pre-flight
+  guard
+- **What AI produced:** root cause (the regex did not allow a possessive such as "member's"
+  between the determiner and "loan"); a widened approve/reject pattern in
+  `src/agent/guardrails.py`; three new cases in `test_06` in `tests/test_guardrails.py`
+- **What we reviewed or changed:** [e.g. checked that informational questions such as "Can an
+  officer approve a member's loan the same day?" are still allowed]
+- **Verification:** guardrail tests pass; 36/36 evaluation scenarios unchanged.
+  Known remaining gap: "approve for me a loan" still gets past the regex (the model refused
+  it), recorded as a limitation
+
+  
+### README
+- **Member:** Kabalebe Joshua
+- **Tool/model:** Claude Code (Claude Opus 5.5)
+- **Used for:** writing the final README and a verified demo runbook for the Section 10
+  presentation
+- **What AI produced:** `README.md` (setup, run, tests, evidence, safety, limitations,
+  troubleshooting)
+- **Verification:** every README link checked;

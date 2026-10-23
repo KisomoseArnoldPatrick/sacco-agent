@@ -44,14 +44,17 @@ for directory in (REPO_ROOT, SRC_DIR):
         sys.path.insert(0, str(directory))
 
 
-from baseline_chat import load_system_prompt  # noqa: E402
+from baseline_chat import identify_prompt_version, load_system_prompt  # noqa: E402
 from agent_tools import call_gemini_with_tools  # noqa: E402
+from agent.tools import summarize_member_record_for_model  # noqa: E402
 from agent.guardrails import (  # noqa: E402
     validate_input_request,
     detect_prohibited_action,
     detect_prompt_injection,
     validate_agent_output,
     validate_tool_allowlist,
+    OUTPUT_WITHHELD_NOTICE,
+    PREFLIGHT_REFUSAL,
 )
 from agent.observability import (  # noqa: E402
     AgentTracer,
@@ -253,27 +256,11 @@ def _summarize_member_record(member_record: dict) -> dict:
     Return only the member-record fields useful for planning.
 
     This prevents the entire raw record from being repeatedly sent
-    to Gemini.
+    to Gemini. The field mapping lives with the tool that defines the
+    record schema (agent.tools).
     """
 
-    if not isinstance(member_record, dict):
-        return {}
-
-    summary = {}
-
-    useful_fields = [
-        "membership_number",
-        "savings",
-        "share_capital",
-        "active_loans",
-        "guarantee_commitments",
-    ]
-
-    for field in useful_fields:
-        if field in member_record:
-            summary[field] = member_record[field]
-
-    return summary
+    return summarize_member_record_for_model(member_record)
 
 
 def _summarize_policy_excerpts(
@@ -785,7 +772,12 @@ def run_agent_loop(
             call occurs.
     """
 
-    tracer = AgentTracer(scenario_id=scenario_id, run_id=run_id)
+    # Record the version of the prompt actually supplied, not a fixed label.
+    tracer = AgentTracer(
+        scenario_id=scenario_id,
+        run_id=run_id,
+        prompt_version=identify_prompt_version(system_prompt),
+    )
 
     # Week 7 Guardrail: Deterministic Input Validation (Defect F-01 remediation)
     val_res = validate_input_request(
@@ -824,6 +816,7 @@ def run_agent_loop(
         return {
             "run_id": tracer.run_id,
             "scenario_id": scenario_id,
+            "prompt_version": tracer.prompt_version,
             "started_at": tracer.start_wall_time,
             "ended_at": now_utc_iso(),
             "elapsed_ms": tracer.elapsed_ms,
@@ -865,6 +858,7 @@ def run_agent_loop(
         return {
             "run_id": tracer.run_id,
             "scenario_id": scenario_id,
+            "prompt_version": tracer.prompt_version,
             "started_at": tracer.start_wall_time,
             "ended_at": now_utc_iso(),
             "elapsed_ms": tracer.elapsed_ms,
@@ -884,6 +878,8 @@ def run_agent_loop(
             timezone.utc
         ).isoformat(),
 
+        "prompt_version": tracer.prompt_version,
+
         "steps": [],
     }
 
@@ -896,7 +892,9 @@ def run_agent_loop(
     if _is_prohibited_action_request(member_message):
         state["stop_reason"] = "prohibited_action_requested"
         state["human_handoff_required"] = True
-        state["case_summary"] = _build_incomplete_case_packet(state)
+        # The refusal is the response. Nothing was gathered, so an empty
+        # case packet would only hide it.
+        state["case_summary"] = PREFLIGHT_REFUSAL
 
         trace["steps"].append(
             {
@@ -905,10 +903,7 @@ def run_agent_loop(
                 "state_before": _make_trace_state_snapshot(state),
                 "model_state": None,
                 "tool_calls": [],
-                "final_text": (
-                    "This agent prepares cases only. "
-                    "A Relationship Officer must make loan decisions."
-                ),
+                "final_text": PREFLIGHT_REFUSAL,
                 "state_after": _make_trace_state_snapshot(state),
             }
         )
@@ -1028,6 +1023,22 @@ def run_agent_loop(
             ) = _classify_final_response(
                 final_text
             )
+
+            # Output guardrail: a response presenting a lending decision as
+            # made is never shown. Replace it with a notice plus the gathered
+            # facts for the officer, and keep the unsafe text out of the trace.
+            if state["stop_reason"] == "prohibited_action_in_output":
+                _, violation = validate_agent_output(final_text)
+                state["case_summary"] = (
+                    OUTPUT_WITHHELD_NOTICE
+                    + "\n\n"
+                    + _build_incomplete_case_packet(state)
+                )
+                step_record["final_text"] = "[withheld by output guardrail]"
+                step_record["guardrail"] = "output_decision_claim_withheld"
+                tracer.record_event(
+                    "output_guardrail_withheld", {"violation": violation}
+                )
 
             # -----------------------------------------------------------
             # A case is only complete if the required preparation

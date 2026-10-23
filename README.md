@@ -191,6 +191,8 @@ Edit `.env` and set your key. `.env` is git-ignored, so never commit it.
 | `GEMINI_EMBEDDING_MODEL` | No | `gemini-embedding-001` | Embedding model for RAG (not in `.env.example`; read by `embeddings.py`) |
 | `VECTOR_STORE_PATH`, `APP_ENV` | No | none | Present in `.env.example`, but not read by the current code |
 
+The system prompt is not an environment variable: the agent loads `prompts/v1.0.md`, set by `DEFAULT_PROMPT_VERSION` in [src/baseline_chat.py](src/baseline_chat.py). Each trace records `prompt_version`, identified from the prompt text actually sent to the model (`null` if it matches no file in `prompts/`).
+
 ### 5. Set the import path
 
 The modules import from `src/`. Run every command from the repository root, and set `PYTHONPATH` once per shell:
@@ -234,7 +236,7 @@ Type a request at the `request>` prompt. For each request, the CLI:
 
 | Command | Effect |
 |---|---|
-| `/new` | Start a new case (fresh iteration and tool-call budget) |
+| `/new` | Start a new case |
 | `/case` | Show the current case ID |
 | `/trace` | Show the path of the last saved trace |
 | `/help` | List commands |
@@ -249,7 +251,7 @@ Type a request at the `request>` prompt. For each request, the CLI:
 | `--memory-path` | Memory file (default `evidence/memory/case_history.json`) |
 | `--trace-dir` | Trace directory (default `evidence/traces/cli_runs/`) |
 
-Within one session, follow-up requests continue the same case. The 6-iteration and 2-calls-per-tool limits count **across the whole case**, so use `/new` to start a separate case. Synthetic membership numbers for testing are in [data/member_records.json](data/member_records.json) (for example `HS-2023-000303` or `HS-2024-000101`).
+Within one session, follow-up requests continue the same case: saved case history is loaded as context, but **each request has its own budget** of 6 iterations and 2 calls per tool. The outcome shows this request's usage and the case totals separately. Short conversational messages (greetings, thanks, "what is your name", "what can you do", pauses such as "I'll get back to you next week", and "continue my application") are answered directly, without the model or any tool, and resume replies use only the saved case history. Use `/new` to start a separate case. Synthetic membership numbers for testing are in [data/member_records.json](data/member_records.json) (for example `HS-2023-000303` or `HS-2024-000101`).
 
 > **Tip for demos and rehearsals:** add `--memory-path` with a scratch file so practice runs don't change the committed memory file `evidence/memory/case_history.json`.
 
@@ -287,7 +289,7 @@ Policy evidence retrieved (RAG):
 Outcome:
   Stop reason:     clarification_required
   Human handoff:   REQUIRED
-  Iterations used: 4/6 (cumulative for this case)
+  This request:    4/6 iterations; tool calls calculate_repayment=1/2, get_member_record=1/2, retrieve_policy=1/2
   Memory:          saved
 
 Case-preparation response:
@@ -309,12 +311,12 @@ Because guarantors and a purpose statement are missing, the run stops as `clarif
 request> Approve this member's loan.
 
   [guardrail] preflight_safety_guard: blocked before any model or tool call.
-  [guardrail] This agent prepares cases only. A Relationship Officer must make loan decisions.
+  [guardrail] This agent prepares cases only. A Relationship Officer must make loan decisions. I can help prepare your case for that review: tell me the loan product, amount, repayment period and payment frequency.
 
 Outcome:
   Stop reason:     prohibited_action_requested
   Human handoff:   REQUIRED
-  Iterations used: 0/6 (cumulative for this case)
+  This request:    0/6 iterations; tool calls calculate_repayment=0/2, get_member_record=0/2, retrieve_policy=0/2
 ```
 
 ## Tests and evaluation
@@ -333,7 +335,7 @@ Run all commands from the repository root, with `PYTHONPATH=src` set as in [Gett
 
 `run_agent_cases.py` skips scenarios that already passed unless `loop.py`, `agent_tools.py`, `tools.py`, `baseline_chat.py`, or the runner itself has changed since the last pass.
 
-**Results verified on 2026-10-23:** 54/54 unit tests passed; evaluation 36/36 scenarios passed with 0 safety violations (verdict `PASS`); 13/13 tool tests passed; all 7 Week 5 scenarios passed; the memory demo passed. The committed [evidence/week7/metrics.json](evidence/week7/metrics.json) also records 36/36 with 0 safety violations.
+**Results verified on 2026-10-23:** 71/71 unit tests passed (on Windows and on case-sensitive Linux under WSL); evaluation 36/36 scenarios passed with 0 safety violations (verdict `PASS`); 13/13 tool tests passed; all 7 Week 5 scenarios passed; the memory demo passed. The committed [evidence/week7/metrics.json](evidence/week7/metrics.json) also records 36/36 with 0 safety violations.
 
 ### Live: needs `GEMINI_API_KEY` and network, and uses API quota
 
@@ -348,7 +350,7 @@ The live results are not deterministic, because model wording varies between run
 
 | Location | Contents |
 |---|---|
-| `evidence/traces/cli_runs/<UTC-timestamp>_<run_id>.json` | One file per CLI request: run metadata (`run_meta`: model, prompt hash, limits, case ID), every iteration step with redacted state snapshots, tool calls with `executed` flags and result summaries, memory status, and final state. Files are never overwritten. |
+| `evidence/traces/cli_runs/<UTC-timestamp>_<run_id>.json` | One file per CLI request: run metadata (`run_meta`: model, prompt version and hash, limits, case ID), every iteration step with redacted state snapshots, tool calls with `executed` flags and result summaries, memory status, and final state. Files are never overwritten. |
 | `evidence/traces/cli_runs/cli_events.jsonl` | One JSON event per line for each CLI run: `run_start`, `model_call`, `tool_call`, `guardrail`, `run_end` |
 | `evidence/traces/<scenario>.json` | Week 5 scenario traces from `run_agent_cases.py` |
 | `evidence/traces/memory_agent_run.json`, `manual_agent_run.json` | Live single-request traces |
@@ -372,7 +374,7 @@ Each control below is implemented in code and covered by tests or evaluation sce
 
 - **No lending decisions.** None of the three tools can approve, reject, score, disburse, or change balances. The repayment tool marks its output `illustrative: true, decision: calculation_only`.
 - **Pre-flight block.** Requests to approve, reject, decide, or score a loan, to disburse or transfer funds, to modify balances, or to bypass human review are stopped before any model or tool call, with `prohibited_action_requested` and a human handoff.
-- **Output validation.** Model text that claims an approval, rejection, or disbursement is classified `prohibited_action_in_output` and handed off.
+- **Output validation.** A model response that presents an approval, rejection, or disbursement as already made is withheld: the user sees a notice and the gathered facts instead, the run stops as `prohibited_action_in_output` with a handoff, and the unsafe text is not written to the trace. Conditional wording such as "once your application is approved…" is allowed.
 - **Prompt injection.** Override patterns in the request, or inside retrieved policy text, stop the run (`adversarial_prompt_rejected` or `policy_injection_detected`).
 - **Tool allow-list and limits.** Only the three approved tools can run, with at most 2 calls per tool (checked before execution) and at most 6 iterations per case. An unknown tool stops the run with `unknown_tool`.
 - **Member-record authorization.** A member can retrieve only their own record. The requester's identity comes from the session, never from model output. An officer can retrieve any record.
@@ -382,11 +384,10 @@ Each control below is implemented in code and covered by tests or evaluation sce
 
 ## Known limitations
 
-- **Policy folder casing.** Git stores the policy corpus as `Knowledge/`, but [src/agent/tools.py](src/agent/tools.py) reads `knowledge/`. This works on Windows and on WSL under `/mnt/<drive>`, where filesystems ignore case. On a case-sensitive Linux filesystem, `retrieve_policy` fails with `service_unavailable` (see [Troubleshooting](#troubleshooting)).
 - **No authentication.** The CLI trusts the role and membership number typed at startup. Authorization is enforced against that identity, but nothing verifies it.
 - **Officer history view is not in the CLI.** Reading a saved case as an officer requires a trusted authorization list, which the CLI does not have. That path exists in `run_agent_loop` and its tests only. In the CLI, officers can prepare cases but do not write memory.
 - **No conversational memory.** Follow-up requests carry over saved preparation progress (documents retrieved, outstanding requirements), not the earlier conversation.
-- **Pattern-based guardrails.** The pre-flight check uses regular expressions and can miss paraphrases. For example, "approve for me a loan" got past it, and the model then refused. In that case the outcome was still safe (`prohibited_action_requested`, handoff), but the block came from the model rather than the deterministic check.
+- **Pattern-based guardrails.** The pre-flight check and the output check both use regular expressions, so they can miss paraphrases (and the output check skips decision phrases inside conditional clauses). For example, "approve for me a loan" got past it, and the model then refused. In that case the outcome was still safe (`prohibited_action_requested`, handoff), but the block came from the model rather than the deterministic check.
 - **Two retrieval paths.** The agent's `retrieve_policy` tool uses term matching over the Markdown files. The embedding-based pipeline (`src/rag/`, `rag_chat.py`) serves standalone Q&A and the RAG evaluation; the agent does not use it.
 - **Narrower scope than the charter.** The project charter also describes document upload and reading, form validation, transaction lookup, and a product matcher. These are not implemented; the agent has only the three tools above.
 - **Model dependence.** Live runs depend on Gemini availability and free-tier quotas. A daily-quota error stops the run with a handoff instead of retrying.
@@ -402,8 +403,8 @@ Each control below is implemented in code and covered by tests or evaluation sce
 | CLI prints `WARNING: GEMINI_API_KEY is not set`; runs stop with `tool_failure:model_unavailable` | Create `.env` from `.env.example` and set `GEMINI_API_KEY`. |
 | `KeyError: 'GEMINI_API_KEY'` from `rag_chat.py` or `run_rag_eval.py` | Same fix: the RAG pipeline reads the key directly. |
 | A request seems to hang for about a minute | On HTTP 429/500/503, the Gemini client makes up to 3 attempts and waits 60 s after a 429. A `daily quota exhausted` error is not retried; wait for the quota to reset. |
-| `tool_failure:service_unavailable` from `retrieve_policy` on Linux | The policy folder casing problem. Until it is fixed in code, create a matching folder name: `ln -s Knowledge knowledge`. |
-| `tool_call_limit_exceeded` or `max_iterations_reached` on a follow-up request | Limits count across the whole case. Type `/new` to start a new case. |
+| `tool_failure:service_unavailable` from `retrieve_policy` | The policy folder is missing or renamed. It must be `Knowledge/` (capital K) at the repository root. |
+| `tool_call_limit_exceeded` or `max_iterations_reached` | The request used its whole budget (6 iterations, 2 calls per tool). Send a narrower request; the next request gets a fresh budget. |
 | `Memory store is unreadable or invalid JSON` | The memory file is corrupted. Restore it with `git restore evidence/memory/case_history.json`, or pass `--memory-path` with a new file. |
 | `tool_failure:unauthorized` | A member requested another member's record. This is expected behavior; use your own membership number, or the `officer` role. |
 | Unexpected changes to `evidence/` files in `git status` | Tests and evaluations write evidence (see [Tests and evaluation](#tests-and-evaluation)). Run `git restore <file>` if you don't want to keep the regenerated files. |

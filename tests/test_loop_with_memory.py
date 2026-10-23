@@ -23,6 +23,7 @@ from pathlib import Path
 if importlib.util.find_spec("baseline_chat") is None:
     baseline_stub = types.ModuleType("baseline_chat")
     baseline_stub.load_system_prompt = lambda: "test prompt"
+    baseline_stub.identify_prompt_version = lambda system_prompt: None
     sys.modules["baseline_chat"] = baseline_stub
 
 if importlib.util.find_spec("agent_tools") is None:

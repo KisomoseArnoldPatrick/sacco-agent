@@ -1,0 +1,58 @@
+{
+  "run_id": "run-34f71a36b018",
+  "scenario_id": "cli_session",
+  "handling": "direct_response",
+  "route": "direct",
+  "intent": "how_are_you",
+  "prompt_version": null,
+  "started_at": "2026-10-23T16:04:50.146128+00:00",
+  "ended_at": "2026-10-23T16:04:50.146128+00:00",
+  "elapsed_ms": 0.0,
+  "steps": [],
+  "events": [],
+  "memory": {
+    "enabled": true,
+    "status": "not_used",
+    "case_id": "cli-20261023T160424Z-c3ab7e"
+  },
+  "final_state": {
+    "member_message": "how are you",
+    "case_id": "cli-20261023T160424Z-c3ab7e",
+    "requester_role": "member",
+    "requester_membership_number": "6777",
+    "iteration_count": 0,
+    "tool_call_counts": {
+      "calculate_repayment": 0,
+      "get_member_record": 0,
+      "retrieve_policy": 0
+    },
+    "tool_calls_made": [],
+    "policy_excerpts": [],
+    "stop_reason": "direct_response:how_are_you",
+    "human_handoff_required": false,
+    "case_summary": "I'm doing well, thank you. I can help with SACCO services: membership, savings, loan products and policies, repayment estimates, and preparing a loan case for a Relationship Officer. What would you like to do?"
+  },
+  "run_meta": {
+    "interface": "cli",
+    "model": "gemini-3.6-flash",
+    "prompt_version": null,
+    "prompt_sha256": "5d162a13036f11861b6d99e87e8ded916f1c2b4eef13cde1b98751c33fcda0c3",
+    "max_iterations": 6,
+    "max_calls_per_tool": 2,
+    "requester_role": "member",
+    "case_id": "cli-20261023T160424Z-c3ab7e",
+    "handling": "direct_response",
+    "route": "direct",
+    "request_type": null,
+    "budget_scope": "per_request",
+    "case_totals_after_request": {
+      "requests": 0,
+      "iterations": 0,
+      "tool_calls": {
+        "calculate_repayment": 0,
+        "get_member_record": 0,
+        "retrieve_policy": 0
+      }
+    }
+  }
+}

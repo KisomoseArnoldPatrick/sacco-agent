@@ -30,8 +30,10 @@ MEMBER_RECORDS_PATH = (
     REPO_ROOT / "data" / "member_records.json"
 )
 
+# Must match the directory name tracked in Git exactly: Linux filesystems
+# are case-sensitive, so "knowledge" would not find "Knowledge".
 POLICY_DIR = (
-    REPO_ROOT / "knowledge"
+    REPO_ROOT / "Knowledge"
 )
 
 
@@ -157,6 +159,56 @@ def get_member_record(
         "membership_number": membership_number,
         **record,
     }
+
+
+# Fields of a get_member_record() result that the model needs for case
+# preparation. full_name is deliberately excluded: the model does not need it.
+MODEL_MEMBER_FIELDS = (
+    "membership_number",
+    "membership_start_date",
+    "savings_balance_ugx",
+    "share_capital_ugx",
+    "active_loan",
+    "guarantee_commitments",
+)
+
+
+def summarize_member_record_for_model(member_record: dict) -> dict:
+    """
+    Return the planning-relevant fields of a get_member_record() result.
+
+    This is the single place that maps the member-record schema to the
+    compact summary sent to the model.
+
+    Missing information is reported, never invented:
+    - a field absent from the record is listed in "fields_not_in_record";
+    - active_loan = null in the record means the record shows no active
+      loan, and is stated explicitly as "none_recorded".
+    Amounts keep their stored UGX values and field names.
+    """
+
+    if not isinstance(member_record, dict):
+        return {}
+
+    summary = {}
+    not_in_record = []
+
+    for field in MODEL_MEMBER_FIELDS:
+        if field not in member_record:
+            not_in_record.append(field)
+            continue
+
+        value = member_record[field]
+
+        if field == "active_loan" and value is None:
+            value = "none_recorded"
+
+        summary[field] = value
+
+    if not_in_record:
+        summary["fields_not_in_record"] = not_in_record
+
+    return summary
 
 
 # ---------------------------------------------------------------------------

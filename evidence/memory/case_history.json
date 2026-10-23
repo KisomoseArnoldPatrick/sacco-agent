@@ -40,5 +40,136 @@
       "contains_raw_member_record": false,
       "contains_full_policy_text": false
     }
+  },
+  "cli-20261023T081702Z-c3c1ba": {
+    "state_version": 1,
+    "case_id": "cli-20261023T081702Z-c3c1ba",
+    "owner_membership_number": "HS-2023-000303",
+    "created_at": "2026-10-23T08:17:50.912808+00:00",
+    "updated_at": "2026-10-23T09:47:10.494779+00:00",
+    "status": "in_progress",
+    "requester_role": "member",
+    "member_message": "approve for me a loan",
+    "workflow": {
+      "current_stage": "stopped",
+      "iteration_count": 6,
+      "max_iterations": 6,
+      "tool_call_counts": {
+        "get_member_record": 1,
+        "retrieve_policy": 1,
+        "calculate_repayment": 0
+      },
+      "max_calls_per_tool": 2,
+      "stop_reason": "incomplete_case",
+      "human_handoff_required": true
+    },
+    "preparation": {
+      "member_record_retrieved": true,
+      "policy_documents": [
+        "school_fees_loan.md"
+      ],
+      "repayment_calculated": false,
+      "missing_requirements": [],
+      "summary_status": "in_progress"
+    },
+    "memory_metadata": {
+      "purpose": "resume and review case preparation",
+      "contains_raw_member_record": false,
+      "contains_full_policy_text": false
+    }
+  },
+  "cli-20261023T153029Z-df282e": {
+    "state_version": 1,
+    "case_id": "cli-20261023T153029Z-df282e",
+    "owner_membership_number": "44-55",
+    "created_at": "2026-10-23T15:32:23.749014+00:00",
+    "updated_at": "2026-10-23T15:33:49.045688+00:00",
+    "status": "in_progress",
+    "requester_role": "member",
+    "member_message": "what is a sacco",
+    "workflow": {
+      "current_stage": "stopped",
+      "iteration_count": 1,
+      "max_iterations": 6,
+      "tool_call_counts": {
+        "get_member_record": 0,
+        "retrieve_policy": 0,
+        "calculate_repayment": 0
+      },
+      "max_calls_per_tool": 2,
+      "stop_reason": "tool_failure:model_unavailable",
+      "human_handoff_required": true
+    },
+    "preparation": {
+      "member_record_retrieved": false,
+      "policy_documents": [],
+      "repayment_calculated": false,
+      "missing_requirements": [],
+      "summary_status": "in_progress"
+    },
+    "memory_metadata": {
+      "purpose": "resume and review case preparation",
+      "contains_raw_member_record": false,
+      "contains_full_policy_text": false
+    }
+  },
+  "cli-20261023T153439Z-9bfd04": {
+    "state_version": 1,
+    "case_id": "cli-20261023T153439Z-9bfd04",
+    "owner_membership_number": "77",
+    "created_at": "2026-10-23T15:34:56.620977+00:00",
+    "updated_at": "2026-10-23T15:38:55.232129+00:00",
+    "status": "waiting_for_member",
+    "requester_role": "member",
+    "member_message": "fishing loan",
+    "workflow": {
+      "current_stage": "stopped",
+      "iteration_count": 1,
+      "max_iterations": 6,
+      "tool_call_counts": {
+        "get_member_record": 0,
+        "retrieve_policy": 0,
+        "calculate_repayment": 0
+      },
+      "max_calls_per_tool": 2,
+      "stop_reason": "incomplete_case",
+      "human_handoff_required": true
+    },
+    "preparation": {
+      "member_record_retrieved": false,
+      "policy_documents": [
+        "complaints_and_grievance_procedure.md",
+        "development_loan.md",
+        "emergency_loan.md",
+        "guarantor_requirements.md",
+        "interest_rates_summary.md",
+        "loan_application_faq.md",
+        "loan_application_procedure.md",
+        "loan_default_and_recovery.md",
+        "loan_requirements.md",
+        "loan_restructuring_policy.md",
+        "member_identification.md",
+        "member_rights_and_responsibilities.md",
+        "membership_registration.md",
+        "repayment_policy.md",
+        "sacco_governance_and_committees.md",
+        "savings_products.md",
+        "school_fees_loan.md",
+        "supporting_documents.md",
+        "withdrawal_and_exit_policy.md"
+      ],
+      "repayment_calculated": false,
+      "missing_requirements": [
+        "Verify the member's savings balance against the 3x savings ceiling.",
+        "Provide and verify the details and eligibility of the 2 required guarantors.",
+        "Submit and review the written statement explaining the loan purpose."
+      ],
+      "summary_status": "needs_clarification"
+    },
+    "memory_metadata": {
+      "purpose": "resume and review case preparation",
+      "contains_raw_member_record": false,
+      "contains_full_policy_text": false
+    }
   }
 }

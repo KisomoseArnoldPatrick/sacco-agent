@@ -1,0 +1,55 @@
+{
+  "run_id": "run-69b4ba676fc0",
+  "scenario_id": "cli_session",
+  "handling": "direct_response",
+  "intent": "identity",
+  "prompt_version": null,
+  "started_at": "2026-10-23T15:15:07.444537+00:00",
+  "ended_at": "2026-10-23T15:15:07.444537+00:00",
+  "elapsed_ms": 0.0,
+  "steps": [],
+  "events": [],
+  "memory": {
+    "enabled": true,
+    "status": "not_used",
+    "case_id": "cli-20261023T151507Z-ec33fe"
+  },
+  "final_state": {
+    "member_message": "what is your name",
+    "case_id": "cli-20261023T151507Z-ec33fe",
+    "requester_role": "member",
+    "requester_membership_number": "HS-2023-000303",
+    "iteration_count": 0,
+    "tool_call_counts": {
+      "calculate_repayment": 0,
+      "get_member_record": 0,
+      "retrieve_policy": 0
+    },
+    "tool_calls_made": [],
+    "policy_excerpts": [],
+    "stop_reason": "direct_response:identity",
+    "human_handoff_required": false,
+    "case_summary": "I'm the SACCO Member-Case Preparation Agent. I prepare cases for review by a SACCO Relationship Officer. I cannot approve or reject loans, disburse funds, or change any account."
+  },
+  "run_meta": {
+    "interface": "cli",
+    "model": "gemini-3.6-flash",
+    "prompt_version": null,
+    "prompt_sha256": "5d162a13036f11861b6d99e87e8ded916f1c2b4eef13cde1b98751c33fcda0c3",
+    "max_iterations": 6,
+    "max_calls_per_tool": 2,
+    "requester_role": "member",
+    "case_id": "cli-20261023T151507Z-ec33fe",
+    "handling": "direct_response",
+    "budget_scope": "per_request",
+    "case_totals_after_request": {
+      "requests": 0,
+      "iterations": 0,
+      "tool_calls": {
+        "calculate_repayment": 0,
+        "get_member_record": 0,
+        "retrieve_policy": 0
+      }
+    }
+  }
+}

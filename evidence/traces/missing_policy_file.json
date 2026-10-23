@@ -1,5 +1,6 @@
 {
-  "started_at": "2026-10-21T14:28:52.532009+00:00",
+  "started_at": "2026-10-23T15:55:40.878955+00:00",
+  "prompt_version": "v1.0",
   "steps": [
     {
       "iteration": 1,
@@ -103,7 +104,7 @@
       }
     }
   ],
-  "ended_at": "2026-10-21T14:28:52.532364+00:00",
+  "ended_at": "2026-10-23T15:55:40.879369+00:00",
   "final_state": {
     "member_message": "Prepare my Development Loan case using the loan policy.",
     "requester_role": "member",
@@ -142,30 +143,30 @@
     "stop_reason": "tool_failure:service_unavailable",
     "human_handoff_required": true
   },
-  "run_id": "run-41c875b089c5",
+  "run_id": "run-2165973a54fd",
   "scenario_id": null,
   "events": [
     {
-      "timestamp": "2026-10-21T14:28:52.532457+00:00",
-      "offset_ms": 0.47,
+      "timestamp": "2026-10-23T15:55:40.879464+00:00",
+      "offset_ms": 0.54,
       "event_type": "run_completed",
       "details": {
         "stop_reason": "tool_failure:service_unavailable",
         "human_handoff_required": true,
-        "elapsed_ms": 0.46
+        "elapsed_ms": 0.52
       }
     }
   ],
-  "elapsed_ms": 0.46,
+  "elapsed_ms": 0.52,
   "test_id": "missing_policy_file",
   "test_name": "Policy file missing",
   "passed": true,
-  "completed_at": "2026-10-21T14:28:52.532558+00:00",
+  "completed_at": "2026-10-23T15:55:40.879572+00:00",
   "source_fingerprint": {
-    "loop.py": "f85996149d3b0da3f5b06ee85856fb9c4c554fe83993138cc09c189a1b724c94",
+    "loop.py": "e36d3e435b3eb4cb0d55d687f48d29492e00782aa707c9aac3b2cd7f5fe87894",
     "agent_tools.py": "4398f3e439b488fc945642ea1cea176e251cb12ba05ad9aee843efab573576dd",
-    "tools.py": "ea3010b5b82a905b94c69705a28d4f8941615fb1956439727a842e423ebc960f",
-    "baseline_chat.py": "c415f116cffc7610ae2d1f2f58ff2234127325989720acc98d7f932fd957a887",
+    "tools.py": "261c415cd65c3b5080e423a2d104da548339157078f5e032826e9263d5b60742",
+    "baseline_chat.py": "d31fa7717ae17f34accb1a5f8f0b5d936e64fa4a04b177007351a80ac7187773",
     "run_agent_cases.py": "ec1d810e9a21e1061b9c416767d9952068e9720b2b2c0b1c23a8fdd9bba309e5"
   }
 }

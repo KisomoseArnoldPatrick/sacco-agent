@@ -1,5 +1,6 @@
 {
-  "started_at": "2026-10-21T14:28:52.536134+00:00",
+  "started_at": "2026-10-23T15:55:40.884814+00:00",
+  "prompt_version": "v1.0",
   "steps": [
     {
       "iteration": 1,
@@ -177,6 +178,15 @@
         "member_record_available": true,
         "member_record_summary": {
           "membership_number": "HS-2023-000303",
+          "membership_start_date": "2023-03-10",
+          "savings_balance_ugx": 1200000,
+          "share_capital_ugx": 50000,
+          "active_loan": {
+            "loan_product": "Development Loan",
+            "principal_ugx": 4000000,
+            "outstanding_balance_ugx": 2500000,
+            "status": "current"
+          },
           "guarantee_commitments": [
             {
               "membership_number": "HS-2024-000101",
@@ -400,6 +410,15 @@
         "member_record_available": true,
         "member_record_summary": {
           "membership_number": "HS-2023-000303",
+          "membership_start_date": "2023-03-10",
+          "savings_balance_ugx": 1200000,
+          "share_capital_ugx": 50000,
+          "active_loan": {
+            "loan_product": "Development Loan",
+            "principal_ugx": 4000000,
+            "outstanding_balance_ugx": 2500000,
+            "status": "current"
+          },
           "guarantee_commitments": [
             {
               "membership_number": "HS-2024-000101",
@@ -741,6 +760,15 @@
         "member_record_available": true,
         "member_record_summary": {
           "membership_number": "HS-2023-000303",
+          "membership_start_date": "2023-03-10",
+          "savings_balance_ugx": 1200000,
+          "share_capital_ugx": 50000,
+          "active_loan": {
+            "loan_product": "Development Loan",
+            "principal_ugx": 4000000,
+            "outstanding_balance_ugx": 2500000,
+            "status": "current"
+          },
           "guarantee_commitments": [
             {
               "membership_number": "HS-2024-000101",
@@ -1113,6 +1141,15 @@
         "member_record_available": true,
         "member_record_summary": {
           "membership_number": "HS-2023-000303",
+          "membership_start_date": "2023-03-10",
+          "savings_balance_ugx": 1200000,
+          "share_capital_ugx": 50000,
+          "active_loan": {
+            "loan_product": "Development Loan",
+            "principal_ugx": 4000000,
+            "outstanding_balance_ugx": 2500000,
+            "status": "current"
+          },
           "guarantee_commitments": [
             {
               "membership_number": "HS-2024-000101",
@@ -1550,6 +1587,15 @@
         "member_record_available": true,
         "member_record_summary": {
           "membership_number": "HS-2023-000303",
+          "membership_start_date": "2023-03-10",
+          "savings_balance_ugx": 1200000,
+          "share_capital_ugx": 50000,
+          "active_loan": {
+            "loan_product": "Development Loan",
+            "principal_ugx": 4000000,
+            "outstanding_balance_ugx": 2500000,
+            "status": "current"
+          },
           "guarantee_commitments": [
             {
               "membership_number": "HS-2024-000101",
@@ -1853,7 +1899,7 @@
       }
     }
   ],
-  "ended_at": "2026-10-21T14:28:52.541641+00:00",
+  "ended_at": "2026-10-23T15:55:40.887725+00:00",
   "final_state": {
     "member_message": "Prepare a Development Loan case.",
     "requester_role": "member",
@@ -1911,7 +1957,7 @@
       "decision": "calculation_only"
     },
     "missing_requirements": [],
-    "case_summary": "INCOMPLETE SACCO CASE PREPARATION PACKET\n\nStatus: Incomplete — Relationship Officer review required.\nStop reason: max_iterations_reached\n\nMember request:\nPrepare a Development Loan case.\n\nInformation gathered:\n- membership_number: HS-2023-000303\n- guarantee_commitments: [{'membership_number': 'HS-2024-000101', 'loan_product': 'School Fees Loan'}]\n\nPolicy documents retrieved:\n- development_loan.md\n\nIllustrative repayment:\n- loan_product: Development Loan\n- principal_ugx: 2000000.0\n- term_months: 12\n- monthly_installment_ugx: 177697.58\n- total_interest_ugx: 132370.93\n- total_repayable_ugx: 2132370.93\n- annual_rate_percent: 12\n- method: reducing_balance\n- policy_basis: development_loan.md\n- illustrative: True\n- decision: calculation_only\n\nMissing / unresolved information:\n- No explicit missing requirement was recorded.\n\nWorkflow status:\n- Iterations used: 6 / 6\n- Tool calls: {\"get_member_record\": 2, \"retrieve_policy\": 2, \"calculate_repayment\": 2}\n\nHuman action required: Relationship Officer should review the gathered information and complete any required assessment. The agent has not approved, rejected, scored, disbursed, or modified the loan/member account.",
+    "case_summary": "INCOMPLETE SACCO CASE PREPARATION PACKET\n\nStatus: Incomplete — Relationship Officer review required.\nStop reason: max_iterations_reached\n\nMember request:\nPrepare a Development Loan case.\n\nInformation gathered:\n- membership_number: HS-2023-000303\n- membership_start_date: 2023-03-10\n- savings_balance_ugx: 1200000\n- share_capital_ugx: 50000\n- active_loan: {'loan_product': 'Development Loan', 'principal_ugx': 4000000, 'outstanding_balance_ugx': 2500000, 'status': 'current'}\n- guarantee_commitments: [{'membership_number': 'HS-2024-000101', 'loan_product': 'School Fees Loan'}]\n\nPolicy documents retrieved:\n- development_loan.md\n\nIllustrative repayment:\n- loan_product: Development Loan\n- principal_ugx: 2000000.0\n- term_months: 12\n- monthly_installment_ugx: 177697.58\n- total_interest_ugx: 132370.93\n- total_repayable_ugx: 2132370.93\n- annual_rate_percent: 12\n- method: reducing_balance\n- policy_basis: development_loan.md\n- illustrative: True\n- decision: calculation_only\n\nMissing / unresolved information:\n- No explicit missing requirement was recorded.\n\nWorkflow status:\n- Iterations used: 6 / 6\n- Tool calls: {\"get_member_record\": 2, \"retrieve_policy\": 2, \"calculate_repayment\": 2}\n\nHuman action required: Relationship Officer should review the gathered information and complete any required assessment. The agent has not approved, rejected, scored, disbursed, or modified the loan/member account.",
     "tool_calls_made": [
       {
         "name": "get_member_record",
@@ -2071,30 +2117,30 @@
     "stop_reason": "max_iterations_reached",
     "human_handoff_required": true
   },
-  "run_id": "run-ba8581053fcf",
+  "run_id": "run-56d413cee0c2",
   "scenario_id": null,
   "events": [
     {
-      "timestamp": "2026-10-21T14:28:52.541802+00:00",
-      "offset_ms": 5.68,
+      "timestamp": "2026-10-23T15:55:40.887879+00:00",
+      "offset_ms": 3.08,
       "event_type": "run_completed",
       "details": {
         "stop_reason": "max_iterations_reached",
         "human_handoff_required": true,
-        "elapsed_ms": 5.67
+        "elapsed_ms": 3.07
       }
     }
   ],
-  "elapsed_ms": 5.67,
+  "elapsed_ms": 3.07,
   "test_id": "max_iterations",
   "test_name": "Agent reaches iteration limit",
   "passed": true,
-  "completed_at": "2026-10-21T14:28:52.542026+00:00",
+  "completed_at": "2026-10-23T15:55:40.888032+00:00",
   "source_fingerprint": {
-    "loop.py": "f85996149d3b0da3f5b06ee85856fb9c4c554fe83993138cc09c189a1b724c94",
+    "loop.py": "e36d3e435b3eb4cb0d55d687f48d29492e00782aa707c9aac3b2cd7f5fe87894",
     "agent_tools.py": "4398f3e439b488fc945642ea1cea176e251cb12ba05ad9aee843efab573576dd",
-    "tools.py": "ea3010b5b82a905b94c69705a28d4f8941615fb1956439727a842e423ebc960f",
-    "baseline_chat.py": "c415f116cffc7610ae2d1f2f58ff2234127325989720acc98d7f932fd957a887",
+    "tools.py": "261c415cd65c3b5080e423a2d104da548339157078f5e032826e9263d5b60742",
+    "baseline_chat.py": "d31fa7717ae17f34accb1a5f8f0b5d936e64fa4a04b177007351a80ac7187773",
     "run_agent_cases.py": "ec1d810e9a21e1061b9c416767d9952068e9720b2b2c0b1c23a8fdd9bba309e5"
   }
 }

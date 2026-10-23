@@ -43,15 +43,19 @@ for directory in (REPO_ROOT, SRC_DIR):
         sys.path.insert(0, str(directory))
 
 
-from baseline_chat import DEFAULT_PROMPT_FILE, load_system_prompt  # noqa: E402
+from baseline_chat import load_system_prompt  # noqa: E402
 from agent_tools import call_gemini_with_tools  # noqa: E402
 from agent.loop_with_memory import (  # noqa: E402
+    APPROVED_TOOLS,
     MAX_CALLS_PER_TOOL,
     MAX_ITERATIONS,
+    _memory_context,
     _summarize_tool_result,
     run_agent_loop,
 )
-from agent.observability import write_trace_events  # noqa: E402
+from agent.conversation import respond, route_message  # noqa: E402
+from agent.memory import CaseMemoryStore, MemoryAccessError  # noqa: E402
+from agent.observability import now_utc_iso, write_trace_events  # noqa: E402
 
 
 DEFAULT_TRACE_DIR = REPO_ROOT / "evidence" / "traces" / "cli_runs"
@@ -59,7 +63,7 @@ DEFAULT_MEMORY_PATH = REPO_ROOT / "evidence" / "memory" / "case_history.json"
 EVENTS_LOG_NAME = "cli_events.jsonl"
 
 HELP_TEXT = """Commands:
-  /new    start a new case (fresh iteration and tool-call budget)
+  /new    start a new case
   /case   show the current case ID
   /trace  show the path of the last saved trace
   /help   show this help
@@ -102,6 +106,21 @@ class CliSession:
             self.system_prompt.encode("utf-8")
         ).hexdigest()
         self.last_trace_path: Path | None = None
+        self.case_totals = self._empty_totals()
+
+    @staticmethod
+    def _empty_totals() -> dict:
+        # Statistics for the current case in this session. Each request still
+        # has its own MAX_ITERATIONS / MAX_CALLS_PER_TOOL budget.
+        return {
+            "requests": 0,
+            "iterations": 0,
+            "tool_calls": {name: 0 for name in sorted(APPROVED_TOOLS)},
+        }
+
+    def start_new_case(self) -> None:
+        self.case_id = new_case_id()
+        self.case_totals = self._empty_totals()
 
     @property
     def resumes_case(self) -> bool:
@@ -109,6 +128,22 @@ class CliSession:
         # resume_saved_case selects the loop's read-only history path, which
         # requires a trusted authorization list this CLI does not have.
         return self.requester_role == "member"
+
+    def case_context(self) -> dict | None:
+        """
+        Saved history for the current case, read through the owner-only
+        memory API. None when memory is off, the requester is not the owner,
+        or nothing has been saved yet.
+        """
+        if not (self.persist_memory and self.resumes_case and self.membership_number):
+            return None
+        try:
+            saved = CaseMemoryStore(self.memory_path).load(
+                self.case_id, self.membership_number, actor_role="member"
+            )
+        except (MemoryAccessError, ValueError, OSError):
+            return None
+        return _memory_context(saved) if saved else None
 
 
 # ---------------------------------------------------------------------------
@@ -175,7 +210,9 @@ def live_runner(base_runner: Callable, out: Callable = print) -> Callable:
     return runner
 
 
-def display_outcome(trace: dict, out: Callable = print) -> None:
+def display_outcome(
+    trace: dict, out: Callable = print, case_totals: dict | None = None
+) -> None:
     """Show guardrail events, policy evidence, and the final outcome of a run."""
 
     final = trace.get("final_state") or {}
@@ -214,16 +251,26 @@ def display_outcome(trace: dict, out: Callable = print) -> None:
     out(f"  Stop reason:     {final.get('stop_reason')}")
     out(f"  Human handoff:   "
         f"{'REQUIRED' if final.get('human_handoff_required') else 'not required'}")
-    out(f"  Iterations used: {final.get('iteration_count', 0)}/{MAX_ITERATIONS}"
-        " (cumulative for this case)")
-    out("  Tool calls:      " + ", ".join(
-        f"{name}={count}/{MAX_CALLS_PER_TOOL}" for name, count in counts.items()
-    ) + " (cumulative)")
-    out(f"  Memory:          {memory.get('status')}")
+    out(f"  This request:    {final.get('iteration_count', 0)}/{MAX_ITERATIONS} iterations; "
+        "tool calls " + ", ".join(
+            f"{name}={count}/{MAX_CALLS_PER_TOOL}" for name, count in sorted(counts.items())
+        ))
+    if case_totals:
+        out(f"  Case so far:     {case_totals['requests']} request(s), "
+            f"{case_totals['iterations']} iterations, tool calls "
+            + ", ".join(f"{n}={c}" for n, c in case_totals["tool_calls"].items()))
+    memory_status = memory.get("status")
+    if trace.get("route") in ("information", "safety_check"):
+        memory_status = "not used (not a case-preparation request)"
+    out(f"  Memory:          {memory_status}")
     if memory.get("error"):
         out(f"  Memory error:    {memory['error']}")
 
-    out("\nCase-preparation response:")
+    heading = {
+        "information": "Answer",
+        "safety_check": "Response",
+    }.get(trace.get("route"), "Case-preparation response")
+    out(f"\n{heading}:")
     out("-" * 72)
     out(final.get("case_summary") or "(no response)")
     out("-" * 72)
@@ -245,12 +292,19 @@ def save_trace(session: CliSession, trace: dict) -> Path:
     trace["run_meta"] = {
         "interface": "cli",
         "model": os.environ.get("GEMINI_MODEL", "gemini-3.6-flash"),
-        "prompt_file": DEFAULT_PROMPT_FILE.name,
+        # Identified by the loop from the prompt text actually sent.
+        "prompt_version": trace.get("prompt_version"),
         "prompt_sha256": session.prompt_sha256,
         "max_iterations": MAX_ITERATIONS,
         "max_calls_per_tool": MAX_CALLS_PER_TOOL,
         "requester_role": session.requester_role,
         "case_id": session.case_id,
+        # "agent_loop" or "direct_response" (no model or tool call).
+        "handling": trace.get("handling", "agent_loop"),
+        "route": trace.get("route", "case_preparation"),
+        "request_type": trace.get("request_type"),
+        "budget_scope": "per_request",
+        "case_totals_after_request": json.loads(json.dumps(session.case_totals)),
     }
 
     run_id = trace.get("run_id") or f"run-{uuid.uuid4().hex[:12]}"
@@ -282,15 +336,22 @@ def run_request(
     message: str,
     gemini_runner: Callable | None = None,
     out: Callable = print,
+    route: str = "case_preparation",
 ) -> tuple[dict, Path]:
     """
     Run one request through the bounded agent, display it, and save its trace.
+
+    route is "case_preparation", "information" or "safety_check" (see
+    agent.conversation.route_message). Only case preparation reads and writes
+    the case memory, so a question or a blocked request cannot alter the
+    active case's saved progress or outstanding requirements.
 
     gemini_runner defaults to the real Gemini tool-calling runner. Tests may
     inject a deterministic runner, exactly as with run_agent_loop().
     """
 
     runner = live_runner(gemini_runner or call_gemini_with_tools, out)
+    is_case_work = route == "case_preparation"
 
     trace = run_agent_loop(
         member_message=message,
@@ -300,15 +361,108 @@ def run_request(
         gemini_runner=runner,
         case_id=session.case_id,
         memory_store_path=session.memory_path,
-        resume_saved_case=session.resumes_case,
-        persist_memory=session.persist_memory,
+        resume_saved_case=session.resumes_case and is_case_work,
+        persist_memory=session.persist_memory and is_case_work,
         scenario_id="cli_session",
+        # Each message is a new request: saved history is loaded as context,
+        # but the request gets its own iteration and tool-call budget.
+        per_request_budget=True,
+        request_type="information" if route == "information" else "case_preparation",
     )
+    trace["route"] = route
 
-    display_outcome(trace, out)
+    totals = None
+    if is_case_work:
+        final = trace.get("final_state") or {}
+        totals = session.case_totals
+        totals["requests"] += 1
+        totals["iterations"] += int(final.get("iteration_count", 0))
+        for name, count in (final.get("tool_call_counts") or {}).items():
+            totals["tool_calls"][name] = totals["tool_calls"].get(name, 0) + int(count)
+
+    display_outcome(trace, out, totals)
     path = save_trace(session, trace)
     out(f"\nTrace saved: {path}")
     return trace, path
+
+
+def run_direct_response(
+    session: CliSession,
+    message: str,
+    intent: str,
+    out: Callable = print,
+) -> tuple[dict, Path]:
+    """
+    Answer a conversational message without the model or any tool, and save
+    a trace that records exactly that: no iterations, no tool calls, and
+    saved case history read (never written).
+    """
+
+    context = session.case_context()
+    reply = respond(intent, session.case_id, context, session.persist_memory)
+    stamp = now_utc_iso()
+
+    trace = {
+        "run_id": f"run-{uuid.uuid4().hex[:12]}",
+        "scenario_id": "cli_session",
+        "handling": "direct_response",
+        "route": "direct",
+        "intent": intent,
+        "prompt_version": None,
+        "started_at": stamp,
+        "ended_at": stamp,
+        "elapsed_ms": 0.0,
+        "steps": [],
+        "events": [],
+        "memory": {
+            "enabled": session.persist_memory,
+            "status": "history_read" if context else "not_used",
+            "case_id": session.case_id,
+        },
+        "final_state": {
+            "member_message": message,
+            "case_id": session.case_id,
+            "requester_role": session.requester_role,
+            "requester_membership_number": session.membership_number,
+            "iteration_count": 0,
+            "tool_call_counts": {name: 0 for name in sorted(APPROVED_TOOLS)},
+            "tool_calls_made": [],
+            "policy_excerpts": [],
+            "stop_reason": f"direct_response:{intent}",
+            "human_handoff_required": False,
+            "case_summary": reply,
+        },
+    }
+
+    out(f"  [direct response: {intent}] answered without the model or any tool.")
+    out("")
+    out(reply)
+    path = save_trace(session, trace)
+    out(f"\nTrace saved: {path}")
+    return trace, path
+
+
+def handle_message(
+    session: CliSession,
+    message: str,
+    gemini_runner: Callable | None = None,
+    out: Callable = print,
+) -> tuple[dict, Path]:
+    """
+    Route one user message (see agent.conversation.route_message):
+    direct replies need no model or tool; information questions and case
+    requests go to the bounded agent loop; anything the prohibited-action or
+    prompt-injection guardrails flag goes to the loop, which blocks it before
+    any model or tool call.
+    """
+
+    message = message.replace("﻿", "").strip()
+    route, intent = route_message(message)
+
+    if route == "direct":
+        return run_direct_response(session, message, intent, out)
+    return run_request(session, message, gemini_runner=gemini_runner, out=out,
+                       route=route)
 
 
 # ---------------------------------------------------------------------------
@@ -346,7 +500,8 @@ def interactive(session: CliSession) -> None:
 
     while True:
         try:
-            message = input("request> ").strip()
+            # Piped input from PowerShell can start with a byte-order mark.
+            message = input("request> ").replace("﻿", "").strip()
         except (EOFError, KeyboardInterrupt):
             out("\nSession ended.")
             return
@@ -368,13 +523,13 @@ def interactive(session: CliSession) -> None:
             out(f"Last trace: {session.last_trace_path or '(none yet)'}")
             continue
         if command == "/new":
-            session.case_id = new_case_id()
+            session.start_new_case()
             out(f"Started new case: {session.case_id}")
             continue
 
         out("")
         try:
-            run_request(session, message, out=out)
+            handle_message(session, message, out=out)
         except KeyboardInterrupt:
             out("\nRequest interrupted; no trace was saved for it.")
         out("")

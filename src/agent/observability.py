@@ -71,7 +71,9 @@ class AgentTracer:
         self,
         scenario_id: Optional[str] = None,
         run_id: Optional[str] = None,
-        prompt_version: str = "v1.2",
+        # Callers pass the version identified from the prompt actually used
+        # (baseline_chat.identify_prompt_version); None means unidentified.
+        prompt_version: Optional[str] = None,
     ):
         self.run_id = run_id or f"run-{uuid.uuid4().hex[:12]}"
         self.scenario_id = scenario_id

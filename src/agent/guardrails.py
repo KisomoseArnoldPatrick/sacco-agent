@@ -28,6 +28,10 @@ PROHIBITED_ACTION_PATTERNS = [
     # may sit between the determiner and the object.
     r"\bapprove\s+(?:the\s+|my\s+|this\s+|our\s+|his\s+|her\s+|their\s+)?(?:[\w-]+['’]s\s+)?(?:loan|application)\b",
     r"\b(?:please\s+)?approve\s+(?:immediately|my\s+request|this\s+case)\b",
+    # A request addressed to the agent, with a few words before the object
+    # ("approve for me a loan", "can you approve my school fees loan").
+    # Third-person questions ("can an officer approve a loan?") do not match.
+    r"(?:^|[.!?]\s*|\b(?:please|kindly|just|you|u)\s+)(?:approve|reject|decline|deny)\s+(?:\S+\s+){0,4}?(?:loan|application)s?\b",
     r"\b(?:reject|decline)\s+(?:the\s+|my\s+|this\s+|our\s+|his\s+|her\s+|their\s+)?(?:[\w-]+['’]s\s+)?(?:loan|application)\b",
     r"\b(?:make|render|issue)\s+(?:the\s+|a\s+)?(?:loan\s+)?decision\b",
     r"\bscore\s+(?:the\s+|my\s+|this\s+)?(?:loan|credit|application)\b",
@@ -66,14 +70,46 @@ INJECTION_REGEX = re.compile("|".join(PROMPT_INJECTION_PATTERNS), re.IGNORECASE)
 
 # Patterns indicating an unsafe autonomous loan decision in agent/model output.
 UNSAFE_OUTPUT_PATTERNS = [
-    r"\b(?:i\s+have\s+approved|we\s+have\s+approved|your\s+loan\s+is\s+approved|application\s+is\s+approved)\b",
-    r"\b(?:loan\s+has\s+been\s+approved|loan\s+is\s+hereby\s+approved)\b",
-    r"\b(?:i\s+have\s+rejected|your\s+loan\s+is\s+rejected|application\s+is\s+rejected)\b",
-    r"\b(?:funds\s+have\s+been\s+disbursed|disbursement\s+is\s+authorized|disbursement\s+scheduled)\b",
+    # Approval / rejection stated as done ("your loan has been approved",
+    # "I have rejected your application", "I hereby approve this loan").
+    r"\b(?:i|we)\s+(?:have\s+)?(?:approved|rejected|declined|denied)\b",
+    r"\b(?:i|we)\s+(?:hereby\s+)?(?:approve|reject|decline)\s+(?:your|the|this)\b",
+    r"\b(?:loan|application|request)\s+(?:is|has\s+been)\s+(?:hereby\s+)?(?:approved|rejected|declined|denied)\b",
+    # Disbursement / transfer stated as done or authorised.
+    r"\b(?:funds|money|loan|amount|ugx\s*[\d,]+)\s+(?:has|have)\s+been\s+(?:disbursed|transferred|released)\b",
+    r"\b(?:i|we)\s+have\s+(?:disbursed|transferred|released)\b",
+    r"\bdisbursement\s+(?:is|has\s+been)\s+(?:authori[sz]ed|approved|scheduled)\b",
+    r"\bdisbursement\s+scheduled\b",
+    # Account changes.
     r"\b(?:savings\s+balance\s+updated\s+to|account\s+balance\s+modified)\b",
 ]
 
 UNSAFE_OUTPUT_REGEX = re.compile("|".join(UNSAFE_OUTPUT_PATTERNS), re.IGNORECASE)
+
+# A decision phrase inside a conditional or procedural clause describes the
+# process ("once your application is approved, funds are released"), not a
+# decision the agent made. Checked from the start of the sentence to the match.
+CONDITIONAL_CONTEXT_REGEX = re.compile(
+    r"\b(?:if|once|after|when|whenever|until|before|whether|unless|upon|pending|should)\b",
+    re.IGNORECASE,
+)
+
+# Shown when the pre-flight guard blocks a prohibited request.
+PREFLIGHT_REFUSAL = (
+    "This agent prepares cases only. A Relationship Officer must make loan "
+    "decisions. I can help prepare your case for that review: tell me the "
+    "loan product, amount, repayment period and payment frequency."
+)
+
+# Shown instead of a model response that presents a lending decision as made.
+OUTPUT_WITHHELD_NOTICE = (
+    "RESPONSE WITHHELD BY OUTPUT GUARDRAIL\n"
+    "\n"
+    "The drafted response presented a lending decision (approval, rejection, "
+    "or disbursement) as already made, so it has not been shown. This agent "
+    "only prepares cases. Any decision on this application must be made by an "
+    "authorized SACCO Relationship Officer."
+)
 
 
 class GuardrailValidationError(ValueError):
@@ -213,8 +249,12 @@ def validate_agent_output(output_text: str) -> Tuple[bool, str | None]:
     if not output_text or not isinstance(output_text, str):
         return True, None
 
-    match = UNSAFE_OUTPUT_REGEX.search(output_text)
-    if match:
+    for match in UNSAFE_OUTPUT_REGEX.finditer(output_text):
+        sentence_start = max(
+            output_text.rfind(mark, 0, match.start()) for mark in ".!?\n"
+        ) + 1
+        if CONDITIONAL_CONTEXT_REGEX.search(output_text[sentence_start:match.start()]):
+            continue
         return False, f"output_contains_autonomous_decision: '{match.group(0)}'"
 
     return True, None

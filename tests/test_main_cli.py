@@ -172,10 +172,14 @@ class MainCliTests(unittest.TestCase):
 
         self.assertNotEqual(first, second)
         self.assertTrue(first.exists() and second.exists())
-        # The second request resumed the same case with cumulative limits.
+        # The second request continues the same case (history loaded) but has
+        # its own budget; case-level totals are kept separately.
         self.assertEqual(trace["memory"]["case_id"], self.session.case_id)
         self.assertTrue(trace["memory"]["resumed_previous_case"])
-        self.assertEqual(trace["final_state"]["iteration_count"], 4)
+        self.assertEqual(trace["final_state"]["iteration_count"], 0)
+        self.assertEqual(self.session.case_totals["requests"], 2)
+        self.assertEqual(self.session.case_totals["iterations"], 4)
+        self.assertEqual(trace["run_meta"]["budget_scope"], "per_request")
 
 
 if __name__ == "__main__":

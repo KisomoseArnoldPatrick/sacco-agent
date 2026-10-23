@@ -87,6 +87,24 @@ def load_system_prompt(prompt_path: Path = DEFAULT_PROMPT_FILE) -> str:
     return "\n\n".join("## " + s.strip() for s in kept)
 
 
+def identify_prompt_version(system_prompt: str) -> str | None:
+    """
+    Return the version (e.g. "v1.0") of the prompts/ file whose loaded text
+    is exactly system_prompt, or None if it matches no versioned prompt.
+
+    Traces use this so the recorded version always describes the prompt
+    actually sent to the model, rather than a separately hardcoded label.
+    """
+
+    for path in sorted(PROMPTS_DIR.glob("v*.md")):
+        try:
+            if load_system_prompt(path) == system_prompt:
+                return path.stem
+        except (OSError, ValueError):
+            continue
+    return None
+
+
 # ---------------------------------------------------------------------------
 # Error-response helpers
 # ---------------------------------------------------------------------------

@@ -1,5 +1,6 @@
 {
-  "started_at": "2026-10-21T14:28:52.526595+00:00",
+  "started_at": "2026-10-23T15:55:40.869032+00:00",
+  "prompt_version": "v1.0",
   "steps": [
     {
       "iteration": 1,
@@ -177,6 +178,15 @@
         "member_record_available": true,
         "member_record_summary": {
           "membership_number": "HS-2023-000303",
+          "membership_start_date": "2023-03-10",
+          "savings_balance_ugx": 1200000,
+          "share_capital_ugx": 50000,
+          "active_loan": {
+            "loan_product": "Development Loan",
+            "principal_ugx": 4000000,
+            "outstanding_balance_ugx": 2500000,
+            "status": "current"
+          },
           "guarantee_commitments": [
             {
               "membership_number": "HS-2024-000101",
@@ -400,6 +410,15 @@
         "member_record_available": true,
         "member_record_summary": {
           "membership_number": "HS-2023-000303",
+          "membership_start_date": "2023-03-10",
+          "savings_balance_ugx": 1200000,
+          "share_capital_ugx": 50000,
+          "active_loan": {
+            "loan_product": "Development Loan",
+            "principal_ugx": 4000000,
+            "outstanding_balance_ugx": 2500000,
+            "status": "current"
+          },
           "guarantee_commitments": [
             {
               "membership_number": "HS-2024-000101",
@@ -527,7 +546,7 @@
       }
     }
   ],
-  "ended_at": "2026-10-21T14:28:52.527937+00:00",
+  "ended_at": "2026-10-23T15:55:40.871103+00:00",
   "final_state": {
     "member_message": "My membership number is HS-2023-000303. I want a Development Loan of UGX 2,000,000. Please prepare my case.",
     "requester_role": "member",
@@ -613,30 +632,30 @@
     "stop_reason": "clarification_required",
     "human_handoff_required": false
   },
-  "run_id": "run-db96d511c5af",
+  "run_id": "run-a100a6e4a0bb",
   "scenario_id": null,
   "events": [
     {
-      "timestamp": "2026-10-21T14:28:52.528017+00:00",
-      "offset_ms": 1.46,
+      "timestamp": "2026-10-23T15:55:40.871266+00:00",
+      "offset_ms": 2.28,
       "event_type": "run_completed",
       "details": {
         "stop_reason": "clarification_required",
         "human_handoff_required": false,
-        "elapsed_ms": 1.45
+        "elapsed_ms": 2.26
       }
     }
   ],
-  "elapsed_ms": 1.45,
+  "elapsed_ms": 2.26,
   "test_id": "missing_repayment_term",
   "test_name": "Missing repayment term",
   "passed": true,
-  "completed_at": "2026-10-21T14:28:52.528120+00:00",
+  "completed_at": "2026-10-23T15:55:40.871475+00:00",
   "source_fingerprint": {
-    "loop.py": "f85996149d3b0da3f5b06ee85856fb9c4c554fe83993138cc09c189a1b724c94",
+    "loop.py": "e36d3e435b3eb4cb0d55d687f48d29492e00782aa707c9aac3b2cd7f5fe87894",
     "agent_tools.py": "4398f3e439b488fc945642ea1cea176e251cb12ba05ad9aee843efab573576dd",
-    "tools.py": "ea3010b5b82a905b94c69705a28d4f8941615fb1956439727a842e423ebc960f",
-    "baseline_chat.py": "c415f116cffc7610ae2d1f2f58ff2234127325989720acc98d7f932fd957a887",
+    "tools.py": "261c415cd65c3b5080e423a2d104da548339157078f5e032826e9263d5b60742",
+    "baseline_chat.py": "d31fa7717ae17f34accb1a5f8f0b5d936e64fa4a04b177007351a80ac7187773",
     "run_agent_cases.py": "ec1d810e9a21e1061b9c416767d9952068e9720b2b2c0b1c23a8fdd9bba309e5"
   }
 }

@@ -1,0 +1,1185 @@
+{
+  "started_at": "2026-10-23T15:34:56.640750+00:00",
+  "prompt_version": "v1.0",
+  "steps": [
+    {
+      "iteration": 1,
+      "state_before": {
+        "member_message": "fishing loan",
+        "requester_role": "member",
+        "requester_membership_number": "77",
+        "member_record": null,
+        "policy_excerpts": [],
+        "repayment_schedule": null,
+        "missing_requirements": [],
+        "case_summary": null,
+        "tool_calls_made": [],
+        "tool_call_counts": {
+          "get_member_record": 0,
+          "retrieve_policy": 0,
+          "calculate_repayment": 0
+        },
+        "iteration_count": 1,
+        "stop_reason": null,
+        "human_handoff_required": false,
+        "case_id": "cli-20261023T153439Z-9bfd04",
+        "previous_case_history": null
+      },
+      "model_state": {
+        "member_message": "fishing loan",
+        "case_id": "cli-20261023T153439Z-9bfd04",
+        "requester_role": "member",
+        "previous_case_history": null,
+        "requester_membership_number": "77",
+        "member_record_available": false,
+        "member_record_summary": null,
+        "policy_documents_retrieved": [],
+        "policy_documents_count": 0,
+        "policy_excerpts": [],
+        "repayment_schedule_available": false,
+        "repayment_summary": null,
+        "missing_requirements": [],
+        "case_summary_available": false,
+        "tool_call_counts": {
+          "get_member_record": 0,
+          "retrieve_policy": 0,
+          "calculate_repayment": 0
+        },
+        "iteration_count": 1,
+        "limits": {
+          "max_iterations": 6,
+          "max_calls_per_tool": 2
+        },
+        "human_handoff_required": false
+      },
+      "model_latency_ms": 6783.17,
+      "model_error": null,
+      "tool_calls": [
+        {
+          "name": "retrieve_policy",
+          "arguments": {
+            "query": "fishing loan"
+          },
+          "executed": true,
+          "result_summary": {
+            "documents": [
+              "complaints_and_grievance_procedure.md",
+              "development_loan.md",
+              "emergency_loan.md",
+              "guarantor_requirements.md",
+              "interest_rates_summary.md",
+              "loan_application_faq.md",
+              "loan_application_procedure.md",
+              "loan_default_and_recovery.md",
+              "loan_requirements.md",
+              "loan_restructuring_policy.md",
+              "member_identification.md",
+              "member_rights_and_responsibilities.md",
+              "membership_registration.md",
+              "repayment_policy.md",
+              "sacco_governance_and_committees.md",
+              "savings_products.md",
+              "school_fees_loan.md",
+              "supporting_documents.md",
+              "withdrawal_and_exit_policy.md"
+            ],
+            "result_count": 19
+          }
+        }
+      ],
+      "final_text": "",
+      "state_after": {
+        "member_message": "fishing loan",
+        "requester_role": "member",
+        "requester_membership_number": "77",
+        "member_record": null,
+        "policy_excerpts": [
+          {
+            "document": "complaints_and_grievance_procedure.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Complaints and Grievance Procedure\n\n## Submitting a complaint\n\n- A member submits a written complaint to the SACCO office, describing the\n  issue.\n- SACCO staff must acknowledge receipt of the complaint within **3 working\n  days**.\n\n## Resolution at staff level\n\n- Staff aim to resolve the complaint within **14 days** of acknowledgement.\n\n## Escalation\n\n- If the complaint is not resolved at staff level within 14 days, it is\n  escalated to the Supervisory Committee.\n- The Supervisory Committee issues a final written decision within **30\n  days** of escalation.\n\n## Appealing a loan rejection specifically\n\n- A member whose loan application was rejected may appeal, once, to the\n  Credit Committee for reconsideration.\n- The appeal must be submitted within **14 days** of the rejection\n  decision.\n\n## Decision authority\n\n- Loan officers may not decide complaints or appeals; only the Supervisory\n  Committee (general complaints) or the Credit Committee (loan-rejection\n  appeals) may issue a final decision (see\n  `sacco_governance_and_committees.md`).\n"
+          },
+          {
+            "document": "development_loan.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Development Loan\n\n## Purpose\n\nThe Development Loan supports members undertaking income-generating or\npersonal development activities, such as small business expansion, land\nimprovement, or asset purchase.\n\n## Terms\n\n| Feature             | Detail                                                                      |\n| ------------------- | --------------------------------------------------------------------------- |\n| Maximum amount      | UGX 10,000,000, subject to the 3x-savings ceiling in `loan_requirements.md` |\n| Interest rate       | 12% per annum, reducing balance                                             |\n| Repayment period    | Up to 24 months                                                             |\n| Guarantors required | 2 (see `guarantor_requirements.md`)                                         |\n| Grace period        | First repayment due 30 days after disbursement                              |\n\n## Additional requirements\n\n- A short written statement describing the business or development purpose\n  the loan will fund must accompany the application (see\n  `supporting_documents.md`).\n\n## Notes\n\n- Interest is calculated monthly on the outstanding principal (reducing\n  balance), so early repayment reduces total interest paid.\n"
+          },
+          {
+            "document": "emergency_loan.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Emergency Loan\n\n## Purpose\n\nThe Emergency Loan provides fast access to funds for urgent, unforeseen\nneeds such as medical treatment or bereavement.\n\n## Terms\n\n| Feature               | Detail                                                           |\n| --------------------- | ---------------------------------------------------------------- |\n| Maximum amount        | The lower of UGX 2,000,000 or 3 times the member's total savings |\n| Interest rate         | 10% per annum, flat rate                                         |\n| Repayment period      | Up to 6 months                                                   |\n| Guarantors required   | 1 (see `guarantor_requirements.md`)                              |\n| Grace period          | First repayment due 14 days after disbursement                   |\n| Disbursement timeline | Within 48 hours of Credit Committee approval                     |\n\n## Additional requirements\n\n- Proof of the emergency (for example, a hospital bill or death\n  certificate) is encouraged but not mandatory for processing, as noted in\n  `supporting_documents.md`.\n\n## Notes\n\n- Because the interest rate is flat, the total interest due does not\n  reduce if the member repays the loan early.\n"
+          },
+          {
+            "document": "guarantor_requirements.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Guarantor Requirements\n\nGuarantors provide assurance to Hangs SACCO that a loan will be repaid. The\nfollowing rules apply to all guarantors.\n\n## Who may act as a guarantor\n\n- Must be an active Hangs SACCO member in good standing.\n- Must not currently be guaranteeing more than **2** other active loans.\n- Combined, the guarantor(s) on an application must hold savings equal to at\n  least **20% of the loan amount** being guaranteed.\n- A member may not guarantee their own loan application.\n- The guarantor must sign the guarantor consent form in person at the SACCO\n  office.\n\n## Number of guarantors required, by loan product\n\n| Loan product     | Guarantors required |\n| ---------------- | ------------------- |\n| Development Loan | 2                   |\n| School Fees Loan | 2                   |\n| Emergency Loan   | 1                   |\n\n## If a guarantor becomes unavailable\n\n- If a guarantor exits the SACCO or is otherwise unable to continue as\n  guarantor after a loan has been disbursed, the borrowing member must\n  provide a replacement guarantor within **30 days**.\n- Failure to provide a replacement guarantor within this period may result\n  in the loan being referred to the Credit Committee for review.\n"
+          },
+          {
+            "document": "interest_rates_summary.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Interest Rate Summary\n\nThis is a consolidated reference of interest rates across Hangs SACCO\nproducts. In case of any discrepancy, the individual product document is\nauthoritative.\n\n## Loan products\n\n| Product           | Interest rate                | Basis            |\n|-------------------|-------------------------------|-------------------|\n| Development Loan   | 12% per annum                 | Reducing balance  |\n| School Fees Loan    | 11% per annum                 | Reducing balance  |\n| Emergency Loan       | 10% per annum                 | Flat rate         |\n\nFull terms for each are in `development_loan.md`, `school_fees_loan.md` and\n`emergency_loan.md`.\n\n## Savings products\n\n| Product              | Rate                          |\n|-----------------------|--------------------------------|\n| Fixed Deposit Savings  | 6% per annum, paid at maturity |\n| Regular Savings         | No fixed rate; eligible for annual dividend (see `dividends_and_profit_sharing.md`) |\n\n## Penalties\n\n- Late loan repayment penalty: 2% of the overdue amount per month or part\n  month (see `repayment_policy.md`).\n"
+          },
+          {
+            "document": "loan_application_faq.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Loan Application FAQ\n\n**Can I hold two loans at the same time?**\nNo. A member may hold only one active loan at a time, unless the Credit\nCommittee grants a specific exception (see `loan_requirements.md`).\n\n**What happens if my guarantor leaves the SACCO?**\nYou must provide a replacement guarantor within 30 days of the original\nguarantor becoming unavailable (see `guarantor_requirements.md`).\n\n**Can I get more money added to a loan I already have?**\nNo. Additional funds must be requested through a new top-up application,\nwhich goes through the full application procedure (see\n`repayment_policy.md` and `loan_application_procedure.md`).\n\n**How long does it take to receive my loan after approval?**\nDevelopment Loan and School Fees Loan: within 5 working days of Credit\nCommittee approval. Emergency Loan: within 48 hours of approval (see\n`loan_application_procedure.md`).\n\n**Is there a penalty for paying off my loan early?**\nNo penalty applies, but the benefit differs by product: reducing-balance\nloans (Development Loan, School Fees Loan) save you interest; the flat-rate\nEmergency Loan does not (see `repayment_policy.md`).\n\n**Who actually approves my loan?**\nThe loan officer only checks that your application is complete and your\nidentity matches SACCO records. Approval, rejection, or special conditions\nare decided solely by the Credit Committee (see\n`loan_application_procedure.md`).\n\n**Can a family member who is not a SACCO member act as my guarantor?**\nNo. A guarantor must be an active Hangs SACCO member in good standing (see\n`guarantor_requirements.md`).\n"
+          },
+          {
+            "document": "loan_application_procedure.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Loan Application Procedure\n\nThis document describes the end-to-end steps for a Hangs SACCO loan\napplication, from initial eligibility check to disbursement.\n\n## Steps\n\n1. **Eligibility check.** The member confirms they meet the general\n   eligibility rules in `loan_requirements.md` (active membership and\n   savings history).\n2. **Product selection.** The member chooses a loan product: Development\n   Loan, Emergency Loan or School Fees Loan.\n3. **Application form.** The member completes the loan application form,\n   stating the amount requested and purpose.\n4. **Supporting documents.** The member gathers the documents listed in\n   `supporting_documents.md` for the chosen product.\n5. **Guarantors.** The member secures the required number of guarantors\n   (see `guarantor_requirements.md`) and each guarantor signs a consent\n   form in person.\n6. **Submission.** The completed application, documents and guarantor\n   forms are submitted to a loan officer.\n7. **Completeness check.** The loan officer verifies the application is\n   complete and the applicant's identity matches SACCO records. Incomplete\n   applications are returned to the member with a list of what is missing.\n8. **Credit Committee review.** Complete applications are forwarded to the\n   Credit Committee, which approves, rejects, or requests additional\n   information.\n9. **Disbursement.** Approved loans are disbursed within **5 working days**\n   of Credit Committee approval, except the Emergency Loan, which is\n   disbursed within **48 hours** of approval.\n10. **Repayment begins.** The first repayment falls due according to the\n    grace period defined in `repayment_policy.md` for the relevant product.\n\n## Who decides what\n\n- The loan officer checks completeness and eligibility; they do not approve\n  loans.\n- Only the Credit Committee may approve, reject, or set special conditions\n  on a loan application.\n"
+          },
+          {
+            "document": "loan_default_and_recovery.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Loan Default and Recovery\n\nThis document describes what happens after a loan is classified as in\ndefault, as defined in `repayment_policy.md` (repayments overdue by more\nthan 60 days).\n\n## Step 1 — Default notice\n\nA written default notice is sent to the member and to each of their\nguarantors as soon as a loan is classified as in default.\n\n## Step 2 — Credit Committee review\n\nThe Credit Committee reviews the defaulted case within **14 days** of the\ndefault classification, and may:\n\n- Agree a recovery plan directly with the member, or\n- Proceed to guarantor liability if no agreement is reached.\n\n## Step 3 — Guarantor liability\n\nIf the default remains unresolved **30 days** after the default notice was\nsent, the guarantor(s) on the loan become liable to cover the outstanding\nbalance from their own savings and share capital, consistent with the\nguarantor consent form they signed at application (see\n`guarantor_requirements.md`).\n\n## Step 4 — Escalation\n\nCases that remain unresolved after guarantor liability has been applied are\nforwarded to the Board of Directors, who may authorize further recovery\naction, including legal recovery, as a last resort.\n\n## Decision authority\n\n- Loan officers cannot authorize any step in this process.\n- Only the Credit Committee and, at the final escalation stage, the Board\n  of Directors, may make default-recovery decisions (see\n  `sacco_governance_and_committees.md`).\n"
+          },
+          {
+            "document": "loan_requirements.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# General Loan Requirements\n\nThis document sets out the baseline eligibility rules that apply to every loan\nproduct offered by Hangs SACCO, unless a specific product document states a\ndifferent rule.\n\n## Eligibility\n\n- The applicant must be a registered member of Hangs SACCO in good standing.\n- The applicant must have held active membership for at least **3 consecutive\n  months** before applying.\n- The applicant must have made regular savings contributions for at least\n  **3 consecutive months** immediately before the application.\n- The applicant must not have any loan currently classified as in default.\n- A member may hold only **one active loan at a time**, unless the Credit\n  Committee grants a specific exception.\n\n## Loan amount ceiling\n\n- Unless a specific loan product states otherwise, the maximum loan amount is\n  **three (3) times the member's total accumulated savings** at the time of\n  application.\n\n## General application requirements\n\n- Completed loan application form.\n- Supporting documents as listed in `supporting_documents.md`.\n- Guarantors as specified in `guarantor_requirements.md` for the relevant\n  loan product.\n\n## Related documents\n\n- See `loan_application_procedure.md` for the step-by-step process.\n- See `supporting_documents.md` for the full document checklist.\n- See `guarantor_requirements.md` for guarantor rules.\n"
+          },
+          {
+            "document": "loan_restructuring_policy.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Loan Restructuring Policy\n\n## When restructuring may be requested\n\n- A member experiencing genuine financial hardship may apply in writing to\n  restructure their loan (for example, an extended repayment term or a\n  revised schedule) **before** the loan falls into default as defined in\n  `repayment_policy.md`.\n\n## Review and approval\n\n- Restructuring requests are reviewed and decided **only** by the Credit\n  Committee. Loan officers cannot approve a restructuring request (see\n  `sacco_governance_and_committees.md`).\n\n## Limits\n\n- A given loan may be restructured **only once** during its term.\n- Restructuring changes the future repayment schedule but does not remove\n  or waive any late payment penalties that have already accrued under\n  `repayment_policy.md`.\n\n## Relationship to default and recovery\n\n- A loan that has already been classified as in default follows the\n  process in `loan_default_and_recovery.md` instead of this restructuring\n  process.\n"
+          },
+          {
+            "document": "member_identification.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Member Identification\n\n## Membership number\n\n- Every Hangs SACCO member is issued a unique Membership Number at\n  registration, in the format `HS-YYYY-NNNNNN` (for example, `HS-2026-000123`).\n- The Membership Number is used to identify the member's record in all\n  applications, transactions and correspondence.\n\n## Identity verification at registration\n\nNew members must complete a Know-Your-Member (KYM) form and present:\n\n1. A valid National ID or passport.\n2. One passport-size photograph.\n\n## Identity verification at loan application\n\nBefore any loan application is processed, the loan officer must confirm\nthat the National ID presented matches the identity on record for that\nMembership Number. If the two do not match, the application must be placed\non hold pending manual verification by the Membership Office.\n\n## Updating member details\n\n- Changes to a member's name, phone number or next of kin must be submitted\n  in writing and verified against the original National ID before the\n  membership record is updated.\n"
+          },
+          {
+            "document": "member_rights_and_responsibilities.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Member Rights and Responsibilities\n\n## Rights\n\n- To vote at the Annual General Meeting (AGM) on a one-member, one-vote\n  basis, regardless of shareholding size.\n- To access their own savings, share capital and loan records on request.\n- To receive an annual dividend statement, where a dividend is declared\n  (see `dividends_and_profit_sharing.md`).\n- To lodge a complaint through the process in\n  `complaints_and_grievance_procedure.md`.\n\n## Responsibilities\n\n- To maintain the minimum monthly savings contribution described in\n  `savings_products.md`.\n- To repay any loan according to the agreed schedule in\n  `repayment_policy.md`.\n- To keep their identification and contact details up to date, as described\n  in `member_identification.md`.\n- To attend the AGM where reasonably possible, as decisions on dividends\n  and governance are made there.\n"
+          },
+          {
+            "document": "membership_registration.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Membership Registration\n\n## Eligibility to join\n\n- Applicants must be at least 18 years old.\n- Applicants must complete a Membership Application Form and a Know-Your-Member\n  (KYM) form, as described in `member_identification.md`.\n\n## Registration costs\n\n- A one-time, non-refundable registration fee of **UGX 20,000**.\n- A minimum initial share capital contribution of **UGX 30,000**.\n\n## Approval\n\n- New membership applications are reviewed and approved by the Board of\n  Directors within **7 working days** of submission.\n- Once approved, the applicant is issued a Membership Number in the format\n  described in `member_identification.md`.\n\n## Becoming loan-eligible\n\n- A new member does not become eligible to apply for a loan immediately on\n  registration. As set out in `loan_requirements.md`, a member must hold\n  active membership and make regular savings contributions for at least\n  3 consecutive months before applying for any loan product.\n"
+          },
+          {
+            "document": "repayment_policy.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Repayment Policy\n\n## Repayment channels\n\nRepayments may be made through any of the following:\n\n- Cash payment at the SACCO office.\n- Mobile money transfer to the SACCO's registered pay-in number.\n- Payroll deduction, where the member's employer has a check-off agreement\n  with the SACCO.\n\n## Grace periods\n\n- Development Loan and School Fees Loan: first repayment due 30 days after\n  disbursement.\n- Emergency Loan: first repayment due 14 days after disbursement.\n\n## Late payment\n\n- A late payment penalty of **2% of the overdue amount** is charged for\n  each month, or part of a month, that a repayment is late.\n- A loan with repayments overdue by more than **60 days** is classified as\n  in default. Defaulted loans are referred to the Credit Committee and the\n  loan's guarantors are formally notified.\n\n## Early repayment\n\n- Members may repay a loan in full before the end of its term at no\n  penalty.\n- For reducing-balance loans (Development Loan, School Fees Loan), early\n  repayment reduces the total interest paid, since interest accrues monthly\n  on the outstanding principal.\n- For the flat-rate Emergency Loan, early repayment does not reduce the\n  total interest due.\n\n## Loan top-ups\n\n- A member may not simply increase an already-approved loan. Any request\n  for additional funds must be submitted as a new \"top-up\" application and\n  goes through the full application procedure in\n  `loan_application_procedure.md`.\n"
+          },
+          {
+            "document": "sacco_governance_and_committees.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# SACCO Governance and Committees\n\nThis document sets out who holds decision-making authority at Hangs SACCO.\nIt directly supports the project's AI Boundary Matrix: the AI assistant may\nexplain policy and help prepare a case, deterministic software may\ncalculate figures such as repayment schedules, but only the human bodies\nlisted below may make binding decisions.\n\n## Board of Directors\n\n- Elected by members at the Annual General Meeting (AGM).\n- Sets overall SACCO policy and strategic direction.\n- Approves new membership applications (see `membership_registration.md`).\n- Makes the final decision on escalated loan-default recovery action (see\n  `loan_default_and_recovery.md`).\n\n## Credit Committee\n\n- The sole authority that may approve, reject, or set conditions on a loan\n  application (see `loan_application_procedure.md`).\n- The sole authority that may approve a loan restructuring request (see\n  `loan_restructuring_policy.md`).\n- Reviews defaulted loans at Step 2 of the recovery process (see\n  `loan_default_and_recovery.md`).\n- Decides loan-rejection appeals (see\n  `complaints_and_grievance_procedure.md`).\n\n## Supervisory Committee\n\n- Handles escalated member complaints that are not loan-rejection appeals\n  (see `complaints_and_grievance_procedure.md`).\n- Provides internal oversight of SACCO operations.\n\n## Loan Officers\n\n- Front-line staff who check that applications are complete and that the\n  applicant's identity matches SACCO records (see\n  `member_identification.md` and `loan_application_procedure.md`).\n- Loan officers do not have authority to approve, reject, restructure, or\n  decide complaints. Their role is limited to verification and preparing a\n  case for Committee review.\n"
+          },
+          {
+            "document": "savings_products.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Savings Products\n\nHangs SACCO offers two savings products. A member's savings balance is used\nto determine their loan ceiling, as described in `loan_requirements.md`.\n\n## Regular Savings Account\n\n- Minimum monthly contribution: **UGX 20,000**.\n- Funds may be withdrawn subject to the notice and conditions in\n  `withdrawal_and_exit_policy.md`.\n- Regular savings balances count toward a member's loan ceiling but do not\n  themselves earn a fixed interest rate; they may instead be eligible for an\n  annual dividend as described in `dividends_and_profit_sharing.md`.\n\n## Fixed Deposit Savings\n\n- Minimum deposit: **UGX 500,000**.\n- Funds are locked for a minimum term of **6 months**.\n- Earns a fixed interest rate of **6% per annum**, paid at maturity.\n- Fixed Deposit balances also count toward a member's loan ceiling.\n\n## Share Capital\n\n- Share capital is separate from savings and is the amount used to\n  calculate annual dividends (see `dividends_and_profit_sharing.md`). The\n  minimum initial share capital is set at registration (see\n  `membership_registration.md`).\n"
+          },
+          {
+            "document": "school_fees_loan.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# School Fees Loan\n\n## Purpose\n\nThe School Fees Loan helps members cover tuition and related education\ncosts for themselves or their dependents.\n\n## Terms\n\n| Feature             | Detail                                                                                        |\n| ------------------- | --------------------------------------------------------------------------------------------- |\n| Maximum amount      | UGX 5,000,000, subject to the 3x-savings ceiling in `loan_requirements.md`                    |\n| Interest rate       | 11% per annum, reducing balance                                                               |\n| Repayment period    | Up to 4 months if aligned to a single school term, or up to 12 months if covering annual fees |\n| Guarantors required | 2 (see `guarantor_requirements.md`)                                                           |\n| Grace period        | First repayment due 30 days after disbursement                                                |\n\n## Additional requirements\n\n- An official fee structure or invoice from the learning institution must\n  be submitted, showing the amount due and the term or year it covers (see\n  `supporting_documents.md`).\n\n## Notes\n\n- Disbursement is made directly to the member's SACCO account; the SACCO\n  does not pay institutions directly on the member's behalf.\n"
+          },
+          {
+            "document": "supporting_documents.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Supporting Documents Checklist\n\nThe following documents must accompany every loan application submitted to\nHangs SACCO.\n\n## Required for all loan products\n\n1. Completed and signed loan application form.\n2. A copy of the member's National ID or valid passport.\n3. One recent passport-size photograph.\n4. Statements of savings/contributions for the last 3 months.\n5. Signed guarantor consent form(s), one per required guarantor.\n\n## Additional documents by loan product\n\n- **School Fees Loan**: an official fee structure or invoice from the\n  learning institution, showing the amount due and the term/semester it\n  covers.\n- **Development Loan**: a short written statement of the business or\n  development purpose the loan will fund (no formal business plan template\n  is required).\n- **Emergency Loan**: proof of the emergency where reasonably available\n  (for example, a hospital bill or a death certificate). This is\n  encouraged but not mandatory for the Emergency Loan to be processed.\n\n## Notes\n\n- Photocopies must be legible; the loan officer may request the original\n  document for verification.\n- Incomplete document sets will not be forwarded to the Credit Committee.\n"
+          },
+          {
+            "document": "withdrawal_and_exit_policy.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Withdrawal and Exit Policy\n\n## Notice required\n\n- A member wishing to exit Hangs SACCO must submit a written withdrawal\n  notice at least **30 days** before their expected payout date.\n\n## Members with an active loan\n\n- A member with an active loan may not withdraw their savings or exit the\n  SACCO until the loan is fully repaid, or until the Credit Committee\n  approves an alternative arrangement secured by the member's remaining\n  guarantors.\n\n## Processing an approved exit\n\n- Once an exit request is approved, the member's share capital and savings\n  balance, minus any outstanding obligations, is refunded within **60\n  days**.\n\n## Related documents\n\n- See `savings_products.md` for what counts toward a member's savings and\n  share capital balance.\n- See `dividends_and_profit_sharing.md` for how an exiting member's\n  dividend entitlement for the current year, if any, is handled at the next\n  AGM.\n"
+          }
+        ],
+        "repayment_schedule": null,
+        "missing_requirements": [],
+        "case_summary": null,
+        "tool_calls_made": [
+          {
+            "name": "retrieve_policy",
+            "arguments": {
+              "query": "fishing loan"
+            },
+            "executed": true,
+            "result": {
+              "error": null,
+              "documents": [
+                "complaints_and_grievance_procedure.md",
+                "development_loan.md",
+                "emergency_loan.md",
+                "guarantor_requirements.md",
+                "interest_rates_summary.md",
+                "loan_application_faq.md",
+                "loan_application_procedure.md",
+                "loan_default_and_recovery.md",
+                "loan_requirements.md",
+                "loan_restructuring_policy.md",
+                "member_identification.md",
+                "member_rights_and_responsibilities.md",
+                "membership_registration.md",
+                "repayment_policy.md",
+                "sacco_governance_and_committees.md",
+                "savings_products.md",
+                "school_fees_loan.md",
+                "supporting_documents.md",
+                "withdrawal_and_exit_policy.md"
+              ],
+              "result_count": 19
+            },
+            "result_summary": {
+              "error": null,
+              "documents": [
+                "complaints_and_grievance_procedure.md",
+                "development_loan.md",
+                "emergency_loan.md",
+                "guarantor_requirements.md",
+                "interest_rates_summary.md",
+                "loan_application_faq.md",
+                "loan_application_procedure.md",
+                "loan_default_and_recovery.md",
+                "loan_requirements.md",
+                "loan_restructuring_policy.md",
+                "member_identification.md",
+                "member_rights_and_responsibilities.md",
+                "membership_registration.md",
+                "repayment_policy.md",
+                "sacco_governance_and_committees.md",
+                "savings_products.md",
+                "school_fees_loan.md",
+                "supporting_documents.md",
+                "withdrawal_and_exit_policy.md"
+              ],
+              "result_count": 19
+            }
+          }
+        ],
+        "tool_call_counts": {
+          "get_member_record": 0,
+          "retrieve_policy": 1,
+          "calculate_repayment": 0
+        },
+        "iteration_count": 1,
+        "stop_reason": null,
+        "human_handoff_required": false,
+        "case_id": "cli-20261023T153439Z-9bfd04",
+        "previous_case_history": null
+      }
+    },
+    {
+      "iteration": 2,
+      "state_before": {
+        "member_message": "fishing loan",
+        "requester_role": "member",
+        "requester_membership_number": "77",
+        "member_record": null,
+        "policy_excerpts": [
+          {
+            "document": "complaints_and_grievance_procedure.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Complaints and Grievance Procedure\n\n## Submitting a complaint\n\n- A member submits a written complaint to the SACCO office, describing the\n  issue.\n- SACCO staff must acknowledge receipt of the complaint within **3 working\n  days**.\n\n## Resolution at staff level\n\n- Staff aim to resolve the complaint within **14 days** of acknowledgement.\n\n## Escalation\n\n- If the complaint is not resolved at staff level within 14 days, it is\n  escalated to the Supervisory Committee.\n- The Supervisory Committee issues a final written decision within **30\n  days** of escalation.\n\n## Appealing a loan rejection specifically\n\n- A member whose loan application was rejected may appeal, once, to the\n  Credit Committee for reconsideration.\n- The appeal must be submitted within **14 days** of the rejection\n  decision.\n\n## Decision authority\n\n- Loan officers may not decide complaints or appeals; only the Supervisory\n  Committee (general complaints) or the Credit Committee (loan-rejection\n  appeals) may issue a final decision (see\n  `sacco_governance_and_committees.md`).\n"
+          },
+          {
+            "document": "development_loan.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Development Loan\n\n## Purpose\n\nThe Development Loan supports members undertaking income-generating or\npersonal development activities, such as small business expansion, land\nimprovement, or asset purchase.\n\n## Terms\n\n| Feature             | Detail                                                                      |\n| ------------------- | --------------------------------------------------------------------------- |\n| Maximum amount      | UGX 10,000,000, subject to the 3x-savings ceiling in `loan_requirements.md` |\n| Interest rate       | 12% per annum, reducing balance                                             |\n| Repayment period    | Up to 24 months                                                             |\n| Guarantors required | 2 (see `guarantor_requirements.md`)                                         |\n| Grace period        | First repayment due 30 days after disbursement                              |\n\n## Additional requirements\n\n- A short written statement describing the business or development purpose\n  the loan will fund must accompany the application (see\n  `supporting_documents.md`).\n\n## Notes\n\n- Interest is calculated monthly on the outstanding principal (reducing\n  balance), so early repayment reduces total interest paid.\n"
+          },
+          {
+            "document": "emergency_loan.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Emergency Loan\n\n## Purpose\n\nThe Emergency Loan provides fast access to funds for urgent, unforeseen\nneeds such as medical treatment or bereavement.\n\n## Terms\n\n| Feature               | Detail                                                           |\n| --------------------- | ---------------------------------------------------------------- |\n| Maximum amount        | The lower of UGX 2,000,000 or 3 times the member's total savings |\n| Interest rate         | 10% per annum, flat rate                                         |\n| Repayment period      | Up to 6 months                                                   |\n| Guarantors required   | 1 (see `guarantor_requirements.md`)                              |\n| Grace period          | First repayment due 14 days after disbursement                   |\n| Disbursement timeline | Within 48 hours of Credit Committee approval                     |\n\n## Additional requirements\n\n- Proof of the emergency (for example, a hospital bill or death\n  certificate) is encouraged but not mandatory for processing, as noted in\n  `supporting_documents.md`.\n\n## Notes\n\n- Because the interest rate is flat, the total interest due does not\n  reduce if the member repays the loan early.\n"
+          },
+          {
+            "document": "guarantor_requirements.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Guarantor Requirements\n\nGuarantors provide assurance to Hangs SACCO that a loan will be repaid. The\nfollowing rules apply to all guarantors.\n\n## Who may act as a guarantor\n\n- Must be an active Hangs SACCO member in good standing.\n- Must not currently be guaranteeing more than **2** other active loans.\n- Combined, the guarantor(s) on an application must hold savings equal to at\n  least **20% of the loan amount** being guaranteed.\n- A member may not guarantee their own loan application.\n- The guarantor must sign the guarantor consent form in person at the SACCO\n  office.\n\n## Number of guarantors required, by loan product\n\n| Loan product     | Guarantors required |\n| ---------------- | ------------------- |\n| Development Loan | 2                   |\n| School Fees Loan | 2                   |\n| Emergency Loan   | 1                   |\n\n## If a guarantor becomes unavailable\n\n- If a guarantor exits the SACCO or is otherwise unable to continue as\n  guarantor after a loan has been disbursed, the borrowing member must\n  provide a replacement guarantor within **30 days**.\n- Failure to provide a replacement guarantor within this period may result\n  in the loan being referred to the Credit Committee for review.\n"
+          },
+          {
+            "document": "interest_rates_summary.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Interest Rate Summary\n\nThis is a consolidated reference of interest rates across Hangs SACCO\nproducts. In case of any discrepancy, the individual product document is\nauthoritative.\n\n## Loan products\n\n| Product           | Interest rate                | Basis            |\n|-------------------|-------------------------------|-------------------|\n| Development Loan   | 12% per annum                 | Reducing balance  |\n| School Fees Loan    | 11% per annum                 | Reducing balance  |\n| Emergency Loan       | 10% per annum                 | Flat rate         |\n\nFull terms for each are in `development_loan.md`, `school_fees_loan.md` and\n`emergency_loan.md`.\n\n## Savings products\n\n| Product              | Rate                          |\n|-----------------------|--------------------------------|\n| Fixed Deposit Savings  | 6% per annum, paid at maturity |\n| Regular Savings         | No fixed rate; eligible for annual dividend (see `dividends_and_profit_sharing.md`) |\n\n## Penalties\n\n- Late loan repayment penalty: 2% of the overdue amount per month or part\n  month (see `repayment_policy.md`).\n"
+          },
+          {
+            "document": "loan_application_faq.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Loan Application FAQ\n\n**Can I hold two loans at the same time?**\nNo. A member may hold only one active loan at a time, unless the Credit\nCommittee grants a specific exception (see `loan_requirements.md`).\n\n**What happens if my guarantor leaves the SACCO?**\nYou must provide a replacement guarantor within 30 days of the original\nguarantor becoming unavailable (see `guarantor_requirements.md`).\n\n**Can I get more money added to a loan I already have?**\nNo. Additional funds must be requested through a new top-up application,\nwhich goes through the full application procedure (see\n`repayment_policy.md` and `loan_application_procedure.md`).\n\n**How long does it take to receive my loan after approval?**\nDevelopment Loan and School Fees Loan: within 5 working days of Credit\nCommittee approval. Emergency Loan: within 48 hours of approval (see\n`loan_application_procedure.md`).\n\n**Is there a penalty for paying off my loan early?**\nNo penalty applies, but the benefit differs by product: reducing-balance\nloans (Development Loan, School Fees Loan) save you interest; the flat-rate\nEmergency Loan does not (see `repayment_policy.md`).\n\n**Who actually approves my loan?**\nThe loan officer only checks that your application is complete and your\nidentity matches SACCO records. Approval, rejection, or special conditions\nare decided solely by the Credit Committee (see\n`loan_application_procedure.md`).\n\n**Can a family member who is not a SACCO member act as my guarantor?**\nNo. A guarantor must be an active Hangs SACCO member in good standing (see\n`guarantor_requirements.md`).\n"
+          },
+          {
+            "document": "loan_application_procedure.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Loan Application Procedure\n\nThis document describes the end-to-end steps for a Hangs SACCO loan\napplication, from initial eligibility check to disbursement.\n\n## Steps\n\n1. **Eligibility check.** The member confirms they meet the general\n   eligibility rules in `loan_requirements.md` (active membership and\n   savings history).\n2. **Product selection.** The member chooses a loan product: Development\n   Loan, Emergency Loan or School Fees Loan.\n3. **Application form.** The member completes the loan application form,\n   stating the amount requested and purpose.\n4. **Supporting documents.** The member gathers the documents listed in\n   `supporting_documents.md` for the chosen product.\n5. **Guarantors.** The member secures the required number of guarantors\n   (see `guarantor_requirements.md`) and each guarantor signs a consent\n   form in person.\n6. **Submission.** The completed application, documents and guarantor\n   forms are submitted to a loan officer.\n7. **Completeness check.** The loan officer verifies the application is\n   complete and the applicant's identity matches SACCO records. Incomplete\n   applications are returned to the member with a list of what is missing.\n8. **Credit Committee review.** Complete applications are forwarded to the\n   Credit Committee, which approves, rejects, or requests additional\n   information.\n9. **Disbursement.** Approved loans are disbursed within **5 working days**\n   of Credit Committee approval, except the Emergency Loan, which is\n   disbursed within **48 hours** of approval.\n10. **Repayment begins.** The first repayment falls due according to the\n    grace period defined in `repayment_policy.md` for the relevant product.\n\n## Who decides what\n\n- The loan officer checks completeness and eligibility; they do not approve\n  loans.\n- Only the Credit Committee may approve, reject, or set special conditions\n  on a loan application.\n"
+          },
+          {
+            "document": "loan_default_and_recovery.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Loan Default and Recovery\n\nThis document describes what happens after a loan is classified as in\ndefault, as defined in `repayment_policy.md` (repayments overdue by more\nthan 60 days).\n\n## Step 1 — Default notice\n\nA written default notice is sent to the member and to each of their\nguarantors as soon as a loan is classified as in default.\n\n## Step 2 — Credit Committee review\n\nThe Credit Committee reviews the defaulted case within **14 days** of the\ndefault classification, and may:\n\n- Agree a recovery plan directly with the member, or\n- Proceed to guarantor liability if no agreement is reached.\n\n## Step 3 — Guarantor liability\n\nIf the default remains unresolved **30 days** after the default notice was\nsent, the guarantor(s) on the loan become liable to cover the outstanding\nbalance from their own savings and share capital, consistent with the\nguarantor consent form they signed at application (see\n`guarantor_requirements.md`).\n\n## Step 4 — Escalation\n\nCases that remain unresolved after guarantor liability has been applied are\nforwarded to the Board of Directors, who may authorize further recovery\naction, including legal recovery, as a last resort.\n\n## Decision authority\n\n- Loan officers cannot authorize any step in this process.\n- Only the Credit Committee and, at the final escalation stage, the Board\n  of Directors, may make default-recovery decisions (see\n  `sacco_governance_and_committees.md`).\n"
+          },
+          {
+            "document": "loan_requirements.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# General Loan Requirements\n\nThis document sets out the baseline eligibility rules that apply to every loan\nproduct offered by Hangs SACCO, unless a specific product document states a\ndifferent rule.\n\n## Eligibility\n\n- The applicant must be a registered member of Hangs SACCO in good standing.\n- The applicant must have held active membership for at least **3 consecutive\n  months** before applying.\n- The applicant must have made regular savings contributions for at least\n  **3 consecutive months** immediately before the application.\n- The applicant must not have any loan currently classified as in default.\n- A member may hold only **one active loan at a time**, unless the Credit\n  Committee grants a specific exception.\n\n## Loan amount ceiling\n\n- Unless a specific loan product states otherwise, the maximum loan amount is\n  **three (3) times the member's total accumulated savings** at the time of\n  application.\n\n## General application requirements\n\n- Completed loan application form.\n- Supporting documents as listed in `supporting_documents.md`.\n- Guarantors as specified in `guarantor_requirements.md` for the relevant\n  loan product.\n\n## Related documents\n\n- See `loan_application_procedure.md` for the step-by-step process.\n- See `supporting_documents.md` for the full document checklist.\n- See `guarantor_requirements.md` for guarantor rules.\n"
+          },
+          {
+            "document": "loan_restructuring_policy.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Loan Restructuring Policy\n\n## When restructuring may be requested\n\n- A member experiencing genuine financial hardship may apply in writing to\n  restructure their loan (for example, an extended repayment term or a\n  revised schedule) **before** the loan falls into default as defined in\n  `repayment_policy.md`.\n\n## Review and approval\n\n- Restructuring requests are reviewed and decided **only** by the Credit\n  Committee. Loan officers cannot approve a restructuring request (see\n  `sacco_governance_and_committees.md`).\n\n## Limits\n\n- A given loan may be restructured **only once** during its term.\n- Restructuring changes the future repayment schedule but does not remove\n  or waive any late payment penalties that have already accrued under\n  `repayment_policy.md`.\n\n## Relationship to default and recovery\n\n- A loan that has already been classified as in default follows the\n  process in `loan_default_and_recovery.md` instead of this restructuring\n  process.\n"
+          },
+          {
+            "document": "member_identification.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Member Identification\n\n## Membership number\n\n- Every Hangs SACCO member is issued a unique Membership Number at\n  registration, in the format `HS-YYYY-NNNNNN` (for example, `HS-2026-000123`).\n- The Membership Number is used to identify the member's record in all\n  applications, transactions and correspondence.\n\n## Identity verification at registration\n\nNew members must complete a Know-Your-Member (KYM) form and present:\n\n1. A valid National ID or passport.\n2. One passport-size photograph.\n\n## Identity verification at loan application\n\nBefore any loan application is processed, the loan officer must confirm\nthat the National ID presented matches the identity on record for that\nMembership Number. If the two do not match, the application must be placed\non hold pending manual verification by the Membership Office.\n\n## Updating member details\n\n- Changes to a member's name, phone number or next of kin must be submitted\n  in writing and verified against the original National ID before the\n  membership record is updated.\n"
+          },
+          {
+            "document": "member_rights_and_responsibilities.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Member Rights and Responsibilities\n\n## Rights\n\n- To vote at the Annual General Meeting (AGM) on a one-member, one-vote\n  basis, regardless of shareholding size.\n- To access their own savings, share capital and loan records on request.\n- To receive an annual dividend statement, where a dividend is declared\n  (see `dividends_and_profit_sharing.md`).\n- To lodge a complaint through the process in\n  `complaints_and_grievance_procedure.md`.\n\n## Responsibilities\n\n- To maintain the minimum monthly savings contribution described in\n  `savings_products.md`.\n- To repay any loan according to the agreed schedule in\n  `repayment_policy.md`.\n- To keep their identification and contact details up to date, as described\n  in `member_identification.md`.\n- To attend the AGM where reasonably possible, as decisions on dividends\n  and governance are made there.\n"
+          },
+          {
+            "document": "membership_registration.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Membership Registration\n\n## Eligibility to join\n\n- Applicants must be at least 18 years old.\n- Applicants must complete a Membership Application Form and a Know-Your-Member\n  (KYM) form, as described in `member_identification.md`.\n\n## Registration costs\n\n- A one-time, non-refundable registration fee of **UGX 20,000**.\n- A minimum initial share capital contribution of **UGX 30,000**.\n\n## Approval\n\n- New membership applications are reviewed and approved by the Board of\n  Directors within **7 working days** of submission.\n- Once approved, the applicant is issued a Membership Number in the format\n  described in `member_identification.md`.\n\n## Becoming loan-eligible\n\n- A new member does not become eligible to apply for a loan immediately on\n  registration. As set out in `loan_requirements.md`, a member must hold\n  active membership and make regular savings contributions for at least\n  3 consecutive months before applying for any loan product.\n"
+          },
+          {
+            "document": "repayment_policy.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Repayment Policy\n\n## Repayment channels\n\nRepayments may be made through any of the following:\n\n- Cash payment at the SACCO office.\n- Mobile money transfer to the SACCO's registered pay-in number.\n- Payroll deduction, where the member's employer has a check-off agreement\n  with the SACCO.\n\n## Grace periods\n\n- Development Loan and School Fees Loan: first repayment due 30 days after\n  disbursement.\n- Emergency Loan: first repayment due 14 days after disbursement.\n\n## Late payment\n\n- A late payment penalty of **2% of the overdue amount** is charged for\n  each month, or part of a month, that a repayment is late.\n- A loan with repayments overdue by more than **60 days** is classified as\n  in default. Defaulted loans are referred to the Credit Committee and the\n  loan's guarantors are formally notified.\n\n## Early repayment\n\n- Members may repay a loan in full before the end of its term at no\n  penalty.\n- For reducing-balance loans (Development Loan, School Fees Loan), early\n  repayment reduces the total interest paid, since interest accrues monthly\n  on the outstanding principal.\n- For the flat-rate Emergency Loan, early repayment does not reduce the\n  total interest due.\n\n## Loan top-ups\n\n- A member may not simply increase an already-approved loan. Any request\n  for additional funds must be submitted as a new \"top-up\" application and\n  goes through the full application procedure in\n  `loan_application_procedure.md`.\n"
+          },
+          {
+            "document": "sacco_governance_and_committees.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# SACCO Governance and Committees\n\nThis document sets out who holds decision-making authority at Hangs SACCO.\nIt directly supports the project's AI Boundary Matrix: the AI assistant may\nexplain policy and help prepare a case, deterministic software may\ncalculate figures such as repayment schedules, but only the human bodies\nlisted below may make binding decisions.\n\n## Board of Directors\n\n- Elected by members at the Annual General Meeting (AGM).\n- Sets overall SACCO policy and strategic direction.\n- Approves new membership applications (see `membership_registration.md`).\n- Makes the final decision on escalated loan-default recovery action (see\n  `loan_default_and_recovery.md`).\n\n## Credit Committee\n\n- The sole authority that may approve, reject, or set conditions on a loan\n  application (see `loan_application_procedure.md`).\n- The sole authority that may approve a loan restructuring request (see\n  `loan_restructuring_policy.md`).\n- Reviews defaulted loans at Step 2 of the recovery process (see\n  `loan_default_and_recovery.md`).\n- Decides loan-rejection appeals (see\n  `complaints_and_grievance_procedure.md`).\n\n## Supervisory Committee\n\n- Handles escalated member complaints that are not loan-rejection appeals\n  (see `complaints_and_grievance_procedure.md`).\n- Provides internal oversight of SACCO operations.\n\n## Loan Officers\n\n- Front-line staff who check that applications are complete and that the\n  applicant's identity matches SACCO records (see\n  `member_identification.md` and `loan_application_procedure.md`).\n- Loan officers do not have authority to approve, reject, restructure, or\n  decide complaints. Their role is limited to verification and preparing a\n  case for Committee review.\n"
+          },
+          {
+            "document": "savings_products.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Savings Products\n\nHangs SACCO offers two savings products. A member's savings balance is used\nto determine their loan ceiling, as described in `loan_requirements.md`.\n\n## Regular Savings Account\n\n- Minimum monthly contribution: **UGX 20,000**.\n- Funds may be withdrawn subject to the notice and conditions in\n  `withdrawal_and_exit_policy.md`.\n- Regular savings balances count toward a member's loan ceiling but do not\n  themselves earn a fixed interest rate; they may instead be eligible for an\n  annual dividend as described in `dividends_and_profit_sharing.md`.\n\n## Fixed Deposit Savings\n\n- Minimum deposit: **UGX 500,000**.\n- Funds are locked for a minimum term of **6 months**.\n- Earns a fixed interest rate of **6% per annum**, paid at maturity.\n- Fixed Deposit balances also count toward a member's loan ceiling.\n\n## Share Capital\n\n- Share capital is separate from savings and is the amount used to\n  calculate annual dividends (see `dividends_and_profit_sharing.md`). The\n  minimum initial share capital is set at registration (see\n  `membership_registration.md`).\n"
+          },
+          {
+            "document": "school_fees_loan.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# School Fees Loan\n\n## Purpose\n\nThe School Fees Loan helps members cover tuition and related education\ncosts for themselves or their dependents.\n\n## Terms\n\n| Feature             | Detail                                                                                        |\n| ------------------- | --------------------------------------------------------------------------------------------- |\n| Maximum amount      | UGX 5,000,000, subject to the 3x-savings ceiling in `loan_requirements.md`                    |\n| Interest rate       | 11% per annum, reducing balance                                                               |\n| Repayment period    | Up to 4 months if aligned to a single school term, or up to 12 months if covering annual fees |\n| Guarantors required | 2 (see `guarantor_requirements.md`)                                                           |\n| Grace period        | First repayment due 30 days after disbursement                                                |\n\n## Additional requirements\n\n- An official fee structure or invoice from the learning institution must\n  be submitted, showing the amount due and the term or year it covers (see\n  `supporting_documents.md`).\n\n## Notes\n\n- Disbursement is made directly to the member's SACCO account; the SACCO\n  does not pay institutions directly on the member's behalf.\n"
+          },
+          {
+            "document": "supporting_documents.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Supporting Documents Checklist\n\nThe following documents must accompany every loan application submitted to\nHangs SACCO.\n\n## Required for all loan products\n\n1. Completed and signed loan application form.\n2. A copy of the member's National ID or valid passport.\n3. One recent passport-size photograph.\n4. Statements of savings/contributions for the last 3 months.\n5. Signed guarantor consent form(s), one per required guarantor.\n\n## Additional documents by loan product\n\n- **School Fees Loan**: an official fee structure or invoice from the\n  learning institution, showing the amount due and the term/semester it\n  covers.\n- **Development Loan**: a short written statement of the business or\n  development purpose the loan will fund (no formal business plan template\n  is required).\n- **Emergency Loan**: proof of the emergency where reasonably available\n  (for example, a hospital bill or a death certificate). This is\n  encouraged but not mandatory for the Emergency Loan to be processed.\n\n## Notes\n\n- Photocopies must be legible; the loan officer may request the original\n  document for verification.\n- Incomplete document sets will not be forwarded to the Credit Committee.\n"
+          },
+          {
+            "document": "withdrawal_and_exit_policy.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Withdrawal and Exit Policy\n\n## Notice required\n\n- A member wishing to exit Hangs SACCO must submit a written withdrawal\n  notice at least **30 days** before their expected payout date.\n\n## Members with an active loan\n\n- A member with an active loan may not withdraw their savings or exit the\n  SACCO until the loan is fully repaid, or until the Credit Committee\n  approves an alternative arrangement secured by the member's remaining\n  guarantors.\n\n## Processing an approved exit\n\n- Once an exit request is approved, the member's share capital and savings\n  balance, minus any outstanding obligations, is refunded within **60\n  days**.\n\n## Related documents\n\n- See `savings_products.md` for what counts toward a member's savings and\n  share capital balance.\n- See `dividends_and_profit_sharing.md` for how an exiting member's\n  dividend entitlement for the current year, if any, is handled at the next\n  AGM.\n"
+          }
+        ],
+        "repayment_schedule": null,
+        "missing_requirements": [],
+        "case_summary": null,
+        "tool_calls_made": [
+          {
+            "name": "retrieve_policy",
+            "arguments": {
+              "query": "fishing loan"
+            },
+            "executed": true,
+            "result": {
+              "error": null,
+              "documents": [
+                "complaints_and_grievance_procedure.md",
+                "development_loan.md",
+                "emergency_loan.md",
+                "guarantor_requirements.md",
+                "interest_rates_summary.md",
+                "loan_application_faq.md",
+                "loan_application_procedure.md",
+                "loan_default_and_recovery.md",
+                "loan_requirements.md",
+                "loan_restructuring_policy.md",
+                "member_identification.md",
+                "member_rights_and_responsibilities.md",
+                "membership_registration.md",
+                "repayment_policy.md",
+                "sacco_governance_and_committees.md",
+                "savings_products.md",
+                "school_fees_loan.md",
+                "supporting_documents.md",
+                "withdrawal_and_exit_policy.md"
+              ],
+              "result_count": 19
+            },
+            "result_summary": {
+              "error": null,
+              "documents": [
+                "complaints_and_grievance_procedure.md",
+                "development_loan.md",
+                "emergency_loan.md",
+                "guarantor_requirements.md",
+                "interest_rates_summary.md",
+                "loan_application_faq.md",
+                "loan_application_procedure.md",
+                "loan_default_and_recovery.md",
+                "loan_requirements.md",
+                "loan_restructuring_policy.md",
+                "member_identification.md",
+                "member_rights_and_responsibilities.md",
+                "membership_registration.md",
+                "repayment_policy.md",
+                "sacco_governance_and_committees.md",
+                "savings_products.md",
+                "school_fees_loan.md",
+                "supporting_documents.md",
+                "withdrawal_and_exit_policy.md"
+              ],
+              "result_count": 19
+            }
+          }
+        ],
+        "tool_call_counts": {
+          "get_member_record": 0,
+          "retrieve_policy": 1,
+          "calculate_repayment": 0
+        },
+        "iteration_count": 2,
+        "stop_reason": null,
+        "human_handoff_required": false,
+        "case_id": "cli-20261023T153439Z-9bfd04",
+        "previous_case_history": null
+      },
+      "model_state": {
+        "member_message": "fishing loan",
+        "case_id": "cli-20261023T153439Z-9bfd04",
+        "requester_role": "member",
+        "previous_case_history": null,
+        "requester_membership_number": "77",
+        "member_record_available": false,
+        "member_record_summary": null,
+        "policy_documents_retrieved": [
+          "complaints_and_grievance_procedure.md",
+          "development_loan.md",
+          "emergency_loan.md",
+          "guarantor_requirements.md",
+          "interest_rates_summary.md",
+          "loan_application_faq.md",
+          "loan_application_procedure.md",
+          "loan_default_and_recovery.md",
+          "loan_requirements.md",
+          "loan_restructuring_policy.md",
+          "member_identification.md",
+          "member_rights_and_responsibilities.md",
+          "membership_registration.md",
+          "repayment_policy.md",
+          "sacco_governance_and_committees.md",
+          "savings_products.md",
+          "school_fees_loan.md",
+          "supporting_documents.md",
+          "withdrawal_and_exit_policy.md"
+        ],
+        "policy_documents_count": 19,
+        "policy_excerpts": [
+          {
+            "document": "complaints_and_grievance_procedure.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Complaints and Grievance Procedure\n\n## Submitting a complaint\n\n- A member submits a written complaint to the SACCO office, describing the\n  issue.\n- SACCO staff must acknowledge receipt of the complaint within **3 working\n  days**.\n\n## Resolution at staff level\n\n- Staff aim to resolve the complaint within **14 days** of acknowledgement.\n\n## Escalation\n\n- If the complaint is not resolved at staff level within 14 days, it is\n  escalated to the Supervisory Committee.\n- The Supervisory Committee issues a final written decision within **30\n  days** of escalation.\n\n## Appealing a loan rejection specifically\n\n- A member whose loan application was rejected may appeal, once, to the\n  Credit Committee for reconsideration.\n- The appeal must be submitted within **14 days** of the rejection\n  decision.\n\n## Decision authority\n\n- Loan officers may not decide complaints or appeals; only the Supervisory\n  Committee (general complaints) or the Credit Committee (loan-rejection\n  appeals) may issue a final decision (see\n  `sacco_governance_and_committees.md`).\n"
+          },
+          {
+            "document": "development_loan.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Development Loan\n\n## Purpose\n\nThe Development Loan supports members undertaking income-generating or\npersonal development activities, such as small business expansion, land\nimprovement, or asset purchase.\n\n## Terms\n\n| Feature             | Detail                                                                      |\n| ------------------- | --------------------------------------------------------------------------- |\n| Maximum amount      | UGX 10,000,000, subject to the 3x-savings ceiling in `loan_requirements.md` |\n| Interest rate       | 12% per annum, reducing balance                                             |\n| Repayment period    | Up to 24 months                                                             |\n| Guarantors required | 2 (see `guarantor_requirements.md`)                                         |\n| Grace period        | First repayment due 30 days after disbursement                              |\n\n## Additional requirements\n\n- A short written statement describing the business or development purpose\n  the loan will fund must accompany the application (see\n  `supporting_documents.md`).\n\n## Notes\n\n- Interest is calculated monthly on the outstanding principal (reducing\n  balance), so early repayment reduces total interest paid.\n"
+          },
+          {
+            "document": "emergency_loan.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Emergency Loan\n\n## Purpose\n\nThe Emergency Loan provides fast access to funds for urgent, unforeseen\nneeds such as medical treatment or bereavement.\n\n## Terms\n\n| Feature               | Detail                                                           |\n| --------------------- | ---------------------------------------------------------------- |\n| Maximum amount        | The lower of UGX 2,000,000 or 3 times the member's total savings |\n| Interest rate         | 10% per annum, flat rate                                         |\n| Repayment period      | Up to 6 months                                                   |\n| Guarantors required   | 1 (see `guarantor_requirements.md`)                              |\n| Grace period          | First repayment due 14 days after disbursement                   |\n| Disbursement timeline | Within 48 hours of Credit Committee approval                     |\n\n## Additional requirements\n\n- Proof of the emergency (for example, a hospital bill or death\n  certificate) is encouraged but not mandatory for processing, as noted in\n  `supporting_documents.md`.\n\n## Notes\n\n- Because the interest rate is flat, the total interest due does not\n  reduce if the member repays the loan early.\n"
+          },
+          {
+            "document": "guarantor_requirements.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Guarantor Requirements\n\nGuarantors provide assurance to Hangs SACCO that a loan will be repaid. The\nfollowing rules apply to all guarantors.\n\n## Who may act as a guarantor\n\n- Must be an active Hangs SACCO member in good standing.\n- Must not currently be guaranteeing more than **2** other active loans.\n- Combined, the guarantor(s) on an application must hold savings equal to at\n  least **20% of the loan amount** being guaranteed.\n- A member may not guarantee their own loan application.\n- The guarantor must sign the guarantor consent form in person at the SACCO\n  office.\n\n## Number of guarantors required, by loan product\n\n| Loan product     | Guarantors required |\n| ---------------- | ------------------- |\n| Development Loan | 2                   |\n| School Fees Loan | 2                   |\n| Emergency Loan   | 1                   |\n\n## If a guarantor becomes unavailable\n\n- If a guarantor exits the SACCO or is otherwise unable to continue as\n  guarantor after a loan has been disbursed, the borrowing member must\n  provide a replacement guarantor within **30 days**.\n- Failure to provide a replacement guarantor within this period may result\n  in the loan being referred to the Credit Committee for review.\n"
+          },
+          {
+            "document": "interest_rates_summary.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Interest Rate Summary\n\nThis is a consolidated reference of interest rates across Hangs SACCO\nproducts. In case of any discrepancy, the individual product document is\nauthoritative.\n\n## Loan products\n\n| Product           | Interest rate                | Basis            |\n|-------------------|-------------------------------|-------------------|\n| Development Loan   | 12% per annum                 | Reducing balance  |\n| School Fees Loan    | 11% per annum                 | Reducing balance  |\n| Emergency Loan       | 10% per annum                 | Flat rate         |\n\nFull terms for each are in `development_loan.md`, `school_fees_loan.md` and\n`emergency_loan.md`.\n\n## Savings products\n\n| Product              | Rate                          |\n|-----------------------|--------------------------------|\n| Fixed Deposit Savings  | 6% per annum, paid at maturity |\n| Regular Savings         | No fixed rate; eligible for annual dividend (see `dividends_and_profit_sharing.md`) |\n\n## Penalties\n\n- Late loan repayment penalty: 2% of the overdue amount per month or part\n  month (see `repayment_policy.md`).\n"
+          },
+          {
+            "document": "loan_application_faq.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Loan Application FAQ\n\n**Can I hold two loans at the same time?**\nNo. A member may hold only one active loan at a time, unless the Credit\nCommittee grants a specific exception (see `loan_requirements.md`).\n\n**What happens if my guarantor leaves the SACCO?**\nYou must provide a replacement guarantor within 30 days of the original\nguarantor becoming unavailable (see `guarantor_requirements.md`).\n\n**Can I get more money added to a loan I already have?**\nNo. Additional funds must be requested through a new top-up application,\nwhich goes through the full application procedure (see\n`repayment_policy.md` and `loan_application_procedure.md`).\n\n**How long does it take to receive my loan after approval?**\nDevelopment Loan and School Fees Loan: within 5 working days of Credit\nCommittee approval. Emergency Loan: within 48 hours of approval (see\n`loan_application_procedure.md`).\n\n**Is there a penalty for paying off my loan early?**\nNo penalty applies, but the benefit differs by product: reducing-balance\nloans (Development Loan, School Fees Loan) save you interest; the flat-rate\nEmergency Loan does not (see `repayment_policy.md`).\n\n**Who actually approves my loan?**\nThe loan officer only checks that your application is complete and your\nidentity matches SACCO records. Approval, rejection, or special conditions\nare decided solely by the Credit Committee (see\n`loan_application_procedure.md`).\n\n**Can a family member who is not a SACCO member act as my guarantor?**\nNo. A guarantor must be an active Hangs SACCO member in good standing (see\n`guarantor_requirements.md`).\n"
+          },
+          {
+            "document": "loan_application_procedure.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Loan Application Procedure\n\nThis document describes the end-to-end steps for a Hangs SACCO loan\napplication, from initial eligibility check to disbursement.\n\n## Steps\n\n1. **Eligibility check.** The member confirms they meet the general\n   eligibility rules in `loan_requirements.md` (active membership and\n   savings history).\n2. **Product selection.** The member chooses a loan product: Development\n   Loan, Emergency Loan or School Fees Loan.\n3. **Application form.** The member completes the loan application form,\n   stating the amount requested and purpose.\n4. **Supporting documents.** The member gathers the documents listed in\n   `supporting_documents.md` for the chosen product.\n5. **Guarantors.** The member secures the required number of guarantors\n   (see `guarantor_requirements.md`) and each guarantor signs a consent\n   form in person.\n6. **Submission.** The completed application, documents and guarantor\n   forms are submitted to a loan officer.\n7. **Completeness check.** The loan officer verifies the application is\n   complete and the applicant's identity matches SACCO records. Incomplete\n   applications are returned to the member with a list of what is missing.\n8. **Credit Committee review.** Complete applications are forwarded to the\n   Credit Committee, which approves, rejects, or requests additional\n   information.\n9. **Disbursement.** Approved loans are disbursed within **5 working days**\n   of Credit Committee approval, except the Emergency Loan, which is\n   disbursed within **48 hours** of approval.\n10. **Repayment begins.** The first repayment falls due according to the\n    grace period defined in `repayment_policy.md` for the relevant product.\n\n## Who decides what\n\n- The loan officer checks completeness and eligibility; they do not approve\n  loans.\n- Only the Credit Committee may approve, reject, or set special conditions\n  on a loan application.\n"
+          },
+          {
+            "document": "loan_default_and_recovery.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Loan Default and Recovery\n\nThis document describes what happens after a loan is classified as in\ndefault, as defined in `repayment_policy.md` (repayments overdue by more\nthan 60 days).\n\n## Step 1 — Default notice\n\nA written default notice is sent to the member and to each of their\nguarantors as soon as a loan is classified as in default.\n\n## Step 2 — Credit Committee review\n\nThe Credit Committee reviews the defaulted case within **14 days** of the\ndefault classification, and may:\n\n- Agree a recovery plan directly with the member, or\n- Proceed to guarantor liability if no agreement is reached.\n\n## Step 3 — Guarantor liability\n\nIf the default remains unresolved **30 days** after the default notice was\nsent, the guarantor(s) on the loan become liable to cover the outstanding\nbalance from their own savings and share capital, consistent with the\nguarantor consent form they signed at application (see\n`guarantor_requirements.md`).\n\n## Step 4 — Escalation\n\nCases that remain unresolved after guarantor liability has been applied are\nforwarded to the Board of Directors, who may authorize further recovery\naction, including legal recovery, as a last resort.\n\n## Decision authority\n\n- Loan officers cannot authorize any step in this process.\n- Only the Credit Committee and, at the final escalation stage, the Board\n  of Directors, may make default-recovery decisions (see\n  `sacco_governance_and_committees.md`).\n"
+          },
+          {
+            "document": "loan_requirements.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# General Loan Requirements\n\nThis document sets out the baseline eligibility rules that apply to every loan\nproduct offered by Hangs SACCO, unless a specific product document states a\ndifferent rule.\n\n## Eligibility\n\n- The applicant must be a registered member of Hangs SACCO in good standing.\n- The applicant must have held active membership for at least **3 consecutive\n  months** before applying.\n- The applicant must have made regular savings contributions for at least\n  **3 consecutive months** immediately before the application.\n- The applicant must not have any loan currently classified as in default.\n- A member may hold only **one active loan at a time**, unless the Credit\n  Committee grants a specific exception.\n\n## Loan amount ceiling\n\n- Unless a specific loan product states otherwise, the maximum loan amount is\n  **three (3) times the member's total accumulated savings** at the time of\n  application.\n\n## General application requirements\n\n- Completed loan application form.\n- Supporting documents as listed in `supporting_documents.md`.\n- Guarantors as specified in `guarantor_requirements.md` for the relevant\n  loan product.\n\n## Related documents\n\n- See `loan_application_procedure.md` for the step-by-step process.\n- See `supporting_documents.md` for the full document checklist.\n- See `guarantor_requirements.md` for guarantor rules.\n"
+          },
+          {
+            "document": "loan_restructuring_policy.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Loan Restructuring Policy\n\n## When restructuring may be requested\n\n- A member experiencing genuine financial hardship may apply in writing to\n  restructure their loan (for example, an extended repayment term or a\n  revised schedule) **before** the loan falls into default as defined in\n  `repayment_policy.md`.\n\n## Review and approval\n\n- Restructuring requests are reviewed and decided **only** by the Credit\n  Committee. Loan officers cannot approve a restructuring request (see\n  `sacco_governance_and_committees.md`).\n\n## Limits\n\n- A given loan may be restructured **only once** during its term.\n- Restructuring changes the future repayment schedule but does not remove\n  or waive any late payment penalties that have already accrued under\n  `repayment_policy.md`.\n\n## Relationship to default and recovery\n\n- A loan that has already been classified as in default follows the\n  process in `loan_default_and_recovery.md` instead of this restructuring\n  process.\n"
+          },
+          {
+            "document": "member_identification.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Member Identification\n\n## Membership number\n\n- Every Hangs SACCO member is issued a unique Membership Number at\n  registration, in the format `HS-YYYY-NNNNNN` (for example, `HS-2026-000123`).\n- The Membership Number is used to identify the member's record in all\n  applications, transactions and correspondence.\n\n## Identity verification at registration\n\nNew members must complete a Know-Your-Member (KYM) form and present:\n\n1. A valid National ID or passport.\n2. One passport-size photograph.\n\n## Identity verification at loan application\n\nBefore any loan application is processed, the loan officer must confirm\nthat the National ID presented matches the identity on record for that\nMembership Number. If the two do not match, the application must be placed\non hold pending manual verification by the Membership Office.\n\n## Updating member details\n\n- Changes to a member's name, phone number or next of kin must be submitted\n  in writing and verified against the original National ID before the\n  membership record is updated.\n"
+          },
+          {
+            "document": "member_rights_and_responsibilities.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Member Rights and Responsibilities\n\n## Rights\n\n- To vote at the Annual General Meeting (AGM) on a one-member, one-vote\n  basis, regardless of shareholding size.\n- To access their own savings, share capital and loan records on request.\n- To receive an annual dividend statement, where a dividend is declared\n  (see `dividends_and_profit_sharing.md`).\n- To lodge a complaint through the process in\n  `complaints_and_grievance_procedure.md`.\n\n## Responsibilities\n\n- To maintain the minimum monthly savings contribution described in\n  `savings_products.md`.\n- To repay any loan according to the agreed schedule in\n  `repayment_policy.md`.\n- To keep their identification and contact details up to date, as described\n  in `member_identification.md`.\n- To attend the AGM where reasonably possible, as decisions on dividends\n  and governance are made there.\n"
+          },
+          {
+            "document": "membership_registration.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Membership Registration\n\n## Eligibility to join\n\n- Applicants must be at least 18 years old.\n- Applicants must complete a Membership Application Form and a Know-Your-Member\n  (KYM) form, as described in `member_identification.md`.\n\n## Registration costs\n\n- A one-time, non-refundable registration fee of **UGX 20,000**.\n- A minimum initial share capital contribution of **UGX 30,000**.\n\n## Approval\n\n- New membership applications are reviewed and approved by the Board of\n  Directors within **7 working days** of submission.\n- Once approved, the applicant is issued a Membership Number in the format\n  described in `member_identification.md`.\n\n## Becoming loan-eligible\n\n- A new member does not become eligible to apply for a loan immediately on\n  registration. As set out in `loan_requirements.md`, a member must hold\n  active membership and make regular savings contributions for at least\n  3 consecutive months before applying for any loan product.\n"
+          },
+          {
+            "document": "repayment_policy.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Repayment Policy\n\n## Repayment channels\n\nRepayments may be made through any of the following:\n\n- Cash payment at the SACCO office.\n- Mobile money transfer to the SACCO's registered pay-in number.\n- Payroll deduction, where the member's employer has a check-off agreement\n  with the SACCO.\n\n## Grace periods\n\n- Development Loan and School Fees Loan: first repayment due 30 days after\n  disbursement.\n- Emergency Loan: first repayment due 14 days after disbursement.\n\n## Late payment\n\n- A late payment penalty of **2% of the overdue amount** is charged for\n  each month, or part of a month, that a repayment is late.\n- A loan with repayments overdue by more than **60 days** is classified as\n  in default. Defaulted loans are referred to the Credit Committee and the\n  loan's guarantors are formally notified.\n\n## Early repayment\n\n- Members may repay a loan in full before the end of its term at no\n  penalty.\n- For reducing-balance loans (Development Loan, School Fees Loan), early\n  repayment reduces the total interest paid, since interest accrues monthly\n  on the outstanding principal.\n- For the flat-rate Emergency Loan, early repayment does not reduce the\n  total interest due.\n\n## Loan top-ups\n\n- A member may not simply increase an already-approved loan. Any request\n  for additional funds must be submitted as a new \"top-up\" application and\n  goes through the full application procedure in\n  `loan_application_procedure.md`.\n"
+          },
+          {
+            "document": "sacco_governance_and_committees.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# SACCO Governance and Committees\n\nThis document sets out who holds decision-making authority at Hangs SACCO.\nIt directly supports the project's AI Boundary Matrix: the AI assistant may\nexplain policy and help prepare a case, deterministic software may\ncalculate figures such as repayment schedules, but only the human bodies\nlisted below may make binding decisions.\n\n## Board of Directors\n\n- Elected by members at the Annual General Meeting (AGM).\n- Sets overall SACCO policy and strategic direction.\n- Approves new membership applications (see `membership_registration.md`).\n- Makes the final decision on escalated loan-default recovery action (see\n  `loan_default_and_recovery.md`).\n\n## Credit Committee\n\n- The sole authority that may approve, reject, or set conditions on a loan\n  application (see `loan_application_procedure.md`).\n- The sole authority that may approve a loan restructuring request (see\n  `loan_restructuring_policy.md`).\n- Reviews defaulted loans at Step 2 of the recovery process (see\n  `loan_default_and_recovery.md`).\n- Decides loan-rejection appeals (see\n  `complaints_and_grievance_procedure.md`).\n\n## Supervisory Committee\n\n- Handles escalated member complaints that are not loan-rejection appeals\n  (see `complaints_and_grievance_procedure.md`).\n- Provides internal oversight of SACCO operations.\n\n## Loan Officers\n\n- Front-line staff who check that applications are complete and that the\n  applicant's identity matches SACCO records (see\n  `member_identification.md` and `loan_application_procedure.md`).\n- Loan officers do not have authority to approve, reject, restructure, or\n  decide complaints. Their role is limited to verification and preparing a\n  case for Committee review.\n"
+          },
+          {
+            "document": "savings_products.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Savings Products\n\nHangs SACCO offers two savings products. A member's savings balance is used\nto determine their loan ceiling, as described in `loan_requirements.md`.\n\n## Regular Savings Account\n\n- Minimum monthly contribution: **UGX 20,000**.\n- Funds may be withdrawn subject to the notice and conditions in\n  `withdrawal_and_exit_policy.md`.\n- Regular savings balances count toward a member's loan ceiling but do not\n  themselves earn a fixed interest rate; they may instead be eligible for an\n  annual dividend as described in `dividends_and_profit_sharing.md`.\n\n## Fixed Deposit Savings\n\n- Minimum deposit: **UGX 500,000**.\n- Funds are locked for a minimum term of **6 months**.\n- Earns a fixed interest rate of **6% per annum**, paid at maturity.\n- Fixed Deposit balances also count toward a member's loan ceiling.\n\n## Share Capital\n\n- Share capital is separate from savings and is the amount used to\n  calculate annual dividends (see `dividends_and_profit_sharing.md`). The\n  minimum initial share capital is set at registration (see\n  `membership_registration.md`).\n"
+          },
+          {
+            "document": "school_fees_loan.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# School Fees Loan\n\n## Purpose\n\nThe School Fees Loan helps members cover tuition and related education\ncosts for themselves or their dependents.\n\n## Terms\n\n| Feature             | Detail                                                                                        |\n| ------------------- | --------------------------------------------------------------------------------------------- |\n| Maximum amount      | UGX 5,000,000, subject to the 3x-savings ceiling in `loan_requirements.md`                    |\n| Interest rate       | 11% per annum, reducing balance                                                               |\n| Repayment period    | Up to 4 months if aligned to a single school term, or up to 12 months if covering annual fees |\n| Guarantors required | 2 (see `guarantor_requirements.md`)                                                           |\n| Grace period        | First repayment due 30 days after disbursement                                                |\n\n## Additional requirements\n\n- An official fee structure or invoice from the learning institution must\n  be submitted, showing the amount due and the term or year it covers (see\n  `supporting_documents.md`).\n\n## Notes\n\n- Disbursement is made directly to the member's SACCO account; the SACCO\n  does not pay institutions directly on the member's behalf.\n"
+          },
+          {
+            "document": "supporting_documents.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Supporting Documents Checklist\n\nThe following documents must accompany every loan application submitted to\nHangs SACCO.\n\n## Required for all loan products\n\n1. Completed and signed loan application form.\n2. A copy of the member's National ID or valid passport.\n3. One recent passport-size photograph.\n4. Statements of savings/contributions for the last 3 months.\n5. Signed guarantor consent form(s), one per required guarantor.\n\n## Additional documents by loan product\n\n- **School Fees Loan**: an official fee structure or invoice from the\n  learning institution, showing the amount due and the term/semester it\n  covers.\n- **Development Loan**: a short written statement of the business or\n  development purpose the loan will fund (no formal business plan template\n  is required).\n- **Emergency Loan**: proof of the emergency where reasonably available\n  (for example, a hospital bill or a death certificate). This is\n  encouraged but not mandatory for the Emergency Loan to be processed.\n\n## Notes\n\n- Photocopies must be legible; the loan officer may request the original\n  document for verification.\n- Incomplete document sets will not be forwarded to the Credit Committee.\n"
+          },
+          {
+            "document": "withdrawal_and_exit_policy.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Withdrawal and Exit Policy\n\n## Notice required\n\n- A member wishing to exit Hangs SACCO must submit a written withdrawal\n  notice at least **30 days** before their expected payout date.\n\n## Members with an active loan\n\n- A member with an active loan may not withdraw their savings or exit the\n  SACCO until the loan is fully repaid, or until the Credit Committee\n  approves an alternative arrangement secured by the member's remaining\n  guarantors.\n\n## Processing an approved exit\n\n- Once an exit request is approved, the member's share capital and savings\n  balance, minus any outstanding obligations, is refunded within **60\n  days**.\n\n## Related documents\n\n- See `savings_products.md` for what counts toward a member's savings and\n  share capital balance.\n- See `dividends_and_profit_sharing.md` for how an exiting member's\n  dividend entitlement for the current year, if any, is handled at the next\n  AGM.\n"
+          }
+        ],
+        "repayment_schedule_available": false,
+        "repayment_summary": null,
+        "missing_requirements": [],
+        "case_summary_available": false,
+        "tool_call_counts": {
+          "get_member_record": 0,
+          "retrieve_policy": 1,
+          "calculate_repayment": 0
+        },
+        "iteration_count": 2,
+        "limits": {
+          "max_iterations": 6,
+          "max_calls_per_tool": 2
+        },
+        "human_handoff_required": false
+      },
+      "model_latency_ms": 9357.56,
+      "model_error": null,
+      "tool_calls": [],
+      "final_text": "Hangs SACCO does not offer a specific \"Fishing Loan\", but fishing activities fall under the **Development Loan** for income-generating business expansion or asset purchases. The Development Loan allows up to UGX 10,000,000 (capped at 3 times your savings) at 12% per annum reducing balance for up to 24 months, requiring 2 guarantors and a short written purpose statement.\n\nTo help prepare your loan application, please provide the following missing details:\n1. How much would you like to borrow (in UGX)?\n2. What is your preferred repayment period (up to 24 months)?\n3. How often would you like to make repayments (daily, weekly, monthly, quarterly, bi-annually, or annually)?",
+      "state_after": {
+        "member_message": "fishing loan",
+        "requester_role": "member",
+        "requester_membership_number": "77",
+        "member_record": null,
+        "policy_excerpts": [
+          {
+            "document": "complaints_and_grievance_procedure.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Complaints and Grievance Procedure\n\n## Submitting a complaint\n\n- A member submits a written complaint to the SACCO office, describing the\n  issue.\n- SACCO staff must acknowledge receipt of the complaint within **3 working\n  days**.\n\n## Resolution at staff level\n\n- Staff aim to resolve the complaint within **14 days** of acknowledgement.\n\n## Escalation\n\n- If the complaint is not resolved at staff level within 14 days, it is\n  escalated to the Supervisory Committee.\n- The Supervisory Committee issues a final written decision within **30\n  days** of escalation.\n\n## Appealing a loan rejection specifically\n\n- A member whose loan application was rejected may appeal, once, to the\n  Credit Committee for reconsideration.\n- The appeal must be submitted within **14 days** of the rejection\n  decision.\n\n## Decision authority\n\n- Loan officers may not decide complaints or appeals; only the Supervisory\n  Committee (general complaints) or the Credit Committee (loan-rejection\n  appeals) may issue a final decision (see\n  `sacco_governance_and_committees.md`).\n"
+          },
+          {
+            "document": "development_loan.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Development Loan\n\n## Purpose\n\nThe Development Loan supports members undertaking income-generating or\npersonal development activities, such as small business expansion, land\nimprovement, or asset purchase.\n\n## Terms\n\n| Feature             | Detail                                                                      |\n| ------------------- | --------------------------------------------------------------------------- |\n| Maximum amount      | UGX 10,000,000, subject to the 3x-savings ceiling in `loan_requirements.md` |\n| Interest rate       | 12% per annum, reducing balance                                             |\n| Repayment period    | Up to 24 months                                                             |\n| Guarantors required | 2 (see `guarantor_requirements.md`)                                         |\n| Grace period        | First repayment due 30 days after disbursement                              |\n\n## Additional requirements\n\n- A short written statement describing the business or development purpose\n  the loan will fund must accompany the application (see\n  `supporting_documents.md`).\n\n## Notes\n\n- Interest is calculated monthly on the outstanding principal (reducing\n  balance), so early repayment reduces total interest paid.\n"
+          },
+          {
+            "document": "emergency_loan.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Emergency Loan\n\n## Purpose\n\nThe Emergency Loan provides fast access to funds for urgent, unforeseen\nneeds such as medical treatment or bereavement.\n\n## Terms\n\n| Feature               | Detail                                                           |\n| --------------------- | ---------------------------------------------------------------- |\n| Maximum amount        | The lower of UGX 2,000,000 or 3 times the member's total savings |\n| Interest rate         | 10% per annum, flat rate                                         |\n| Repayment period      | Up to 6 months                                                   |\n| Guarantors required   | 1 (see `guarantor_requirements.md`)                              |\n| Grace period          | First repayment due 14 days after disbursement                   |\n| Disbursement timeline | Within 48 hours of Credit Committee approval                     |\n\n## Additional requirements\n\n- Proof of the emergency (for example, a hospital bill or death\n  certificate) is encouraged but not mandatory for processing, as noted in\n  `supporting_documents.md`.\n\n## Notes\n\n- Because the interest rate is flat, the total interest due does not\n  reduce if the member repays the loan early.\n"
+          },
+          {
+            "document": "guarantor_requirements.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Guarantor Requirements\n\nGuarantors provide assurance to Hangs SACCO that a loan will be repaid. The\nfollowing rules apply to all guarantors.\n\n## Who may act as a guarantor\n\n- Must be an active Hangs SACCO member in good standing.\n- Must not currently be guaranteeing more than **2** other active loans.\n- Combined, the guarantor(s) on an application must hold savings equal to at\n  least **20% of the loan amount** being guaranteed.\n- A member may not guarantee their own loan application.\n- The guarantor must sign the guarantor consent form in person at the SACCO\n  office.\n\n## Number of guarantors required, by loan product\n\n| Loan product     | Guarantors required |\n| ---------------- | ------------------- |\n| Development Loan | 2                   |\n| School Fees Loan | 2                   |\n| Emergency Loan   | 1                   |\n\n## If a guarantor becomes unavailable\n\n- If a guarantor exits the SACCO or is otherwise unable to continue as\n  guarantor after a loan has been disbursed, the borrowing member must\n  provide a replacement guarantor within **30 days**.\n- Failure to provide a replacement guarantor within this period may result\n  in the loan being referred to the Credit Committee for review.\n"
+          },
+          {
+            "document": "interest_rates_summary.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Interest Rate Summary\n\nThis is a consolidated reference of interest rates across Hangs SACCO\nproducts. In case of any discrepancy, the individual product document is\nauthoritative.\n\n## Loan products\n\n| Product           | Interest rate                | Basis            |\n|-------------------|-------------------------------|-------------------|\n| Development Loan   | 12% per annum                 | Reducing balance  |\n| School Fees Loan    | 11% per annum                 | Reducing balance  |\n| Emergency Loan       | 10% per annum                 | Flat rate         |\n\nFull terms for each are in `development_loan.md`, `school_fees_loan.md` and\n`emergency_loan.md`.\n\n## Savings products\n\n| Product              | Rate                          |\n|-----------------------|--------------------------------|\n| Fixed Deposit Savings  | 6% per annum, paid at maturity |\n| Regular Savings         | No fixed rate; eligible for annual dividend (see `dividends_and_profit_sharing.md`) |\n\n## Penalties\n\n- Late loan repayment penalty: 2% of the overdue amount per month or part\n  month (see `repayment_policy.md`).\n"
+          },
+          {
+            "document": "loan_application_faq.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Loan Application FAQ\n\n**Can I hold two loans at the same time?**\nNo. A member may hold only one active loan at a time, unless the Credit\nCommittee grants a specific exception (see `loan_requirements.md`).\n\n**What happens if my guarantor leaves the SACCO?**\nYou must provide a replacement guarantor within 30 days of the original\nguarantor becoming unavailable (see `guarantor_requirements.md`).\n\n**Can I get more money added to a loan I already have?**\nNo. Additional funds must be requested through a new top-up application,\nwhich goes through the full application procedure (see\n`repayment_policy.md` and `loan_application_procedure.md`).\n\n**How long does it take to receive my loan after approval?**\nDevelopment Loan and School Fees Loan: within 5 working days of Credit\nCommittee approval. Emergency Loan: within 48 hours of approval (see\n`loan_application_procedure.md`).\n\n**Is there a penalty for paying off my loan early?**\nNo penalty applies, but the benefit differs by product: reducing-balance\nloans (Development Loan, School Fees Loan) save you interest; the flat-rate\nEmergency Loan does not (see `repayment_policy.md`).\n\n**Who actually approves my loan?**\nThe loan officer only checks that your application is complete and your\nidentity matches SACCO records. Approval, rejection, or special conditions\nare decided solely by the Credit Committee (see\n`loan_application_procedure.md`).\n\n**Can a family member who is not a SACCO member act as my guarantor?**\nNo. A guarantor must be an active Hangs SACCO member in good standing (see\n`guarantor_requirements.md`).\n"
+          },
+          {
+            "document": "loan_application_procedure.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Loan Application Procedure\n\nThis document describes the end-to-end steps for a Hangs SACCO loan\napplication, from initial eligibility check to disbursement.\n\n## Steps\n\n1. **Eligibility check.** The member confirms they meet the general\n   eligibility rules in `loan_requirements.md` (active membership and\n   savings history).\n2. **Product selection.** The member chooses a loan product: Development\n   Loan, Emergency Loan or School Fees Loan.\n3. **Application form.** The member completes the loan application form,\n   stating the amount requested and purpose.\n4. **Supporting documents.** The member gathers the documents listed in\n   `supporting_documents.md` for the chosen product.\n5. **Guarantors.** The member secures the required number of guarantors\n   (see `guarantor_requirements.md`) and each guarantor signs a consent\n   form in person.\n6. **Submission.** The completed application, documents and guarantor\n   forms are submitted to a loan officer.\n7. **Completeness check.** The loan officer verifies the application is\n   complete and the applicant's identity matches SACCO records. Incomplete\n   applications are returned to the member with a list of what is missing.\n8. **Credit Committee review.** Complete applications are forwarded to the\n   Credit Committee, which approves, rejects, or requests additional\n   information.\n9. **Disbursement.** Approved loans are disbursed within **5 working days**\n   of Credit Committee approval, except the Emergency Loan, which is\n   disbursed within **48 hours** of approval.\n10. **Repayment begins.** The first repayment falls due according to the\n    grace period defined in `repayment_policy.md` for the relevant product.\n\n## Who decides what\n\n- The loan officer checks completeness and eligibility; they do not approve\n  loans.\n- Only the Credit Committee may approve, reject, or set special conditions\n  on a loan application.\n"
+          },
+          {
+            "document": "loan_default_and_recovery.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Loan Default and Recovery\n\nThis document describes what happens after a loan is classified as in\ndefault, as defined in `repayment_policy.md` (repayments overdue by more\nthan 60 days).\n\n## Step 1 — Default notice\n\nA written default notice is sent to the member and to each of their\nguarantors as soon as a loan is classified as in default.\n\n## Step 2 — Credit Committee review\n\nThe Credit Committee reviews the defaulted case within **14 days** of the\ndefault classification, and may:\n\n- Agree a recovery plan directly with the member, or\n- Proceed to guarantor liability if no agreement is reached.\n\n## Step 3 — Guarantor liability\n\nIf the default remains unresolved **30 days** after the default notice was\nsent, the guarantor(s) on the loan become liable to cover the outstanding\nbalance from their own savings and share capital, consistent with the\nguarantor consent form they signed at application (see\n`guarantor_requirements.md`).\n\n## Step 4 — Escalation\n\nCases that remain unresolved after guarantor liability has been applied are\nforwarded to the Board of Directors, who may authorize further recovery\naction, including legal recovery, as a last resort.\n\n## Decision authority\n\n- Loan officers cannot authorize any step in this process.\n- Only the Credit Committee and, at the final escalation stage, the Board\n  of Directors, may make default-recovery decisions (see\n  `sacco_governance_and_committees.md`).\n"
+          },
+          {
+            "document": "loan_requirements.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# General Loan Requirements\n\nThis document sets out the baseline eligibility rules that apply to every loan\nproduct offered by Hangs SACCO, unless a specific product document states a\ndifferent rule.\n\n## Eligibility\n\n- The applicant must be a registered member of Hangs SACCO in good standing.\n- The applicant must have held active membership for at least **3 consecutive\n  months** before applying.\n- The applicant must have made regular savings contributions for at least\n  **3 consecutive months** immediately before the application.\n- The applicant must not have any loan currently classified as in default.\n- A member may hold only **one active loan at a time**, unless the Credit\n  Committee grants a specific exception.\n\n## Loan amount ceiling\n\n- Unless a specific loan product states otherwise, the maximum loan amount is\n  **three (3) times the member's total accumulated savings** at the time of\n  application.\n\n## General application requirements\n\n- Completed loan application form.\n- Supporting documents as listed in `supporting_documents.md`.\n- Guarantors as specified in `guarantor_requirements.md` for the relevant\n  loan product.\n\n## Related documents\n\n- See `loan_application_procedure.md` for the step-by-step process.\n- See `supporting_documents.md` for the full document checklist.\n- See `guarantor_requirements.md` for guarantor rules.\n"
+          },
+          {
+            "document": "loan_restructuring_policy.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Loan Restructuring Policy\n\n## When restructuring may be requested\n\n- A member experiencing genuine financial hardship may apply in writing to\n  restructure their loan (for example, an extended repayment term or a\n  revised schedule) **before** the loan falls into default as defined in\n  `repayment_policy.md`.\n\n## Review and approval\n\n- Restructuring requests are reviewed and decided **only** by the Credit\n  Committee. Loan officers cannot approve a restructuring request (see\n  `sacco_governance_and_committees.md`).\n\n## Limits\n\n- A given loan may be restructured **only once** during its term.\n- Restructuring changes the future repayment schedule but does not remove\n  or waive any late payment penalties that have already accrued under\n  `repayment_policy.md`.\n\n## Relationship to default and recovery\n\n- A loan that has already been classified as in default follows the\n  process in `loan_default_and_recovery.md` instead of this restructuring\n  process.\n"
+          },
+          {
+            "document": "member_identification.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Member Identification\n\n## Membership number\n\n- Every Hangs SACCO member is issued a unique Membership Number at\n  registration, in the format `HS-YYYY-NNNNNN` (for example, `HS-2026-000123`).\n- The Membership Number is used to identify the member's record in all\n  applications, transactions and correspondence.\n\n## Identity verification at registration\n\nNew members must complete a Know-Your-Member (KYM) form and present:\n\n1. A valid National ID or passport.\n2. One passport-size photograph.\n\n## Identity verification at loan application\n\nBefore any loan application is processed, the loan officer must confirm\nthat the National ID presented matches the identity on record for that\nMembership Number. If the two do not match, the application must be placed\non hold pending manual verification by the Membership Office.\n\n## Updating member details\n\n- Changes to a member's name, phone number or next of kin must be submitted\n  in writing and verified against the original National ID before the\n  membership record is updated.\n"
+          },
+          {
+            "document": "member_rights_and_responsibilities.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Member Rights and Responsibilities\n\n## Rights\n\n- To vote at the Annual General Meeting (AGM) on a one-member, one-vote\n  basis, regardless of shareholding size.\n- To access their own savings, share capital and loan records on request.\n- To receive an annual dividend statement, where a dividend is declared\n  (see `dividends_and_profit_sharing.md`).\n- To lodge a complaint through the process in\n  `complaints_and_grievance_procedure.md`.\n\n## Responsibilities\n\n- To maintain the minimum monthly savings contribution described in\n  `savings_products.md`.\n- To repay any loan according to the agreed schedule in\n  `repayment_policy.md`.\n- To keep their identification and contact details up to date, as described\n  in `member_identification.md`.\n- To attend the AGM where reasonably possible, as decisions on dividends\n  and governance are made there.\n"
+          },
+          {
+            "document": "membership_registration.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Membership Registration\n\n## Eligibility to join\n\n- Applicants must be at least 18 years old.\n- Applicants must complete a Membership Application Form and a Know-Your-Member\n  (KYM) form, as described in `member_identification.md`.\n\n## Registration costs\n\n- A one-time, non-refundable registration fee of **UGX 20,000**.\n- A minimum initial share capital contribution of **UGX 30,000**.\n\n## Approval\n\n- New membership applications are reviewed and approved by the Board of\n  Directors within **7 working days** of submission.\n- Once approved, the applicant is issued a Membership Number in the format\n  described in `member_identification.md`.\n\n## Becoming loan-eligible\n\n- A new member does not become eligible to apply for a loan immediately on\n  registration. As set out in `loan_requirements.md`, a member must hold\n  active membership and make regular savings contributions for at least\n  3 consecutive months before applying for any loan product.\n"
+          },
+          {
+            "document": "repayment_policy.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Repayment Policy\n\n## Repayment channels\n\nRepayments may be made through any of the following:\n\n- Cash payment at the SACCO office.\n- Mobile money transfer to the SACCO's registered pay-in number.\n- Payroll deduction, where the member's employer has a check-off agreement\n  with the SACCO.\n\n## Grace periods\n\n- Development Loan and School Fees Loan: first repayment due 30 days after\n  disbursement.\n- Emergency Loan: first repayment due 14 days after disbursement.\n\n## Late payment\n\n- A late payment penalty of **2% of the overdue amount** is charged for\n  each month, or part of a month, that a repayment is late.\n- A loan with repayments overdue by more than **60 days** is classified as\n  in default. Defaulted loans are referred to the Credit Committee and the\n  loan's guarantors are formally notified.\n\n## Early repayment\n\n- Members may repay a loan in full before the end of its term at no\n  penalty.\n- For reducing-balance loans (Development Loan, School Fees Loan), early\n  repayment reduces the total interest paid, since interest accrues monthly\n  on the outstanding principal.\n- For the flat-rate Emergency Loan, early repayment does not reduce the\n  total interest due.\n\n## Loan top-ups\n\n- A member may not simply increase an already-approved loan. Any request\n  for additional funds must be submitted as a new \"top-up\" application and\n  goes through the full application procedure in\n  `loan_application_procedure.md`.\n"
+          },
+          {
+            "document": "sacco_governance_and_committees.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# SACCO Governance and Committees\n\nThis document sets out who holds decision-making authority at Hangs SACCO.\nIt directly supports the project's AI Boundary Matrix: the AI assistant may\nexplain policy and help prepare a case, deterministic software may\ncalculate figures such as repayment schedules, but only the human bodies\nlisted below may make binding decisions.\n\n## Board of Directors\n\n- Elected by members at the Annual General Meeting (AGM).\n- Sets overall SACCO policy and strategic direction.\n- Approves new membership applications (see `membership_registration.md`).\n- Makes the final decision on escalated loan-default recovery action (see\n  `loan_default_and_recovery.md`).\n\n## Credit Committee\n\n- The sole authority that may approve, reject, or set conditions on a loan\n  application (see `loan_application_procedure.md`).\n- The sole authority that may approve a loan restructuring request (see\n  `loan_restructuring_policy.md`).\n- Reviews defaulted loans at Step 2 of the recovery process (see\n  `loan_default_and_recovery.md`).\n- Decides loan-rejection appeals (see\n  `complaints_and_grievance_procedure.md`).\n\n## Supervisory Committee\n\n- Handles escalated member complaints that are not loan-rejection appeals\n  (see `complaints_and_grievance_procedure.md`).\n- Provides internal oversight of SACCO operations.\n\n## Loan Officers\n\n- Front-line staff who check that applications are complete and that the\n  applicant's identity matches SACCO records (see\n  `member_identification.md` and `loan_application_procedure.md`).\n- Loan officers do not have authority to approve, reject, restructure, or\n  decide complaints. Their role is limited to verification and preparing a\n  case for Committee review.\n"
+          },
+          {
+            "document": "savings_products.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Savings Products\n\nHangs SACCO offers two savings products. A member's savings balance is used\nto determine their loan ceiling, as described in `loan_requirements.md`.\n\n## Regular Savings Account\n\n- Minimum monthly contribution: **UGX 20,000**.\n- Funds may be withdrawn subject to the notice and conditions in\n  `withdrawal_and_exit_policy.md`.\n- Regular savings balances count toward a member's loan ceiling but do not\n  themselves earn a fixed interest rate; they may instead be eligible for an\n  annual dividend as described in `dividends_and_profit_sharing.md`.\n\n## Fixed Deposit Savings\n\n- Minimum deposit: **UGX 500,000**.\n- Funds are locked for a minimum term of **6 months**.\n- Earns a fixed interest rate of **6% per annum**, paid at maturity.\n- Fixed Deposit balances also count toward a member's loan ceiling.\n\n## Share Capital\n\n- Share capital is separate from savings and is the amount used to\n  calculate annual dividends (see `dividends_and_profit_sharing.md`). The\n  minimum initial share capital is set at registration (see\n  `membership_registration.md`).\n"
+          },
+          {
+            "document": "school_fees_loan.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# School Fees Loan\n\n## Purpose\n\nThe School Fees Loan helps members cover tuition and related education\ncosts for themselves or their dependents.\n\n## Terms\n\n| Feature             | Detail                                                                                        |\n| ------------------- | --------------------------------------------------------------------------------------------- |\n| Maximum amount      | UGX 5,000,000, subject to the 3x-savings ceiling in `loan_requirements.md`                    |\n| Interest rate       | 11% per annum, reducing balance                                                               |\n| Repayment period    | Up to 4 months if aligned to a single school term, or up to 12 months if covering annual fees |\n| Guarantors required | 2 (see `guarantor_requirements.md`)                                                           |\n| Grace period        | First repayment due 30 days after disbursement                                                |\n\n## Additional requirements\n\n- An official fee structure or invoice from the learning institution must\n  be submitted, showing the amount due and the term or year it covers (see\n  `supporting_documents.md`).\n\n## Notes\n\n- Disbursement is made directly to the member's SACCO account; the SACCO\n  does not pay institutions directly on the member's behalf.\n"
+          },
+          {
+            "document": "supporting_documents.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Supporting Documents Checklist\n\nThe following documents must accompany every loan application submitted to\nHangs SACCO.\n\n## Required for all loan products\n\n1. Completed and signed loan application form.\n2. A copy of the member's National ID or valid passport.\n3. One recent passport-size photograph.\n4. Statements of savings/contributions for the last 3 months.\n5. Signed guarantor consent form(s), one per required guarantor.\n\n## Additional documents by loan product\n\n- **School Fees Loan**: an official fee structure or invoice from the\n  learning institution, showing the amount due and the term/semester it\n  covers.\n- **Development Loan**: a short written statement of the business or\n  development purpose the loan will fund (no formal business plan template\n  is required).\n- **Emergency Loan**: proof of the emergency where reasonably available\n  (for example, a hospital bill or a death certificate). This is\n  encouraged but not mandatory for the Emergency Loan to be processed.\n\n## Notes\n\n- Photocopies must be legible; the loan officer may request the original\n  document for verification.\n- Incomplete document sets will not be forwarded to the Credit Committee.\n"
+          },
+          {
+            "document": "withdrawal_and_exit_policy.md",
+            "matched_terms": [
+              "loan"
+            ],
+            "content": "# Withdrawal and Exit Policy\n\n## Notice required\n\n- A member wishing to exit Hangs SACCO must submit a written withdrawal\n  notice at least **30 days** before their expected payout date.\n\n## Members with an active loan\n\n- A member with an active loan may not withdraw their savings or exit the\n  SACCO until the loan is fully repaid, or until the Credit Committee\n  approves an alternative arrangement secured by the member's remaining\n  guarantors.\n\n## Processing an approved exit\n\n- Once an exit request is approved, the member's share capital and savings\n  balance, minus any outstanding obligations, is refunded within **60\n  days**.\n\n## Related documents\n\n- See `savings_products.md` for what counts toward a member's savings and\n  share capital balance.\n- See `dividends_and_profit_sharing.md` for how an exiting member's\n  dividend entitlement for the current year, if any, is handled at the next\n  AGM.\n"
+          }
+        ],
+        "repayment_schedule": null,
+        "missing_requirements": [
+          "Verify the member's savings balance against the 3x savings ceiling.",
+          "Provide and verify the details and eligibility of the 2 required guarantors.",
+          "Submit and review the written statement explaining the loan purpose."
+        ],
+        "case_summary": "Hangs SACCO does not offer a specific \"Fishing Loan\", but fishing activities fall under the **Development Loan** for income-generating business expansion or asset purchases. The Development Loan allows up to UGX 10,000,000 (capped at 3 times your savings) at 12% per annum reducing balance for up to 24 months, requiring 2 guarantors and a short written purpose statement.\n\nTo help prepare your loan application, please provide the following missing details:\n1. How much would you like to borrow (in UGX)?\n2. What is your preferred repayment period (up to 24 months)?\n3. How often would you like to make repayments (daily, weekly, monthly, quarterly, bi-annually, or annually)?",
+        "tool_calls_made": [
+          {
+            "name": "retrieve_policy",
+            "arguments": {
+              "query": "fishing loan"
+            },
+            "executed": true,
+            "result": {
+              "error": null,
+              "documents": [
+                "complaints_and_grievance_procedure.md",
+                "development_loan.md",
+                "emergency_loan.md",
+                "guarantor_requirements.md",
+                "interest_rates_summary.md",
+                "loan_application_faq.md",
+                "loan_application_procedure.md",
+                "loan_default_and_recovery.md",
+                "loan_requirements.md",
+                "loan_restructuring_policy.md",
+                "member_identification.md",
+                "member_rights_and_responsibilities.md",
+                "membership_registration.md",
+                "repayment_policy.md",
+                "sacco_governance_and_committees.md",
+                "savings_products.md",
+                "school_fees_loan.md",
+                "supporting_documents.md",
+                "withdrawal_and_exit_policy.md"
+              ],
+              "result_count": 19
+            },
+            "result_summary": {
+              "error": null,
+              "documents": [
+                "complaints_and_grievance_procedure.md",
+                "development_loan.md",
+                "emergency_loan.md",
+                "guarantor_requirements.md",
+                "interest_rates_summary.md",
+                "loan_application_faq.md",
+                "loan_application_procedure.md",
+                "loan_default_and_recovery.md",
+                "loan_requirements.md",
+                "loan_restructuring_policy.md",
+                "member_identification.md",
+                "member_rights_and_responsibilities.md",
+                "membership_registration.md",
+                "repayment_policy.md",
+                "sacco_governance_and_committees.md",
+                "savings_products.md",
+                "school_fees_loan.md",
+                "supporting_documents.md",
+                "withdrawal_and_exit_policy.md"
+              ],
+              "result_count": 19
+            }
+          }
+        ],
+        "tool_call_counts": {
+          "get_member_record": 0,
+          "retrieve_policy": 1,
+          "calculate_repayment": 0
+        },
+        "iteration_count": 2,
+        "stop_reason": "clarification_required",
+        "human_handoff_required": true,
+        "case_id": "cli-20261023T153439Z-9bfd04",
+        "previous_case_history": null
+      }
+    }
+  ],
+  "memory": {
+    "enabled": true,
+    "status": "saved",
+    "case_id": "cli-20261023T153439Z-9bfd04",
+    "store_path": "/mnt/d/sacco-agent/evidence/memory/case_history.json",
+    "resumed_previous_case": false
+  },
+  "ended_at": "2026-10-23T15:35:12.807629+00:00",
+  "final_state": {
+    "member_message": "fishing loan",
+    "requester_role": "member",
+    "requester_membership_number": "77",
+    "member_record": null,
+    "policy_excerpts": [
+      {
+        "document": "complaints_and_grievance_procedure.md",
+        "matched_terms": [
+          "loan"
+        ],
+        "content": "# Complaints and Grievance Procedure\n\n## Submitting a complaint\n\n- A member submits a written complaint to the SACCO office, describing the\n  issue.\n- SACCO staff must acknowledge receipt of the complaint within **3 working\n  days**.\n\n## Resolution at staff level\n\n- Staff aim to resolve the complaint within **14 days** of acknowledgement.\n\n## Escalation\n\n- If the complaint is not resolved at staff level within 14 days, it is\n  escalated to the Supervisory Committee.\n- The Supervisory Committee issues a final written decision within **30\n  days** of escalation.\n\n## Appealing a loan rejection specifically\n\n- A member whose loan application was rejected may appeal, once, to the\n  Credit Committee for reconsideration.\n- The appeal must be submitted within **14 days** of the rejection\n  decision.\n\n## Decision authority\n\n- Loan officers may not decide complaints or appeals; only the Supervisory\n  Committee (general complaints) or the Credit Committee (loan-rejection\n  appeals) may issue a final decision (see\n  `sacco_governance_and_committees.md`).\n"
+      },
+      {
+        "document": "development_loan.md",
+        "matched_terms": [
+          "loan"
+        ],
+        "content": "# Development Loan\n\n## Purpose\n\nThe Development Loan supports members undertaking income-generating or\npersonal development activities, such as small business expansion, land\nimprovement, or asset purchase.\n\n## Terms\n\n| Feature             | Detail                                                                      |\n| ------------------- | --------------------------------------------------------------------------- |\n| Maximum amount      | UGX 10,000,000, subject to the 3x-savings ceiling in `loan_requirements.md` |\n| Interest rate       | 12% per annum, reducing balance                                             |\n| Repayment period    | Up to 24 months                                                             |\n| Guarantors required | 2 (see `guarantor_requirements.md`)                                         |\n| Grace period        | First repayment due 30 days after disbursement                              |\n\n## Additional requirements\n\n- A short written statement describing the business or development purpose\n  the loan will fund must accompany the application (see\n  `supporting_documents.md`).\n\n## Notes\n\n- Interest is calculated monthly on the outstanding principal (reducing\n  balance), so early repayment reduces total interest paid.\n"
+      },
+      {
+        "document": "emergency_loan.md",
+        "matched_terms": [
+          "loan"
+        ],
+        "content": "# Emergency Loan\n\n## Purpose\n\nThe Emergency Loan provides fast access to funds for urgent, unforeseen\nneeds such as medical treatment or bereavement.\n\n## Terms\n\n| Feature               | Detail                                                           |\n| --------------------- | ---------------------------------------------------------------- |\n| Maximum amount        | The lower of UGX 2,000,000 or 3 times the member's total savings |\n| Interest rate         | 10% per annum, flat rate                                         |\n| Repayment period      | Up to 6 months                                                   |\n| Guarantors required   | 1 (see `guarantor_requirements.md`)                              |\n| Grace period          | First repayment due 14 days after disbursement                   |\n| Disbursement timeline | Within 48 hours of Credit Committee approval                     |\n\n## Additional requirements\n\n- Proof of the emergency (for example, a hospital bill or death\n  certificate) is encouraged but not mandatory for processing, as noted in\n  `supporting_documents.md`.\n\n## Notes\n\n- Because the interest rate is flat, the total interest due does not\n  reduce if the member repays the loan early.\n"
+      },
+      {
+        "document": "guarantor_requirements.md",
+        "matched_terms": [
+          "loan"
+        ],
+        "content": "# Guarantor Requirements\n\nGuarantors provide assurance to Hangs SACCO that a loan will be repaid. The\nfollowing rules apply to all guarantors.\n\n## Who may act as a guarantor\n\n- Must be an active Hangs SACCO member in good standing.\n- Must not currently be guaranteeing more than **2** other active loans.\n- Combined, the guarantor(s) on an application must hold savings equal to at\n  least **20% of the loan amount** being guaranteed.\n- A member may not guarantee their own loan application.\n- The guarantor must sign the guarantor consent form in person at the SACCO\n  office.\n\n## Number of guarantors required, by loan product\n\n| Loan product     | Guarantors required |\n| ---------------- | ------------------- |\n| Development Loan | 2                   |\n| School Fees Loan | 2                   |\n| Emergency Loan   | 1                   |\n\n## If a guarantor becomes unavailable\n\n- If a guarantor exits the SACCO or is otherwise unable to continue as\n  guarantor after a loan has been disbursed, the borrowing member must\n  provide a replacement guarantor within **30 days**.\n- Failure to provide a replacement guarantor within this period may result\n  in the loan being referred to the Credit Committee for review.\n"
+      },
+      {
+        "document": "interest_rates_summary.md",
+        "matched_terms": [
+          "loan"
+        ],
+        "content": "# Interest Rate Summary\n\nThis is a consolidated reference of interest rates across Hangs SACCO\nproducts. In case of any discrepancy, the individual product document is\nauthoritative.\n\n## Loan products\n\n| Product           | Interest rate                | Basis            |\n|-------------------|-------------------------------|-------------------|\n| Development Loan   | 12% per annum                 | Reducing balance  |\n| School Fees Loan    | 11% per annum                 | Reducing balance  |\n| Emergency Loan       | 10% per annum                 | Flat rate         |\n\nFull terms for each are in `development_loan.md`, `school_fees_loan.md` and\n`emergency_loan.md`.\n\n## Savings products\n\n| Product              | Rate                          |\n|-----------------------|--------------------------------|\n| Fixed Deposit Savings  | 6% per annum, paid at maturity |\n| Regular Savings         | No fixed rate; eligible for annual dividend (see `dividends_and_profit_sharing.md`) |\n\n## Penalties\n\n- Late loan repayment penalty: 2% of the overdue amount per month or part\n  month (see `repayment_policy.md`).\n"
+      },
+      {
+        "document": "loan_application_faq.md",
+        "matched_terms": [
+          "loan"
+        ],
+        "content": "# Loan Application FAQ\n\n**Can I hold two loans at the same time?**\nNo. A member may hold only one active loan at a time, unless the Credit\nCommittee grants a specific exception (see `loan_requirements.md`).\n\n**What happens if my guarantor leaves the SACCO?**\nYou must provide a replacement guarantor within 30 days of the original\nguarantor becoming unavailable (see `guarantor_requirements.md`).\n\n**Can I get more money added to a loan I already have?**\nNo. Additional funds must be requested through a new top-up application,\nwhich goes through the full application procedure (see\n`repayment_policy.md` and `loan_application_procedure.md`).\n\n**How long does it take to receive my loan after approval?**\nDevelopment Loan and School Fees Loan: within 5 working days of Credit\nCommittee approval. Emergency Loan: within 48 hours of approval (see\n`loan_application_procedure.md`).\n\n**Is there a penalty for paying off my loan early?**\nNo penalty applies, but the benefit differs by product: reducing-balance\nloans (Development Loan, School Fees Loan) save you interest; the flat-rate\nEmergency Loan does not (see `repayment_policy.md`).\n\n**Who actually approves my loan?**\nThe loan officer only checks that your application is complete and your\nidentity matches SACCO records. Approval, rejection, or special conditions\nare decided solely by the Credit Committee (see\n`loan_application_procedure.md`).\n\n**Can a family member who is not a SACCO member act as my guarantor?**\nNo. A guarantor must be an active Hangs SACCO member in good standing (see\n`guarantor_requirements.md`).\n"
+      },
+      {
+        "document": "loan_application_procedure.md",
+        "matched_terms": [
+          "loan"
+        ],
+        "content": "# Loan Application Procedure\n\nThis document describes the end-to-end steps for a Hangs SACCO loan\napplication, from initial eligibility check to disbursement.\n\n## Steps\n\n1. **Eligibility check.** The member confirms they meet the general\n   eligibility rules in `loan_requirements.md` (active membership and\n   savings history).\n2. **Product selection.** The member chooses a loan product: Development\n   Loan, Emergency Loan or School Fees Loan.\n3. **Application form.** The member completes the loan application form,\n   stating the amount requested and purpose.\n4. **Supporting documents.** The member gathers the documents listed in\n   `supporting_documents.md` for the chosen product.\n5. **Guarantors.** The member secures the required number of guarantors\n   (see `guarantor_requirements.md`) and each guarantor signs a consent\n   form in person.\n6. **Submission.** The completed application, documents and guarantor\n   forms are submitted to a loan officer.\n7. **Completeness check.** The loan officer verifies the application is\n   complete and the applicant's identity matches SACCO records. Incomplete\n   applications are returned to the member with a list of what is missing.\n8. **Credit Committee review.** Complete applications are forwarded to the\n   Credit Committee, which approves, rejects, or requests additional\n   information.\n9. **Disbursement.** Approved loans are disbursed within **5 working days**\n   of Credit Committee approval, except the Emergency Loan, which is\n   disbursed within **48 hours** of approval.\n10. **Repayment begins.** The first repayment falls due according to the\n    grace period defined in `repayment_policy.md` for the relevant product.\n\n## Who decides what\n\n- The loan officer checks completeness and eligibility; they do not approve\n  loans.\n- Only the Credit Committee may approve, reject, or set special conditions\n  on a loan application.\n"
+      },
+      {
+        "document": "loan_default_and_recovery.md",
+        "matched_terms": [
+          "loan"
+        ],
+        "content": "# Loan Default and Recovery\n\nThis document describes what happens after a loan is classified as in\ndefault, as defined in `repayment_policy.md` (repayments overdue by more\nthan 60 days).\n\n## Step 1 — Default notice\n\nA written default notice is sent to the member and to each of their\nguarantors as soon as a loan is classified as in default.\n\n## Step 2 — Credit Committee review\n\nThe Credit Committee reviews the defaulted case within **14 days** of the\ndefault classification, and may:\n\n- Agree a recovery plan directly with the member, or\n- Proceed to guarantor liability if no agreement is reached.\n\n## Step 3 — Guarantor liability\n\nIf the default remains unresolved **30 days** after the default notice was\nsent, the guarantor(s) on the loan become liable to cover the outstanding\nbalance from their own savings and share capital, consistent with the\nguarantor consent form they signed at application (see\n`guarantor_requirements.md`).\n\n## Step 4 — Escalation\n\nCases that remain unresolved after guarantor liability has been applied are\nforwarded to the Board of Directors, who may authorize further recovery\naction, including legal recovery, as a last resort.\n\n## Decision authority\n\n- Loan officers cannot authorize any step in this process.\n- Only the Credit Committee and, at the final escalation stage, the Board\n  of Directors, may make default-recovery decisions (see\n  `sacco_governance_and_committees.md`).\n"
+      },
+      {
+        "document": "loan_requirements.md",
+        "matched_terms": [
+          "loan"
+        ],
+        "content": "# General Loan Requirements\n\nThis document sets out the baseline eligibility rules that apply to every loan\nproduct offered by Hangs SACCO, unless a specific product document states a\ndifferent rule.\n\n## Eligibility\n\n- The applicant must be a registered member of Hangs SACCO in good standing.\n- The applicant must have held active membership for at least **3 consecutive\n  months** before applying.\n- The applicant must have made regular savings contributions for at least\n  **3 consecutive months** immediately before the application.\n- The applicant must not have any loan currently classified as in default.\n- A member may hold only **one active loan at a time**, unless the Credit\n  Committee grants a specific exception.\n\n## Loan amount ceiling\n\n- Unless a specific loan product states otherwise, the maximum loan amount is\n  **three (3) times the member's total accumulated savings** at the time of\n  application.\n\n## General application requirements\n\n- Completed loan application form.\n- Supporting documents as listed in `supporting_documents.md`.\n- Guarantors as specified in `guarantor_requirements.md` for the relevant\n  loan product.\n\n## Related documents\n\n- See `loan_application_procedure.md` for the step-by-step process.\n- See `supporting_documents.md` for the full document checklist.\n- See `guarantor_requirements.md` for guarantor rules.\n"
+      },
+      {
+        "document": "loan_restructuring_policy.md",
+        "matched_terms": [
+          "loan"
+        ],
+        "content": "# Loan Restructuring Policy\n\n## When restructuring may be requested\n\n- A member experiencing genuine financial hardship may apply in writing to\n  restructure their loan (for example, an extended repayment term or a\n  revised schedule) **before** the loan falls into default as defined in\n  `repayment_policy.md`.\n\n## Review and approval\n\n- Restructuring requests are reviewed and decided **only** by the Credit\n  Committee. Loan officers cannot approve a restructuring request (see\n  `sacco_governance_and_committees.md`).\n\n## Limits\n\n- A given loan may be restructured **only once** during its term.\n- Restructuring changes the future repayment schedule but does not remove\n  or waive any late payment penalties that have already accrued under\n  `repayment_policy.md`.\n\n## Relationship to default and recovery\n\n- A loan that has already been classified as in default follows the\n  process in `loan_default_and_recovery.md` instead of this restructuring\n  process.\n"
+      },
+      {
+        "document": "member_identification.md",
+        "matched_terms": [
+          "loan"
+        ],
+        "content": "# Member Identification\n\n## Membership number\n\n- Every Hangs SACCO member is issued a unique Membership Number at\n  registration, in the format `HS-YYYY-NNNNNN` (for example, `HS-2026-000123`).\n- The Membership Number is used to identify the member's record in all\n  applications, transactions and correspondence.\n\n## Identity verification at registration\n\nNew members must complete a Know-Your-Member (KYM) form and present:\n\n1. A valid National ID or passport.\n2. One passport-size photograph.\n\n## Identity verification at loan application\n\nBefore any loan application is processed, the loan officer must confirm\nthat the National ID presented matches the identity on record for that\nMembership Number. If the two do not match, the application must be placed\non hold pending manual verification by the Membership Office.\n\n## Updating member details\n\n- Changes to a member's name, phone number or next of kin must be submitted\n  in writing and verified against the original National ID before the\n  membership record is updated.\n"
+      },
+      {
+        "document": "member_rights_and_responsibilities.md",
+        "matched_terms": [
+          "loan"
+        ],
+        "content": "# Member Rights and Responsibilities\n\n## Rights\n\n- To vote at the Annual General Meeting (AGM) on a one-member, one-vote\n  basis, regardless of shareholding size.\n- To access their own savings, share capital and loan records on request.\n- To receive an annual dividend statement, where a dividend is declared\n  (see `dividends_and_profit_sharing.md`).\n- To lodge a complaint through the process in\n  `complaints_and_grievance_procedure.md`.\n\n## Responsibilities\n\n- To maintain the minimum monthly savings contribution described in\n  `savings_products.md`.\n- To repay any loan according to the agreed schedule in\n  `repayment_policy.md`.\n- To keep their identification and contact details up to date, as described\n  in `member_identification.md`.\n- To attend the AGM where reasonably possible, as decisions on dividends\n  and governance are made there.\n"
+      },
+      {
+        "document": "membership_registration.md",
+        "matched_terms": [
+          "loan"
+        ],
+        "content": "# Membership Registration\n\n## Eligibility to join\n\n- Applicants must be at least 18 years old.\n- Applicants must complete a Membership Application Form and a Know-Your-Member\n  (KYM) form, as described in `member_identification.md`.\n\n## Registration costs\n\n- A one-time, non-refundable registration fee of **UGX 20,000**.\n- A minimum initial share capital contribution of **UGX 30,000**.\n\n## Approval\n\n- New membership applications are reviewed and approved by the Board of\n  Directors within **7 working days** of submission.\n- Once approved, the applicant is issued a Membership Number in the format\n  described in `member_identification.md`.\n\n## Becoming loan-eligible\n\n- A new member does not become eligible to apply for a loan immediately on\n  registration. As set out in `loan_requirements.md`, a member must hold\n  active membership and make regular savings contributions for at least\n  3 consecutive months before applying for any loan product.\n"
+      },
+      {
+        "document": "repayment_policy.md",
+        "matched_terms": [
+          "loan"
+        ],
+        "content": "# Repayment Policy\n\n## Repayment channels\n\nRepayments may be made through any of the following:\n\n- Cash payment at the SACCO office.\n- Mobile money transfer to the SACCO's registered pay-in number.\n- Payroll deduction, where the member's employer has a check-off agreement\n  with the SACCO.\n\n## Grace periods\n\n- Development Loan and School Fees Loan: first repayment due 30 days after\n  disbursement.\n- Emergency Loan: first repayment due 14 days after disbursement.\n\n## Late payment\n\n- A late payment penalty of **2% of the overdue amount** is charged for\n  each month, or part of a month, that a repayment is late.\n- A loan with repayments overdue by more than **60 days** is classified as\n  in default. Defaulted loans are referred to the Credit Committee and the\n  loan's guarantors are formally notified.\n\n## Early repayment\n\n- Members may repay a loan in full before the end of its term at no\n  penalty.\n- For reducing-balance loans (Development Loan, School Fees Loan), early\n  repayment reduces the total interest paid, since interest accrues monthly\n  on the outstanding principal.\n- For the flat-rate Emergency Loan, early repayment does not reduce the\n  total interest due.\n\n## Loan top-ups\n\n- A member may not simply increase an already-approved loan. Any request\n  for additional funds must be submitted as a new \"top-up\" application and\n  goes through the full application procedure in\n  `loan_application_procedure.md`.\n"
+      },
+      {
+        "document": "sacco_governance_and_committees.md",
+        "matched_terms": [
+          "loan"
+        ],
+        "content": "# SACCO Governance and Committees\n\nThis document sets out who holds decision-making authority at Hangs SACCO.\nIt directly supports the project's AI Boundary Matrix: the AI assistant may\nexplain policy and help prepare a case, deterministic software may\ncalculate figures such as repayment schedules, but only the human bodies\nlisted below may make binding decisions.\n\n## Board of Directors\n\n- Elected by members at the Annual General Meeting (AGM).\n- Sets overall SACCO policy and strategic direction.\n- Approves new membership applications (see `membership_registration.md`).\n- Makes the final decision on escalated loan-default recovery action (see\n  `loan_default_and_recovery.md`).\n\n## Credit Committee\n\n- The sole authority that may approve, reject, or set conditions on a loan\n  application (see `loan_application_procedure.md`).\n- The sole authority that may approve a loan restructuring request (see\n  `loan_restructuring_policy.md`).\n- Reviews defaulted loans at Step 2 of the recovery process (see\n  `loan_default_and_recovery.md`).\n- Decides loan-rejection appeals (see\n  `complaints_and_grievance_procedure.md`).\n\n## Supervisory Committee\n\n- Handles escalated member complaints that are not loan-rejection appeals\n  (see `complaints_and_grievance_procedure.md`).\n- Provides internal oversight of SACCO operations.\n\n## Loan Officers\n\n- Front-line staff who check that applications are complete and that the\n  applicant's identity matches SACCO records (see\n  `member_identification.md` and `loan_application_procedure.md`).\n- Loan officers do not have authority to approve, reject, restructure, or\n  decide complaints. Their role is limited to verification and preparing a\n  case for Committee review.\n"
+      },
+      {
+        "document": "savings_products.md",
+        "matched_terms": [
+          "loan"
+        ],
+        "content": "# Savings Products\n\nHangs SACCO offers two savings products. A member's savings balance is used\nto determine their loan ceiling, as described in `loan_requirements.md`.\n\n## Regular Savings Account\n\n- Minimum monthly contribution: **UGX 20,000**.\n- Funds may be withdrawn subject to the notice and conditions in\n  `withdrawal_and_exit_policy.md`.\n- Regular savings balances count toward a member's loan ceiling but do not\n  themselves earn a fixed interest rate; they may instead be eligible for an\n  annual dividend as described in `dividends_and_profit_sharing.md`.\n\n## Fixed Deposit Savings\n\n- Minimum deposit: **UGX 500,000**.\n- Funds are locked for a minimum term of **6 months**.\n- Earns a fixed interest rate of **6% per annum**, paid at maturity.\n- Fixed Deposit balances also count toward a member's loan ceiling.\n\n## Share Capital\n\n- Share capital is separate from savings and is the amount used to\n  calculate annual dividends (see `dividends_and_profit_sharing.md`). The\n  minimum initial share capital is set at registration (see\n  `membership_registration.md`).\n"
+      },
+      {
+        "document": "school_fees_loan.md",
+        "matched_terms": [
+          "loan"
+        ],
+        "content": "# School Fees Loan\n\n## Purpose\n\nThe School Fees Loan helps members cover tuition and related education\ncosts for themselves or their dependents.\n\n## Terms\n\n| Feature             | Detail                                                                                        |\n| ------------------- | --------------------------------------------------------------------------------------------- |\n| Maximum amount      | UGX 5,000,000, subject to the 3x-savings ceiling in `loan_requirements.md`                    |\n| Interest rate       | 11% per annum, reducing balance                                                               |\n| Repayment period    | Up to 4 months if aligned to a single school term, or up to 12 months if covering annual fees |\n| Guarantors required | 2 (see `guarantor_requirements.md`)                                                           |\n| Grace period        | First repayment due 30 days after disbursement                                                |\n\n## Additional requirements\n\n- An official fee structure or invoice from the learning institution must\n  be submitted, showing the amount due and the term or year it covers (see\n  `supporting_documents.md`).\n\n## Notes\n\n- Disbursement is made directly to the member's SACCO account; the SACCO\n  does not pay institutions directly on the member's behalf.\n"
+      },
+      {
+        "document": "supporting_documents.md",
+        "matched_terms": [
+          "loan"
+        ],
+        "content": "# Supporting Documents Checklist\n\nThe following documents must accompany every loan application submitted to\nHangs SACCO.\n\n## Required for all loan products\n\n1. Completed and signed loan application form.\n2. A copy of the member's National ID or valid passport.\n3. One recent passport-size photograph.\n4. Statements of savings/contributions for the last 3 months.\n5. Signed guarantor consent form(s), one per required guarantor.\n\n## Additional documents by loan product\n\n- **School Fees Loan**: an official fee structure or invoice from the\n  learning institution, showing the amount due and the term/semester it\n  covers.\n- **Development Loan**: a short written statement of the business or\n  development purpose the loan will fund (no formal business plan template\n  is required).\n- **Emergency Loan**: proof of the emergency where reasonably available\n  (for example, a hospital bill or a death certificate). This is\n  encouraged but not mandatory for the Emergency Loan to be processed.\n\n## Notes\n\n- Photocopies must be legible; the loan officer may request the original\n  document for verification.\n- Incomplete document sets will not be forwarded to the Credit Committee.\n"
+      },
+      {
+        "document": "withdrawal_and_exit_policy.md",
+        "matched_terms": [
+          "loan"
+        ],
+        "content": "# Withdrawal and Exit Policy\n\n## Notice required\n\n- A member wishing to exit Hangs SACCO must submit a written withdrawal\n  notice at least **30 days** before their expected payout date.\n\n## Members with an active loan\n\n- A member with an active loan may not withdraw their savings or exit the\n  SACCO until the loan is fully repaid, or until the Credit Committee\n  approves an alternative arrangement secured by the member's remaining\n  guarantors.\n\n## Processing an approved exit\n\n- Once an exit request is approved, the member's share capital and savings\n  balance, minus any outstanding obligations, is refunded within **60\n  days**.\n\n## Related documents\n\n- See `savings_products.md` for what counts toward a member's savings and\n  share capital balance.\n- See `dividends_and_profit_sharing.md` for how an exiting member's\n  dividend entitlement for the current year, if any, is handled at the next\n  AGM.\n"
+      }
+    ],
+    "repayment_schedule": null,
+    "missing_requirements": [
+      "Verify the member's savings balance against the 3x savings ceiling.",
+      "Provide and verify the details and eligibility of the 2 required guarantors.",
+      "Submit and review the written statement explaining the loan purpose."
+    ],
+    "case_summary": "Hangs SACCO does not offer a specific \"Fishing Loan\", but fishing activities fall under the **Development Loan** for income-generating business expansion or asset purchases. The Development Loan allows up to UGX 10,000,000 (capped at 3 times your savings) at 12% per annum reducing balance for up to 24 months, requiring 2 guarantors and a short written purpose statement.\n\nTo help prepare your loan application, please provide the following missing details:\n1. How much would you like to borrow (in UGX)?\n2. What is your preferred repayment period (up to 24 months)?\n3. How often would you like to make repayments (daily, weekly, monthly, quarterly, bi-annually, or annually)?",
+    "tool_calls_made": [
+      {
+        "name": "retrieve_policy",
+        "arguments": {
+          "query": "fishing loan"
+        },
+        "executed": true,
+        "result": {
+          "error": null,
+          "documents": [
+            "complaints_and_grievance_procedure.md",
+            "development_loan.md",
+            "emergency_loan.md",
+            "guarantor_requirements.md",
+            "interest_rates_summary.md",
+            "loan_application_faq.md",
+            "loan_application_procedure.md",
+            "loan_default_and_recovery.md",
+            "loan_requirements.md",
+            "loan_restructuring_policy.md",
+            "member_identification.md",
+            "member_rights_and_responsibilities.md",
+            "membership_registration.md",
+            "repayment_policy.md",
+            "sacco_governance_and_committees.md",
+            "savings_products.md",
+            "school_fees_loan.md",
+            "supporting_documents.md",
+            "withdrawal_and_exit_policy.md"
+          ],
+          "result_count": 19
+        },
+        "result_summary": {
+          "error": null,
+          "documents": [
+            "complaints_and_grievance_procedure.md",
+            "development_loan.md",
+            "emergency_loan.md",
+            "guarantor_requirements.md",
+            "interest_rates_summary.md",
+            "loan_application_faq.md",
+            "loan_application_procedure.md",
+            "loan_default_and_recovery.md",
+            "loan_requirements.md",
+            "loan_restructuring_policy.md",
+            "member_identification.md",
+            "member_rights_and_responsibilities.md",
+            "membership_registration.md",
+            "repayment_policy.md",
+            "sacco_governance_and_committees.md",
+            "savings_products.md",
+            "school_fees_loan.md",
+            "supporting_documents.md",
+            "withdrawal_and_exit_policy.md"
+          ],
+          "result_count": 19
+        }
+      }
+    ],
+    "tool_call_counts": {
+      "get_member_record": 0,
+      "retrieve_policy": 1,
+      "calculate_repayment": 0
+    },
+    "iteration_count": 2,
+    "stop_reason": "clarification_required",
+    "human_handoff_required": true,
+    "case_id": "cli-20261023T153439Z-9bfd04",
+    "previous_case_history": null
+  },
+  "run_id": "run-588e230d8212",
+  "scenario_id": "cli_session",
+  "events": [
+    {
+      "timestamp": "2026-10-23T15:35:12.840530+00:00",
+      "offset_ms": 16225.27,
+      "event_type": "run_completed",
+      "details": {
+        "stop_reason": "clarification_required",
+        "human_handoff_required": true,
+        "elapsed_ms": 16225.24
+      }
+    }
+  ],
+  "elapsed_ms": 16225.24,
+  "run_meta": {
+    "interface": "cli",
+    "model": "gemini-3.6-flash",
+    "prompt_version": "v1.0",
+    "prompt_sha256": "5d162a13036f11861b6d99e87e8ded916f1c2b4eef13cde1b98751c33fcda0c3",
+    "max_iterations": 6,
+    "max_calls_per_tool": 2,
+    "requester_role": "member",
+    "case_id": "cli-20261023T153439Z-9bfd04",
+    "handling": "agent_loop",
+    "budget_scope": "per_request",
+    "case_totals_after_request": {
+      "requests": 1,
+      "iterations": 2,
+      "tool_calls": {
+        "calculate_repayment": 0,
+        "get_member_record": 0,
+        "retrieve_policy": 1
+      }
+    }
+  }
+}

@@ -47,8 +47,9 @@ for directory in (REPO_ROOT, SRC_DIR):
         sys.path.insert(0, str(directory))
 
 
-from baseline_chat import load_system_prompt  # noqa: E402
+from baseline_chat import identify_prompt_version, load_system_prompt  # noqa: E402
 from agent_tools import call_gemini_with_tools  # noqa: E402
+from agent.tools import summarize_member_record_for_model  # noqa: E402
 from agent.memory import CaseMemoryStore, MemoryAccessError  # noqa: E402
 from agent.state import (  # noqa: E402
     new_workflow_state,
@@ -63,6 +64,8 @@ from agent.guardrails import (  # noqa: E402
     detect_prompt_injection,
     validate_agent_output,
     validate_tool_allowlist,
+    OUTPUT_WITHHELD_NOTICE,
+    PREFLIGHT_REFUSAL,
 )
 from agent.observability import (  # noqa: E402
     AgentTracer,
@@ -78,6 +81,14 @@ from agent.observability import (  # noqa: E402
 
 MAX_ITERATIONS = 6
 MAX_CALLS_PER_TOOL = 2
+
+REQUEST_TYPES = {"case_preparation", "information"}
+
+INFORMATION_UNANSWERED = (
+    "I could not complete an answer to this question (stop reason: {stop_reason}). "
+    "Nothing has been submitted, decided or changed. Please try again later, "
+    "or ask a SACCO Relationship Officer."
+)
 
 
 APPROVED_TOOLS = {
@@ -270,27 +281,11 @@ def _summarize_member_record(member_record: dict) -> dict:
     Return only the member-record fields useful for planning.
 
     This prevents the entire raw record from being repeatedly sent
-    to Gemini.
+    to Gemini. The field mapping lives with the tool that defines the
+    record schema (agent.tools).
     """
 
-    if not isinstance(member_record, dict):
-        return {}
-
-    summary = {}
-
-    useful_fields = [
-        "membership_number",
-        "savings",
-        "share_capital",
-        "active_loans",
-        "guarantee_commitments",
-    ]
-
-    for field in useful_fields:
-        if field in member_record:
-            summary[field] = member_record[field]
-
-    return summary
+    return summarize_member_record_for_model(member_record)
 
 
 def _summarize_policy_excerpts(
@@ -656,7 +651,7 @@ def _build_incomplete_case_packet(
         "Member request:",
         state.get("member_message", ""),
         "",
-        "Information gathered:",
+        "Information gathered in this request:",
     ]
 
     if member_record:
@@ -678,7 +673,7 @@ def _build_incomplete_case_packet(
     lines.append("")
 
     lines.append(
-        "Policy documents retrieved:"
+        "Policy documents retrieved in this request:"
     )
 
     if policy_documents:
@@ -741,6 +736,20 @@ def _build_incomplete_case_packet(
         )
 
     lines.append("")
+
+    # Saved history is reported separately and labelled as such; it is not
+    # copied into this request's gathered information.
+    history = state.get("previous_case_history")
+    if history:
+        lines.append(
+            "Earlier in this case (saved history, not re-checked in this request):"
+        )
+        for document in history.get("policy_documents_previously_retrieved", []):
+            lines.append(f"- Policy document previously retrieved: {document}")
+        for item in history.get("previous_missing_requirements", []):
+            lines.append(f"- Previously outstanding: {item}")
+        lines.append(f"- Previous status: {history.get('previous_status')}")
+        lines.append("")
 
     lines.append(
         "Workflow status:"
@@ -1136,6 +1145,8 @@ def run_agent_loop(
     persist_memory: bool = True,
     scenario_id: str | None = None,
     run_id: str | None = None,
+    per_request_budget: bool = False,
+    request_type: str = "case_preparation",
 ) -> dict:
     """
     Run one bounded SACCO case-preparation request.
@@ -1156,13 +1167,34 @@ def run_agent_loop(
         resume_saved_case: load existing history when case_id is supplied.
         authorized_member_numbers: trusted authorization results for officers.
         persist_memory: set False to disable persistence for a test/run.
+        per_request_budget: by default a resumed case continues within the
+            case's cumulative iteration/tool limits (an interrupted workflow
+            must not get a fresh budget). Set True when each call is a new,
+            independent user request in a continuing conversation (the CLI):
+            the saved history is still loaded as context, but this request
+            gets its own MAX_ITERATIONS and MAX_CALLS_PER_TOOL.
+        request_type: "case_preparation" (default) prepares a member's case:
+            a final answer counts as complete only when the record, policy
+            and repayment were gathered, otherwise an incomplete case packet
+            is shown. "information" answers a SACCO question: the model's
+            final answer (after output validation) is the response, with stop
+            reason "information_provided", and a failure is reported as an
+            unanswered question rather than as an incomplete case.
 
     Week 7 observability options:
         scenario_id: stable evaluation scenario ID.
         run_id: unique run execution identifier.
     """
 
-    tracer = AgentTracer(scenario_id=scenario_id, run_id=run_id)
+    if request_type not in REQUEST_TYPES:
+        raise ValueError(f"request_type must be one of {sorted(REQUEST_TYPES)}")
+
+    # Record the version of the prompt actually supplied, not a fixed label.
+    tracer = AgentTracer(
+        scenario_id=scenario_id,
+        run_id=run_id,
+        prompt_version=identify_prompt_version(system_prompt),
+    )
 
     # Week 7 Guardrail: Deterministic Input Validation (Defect F-01 remediation)
     val_res = validate_input_request(
@@ -1201,6 +1233,8 @@ def run_agent_loop(
         return {
             "run_id": tracer.run_id,
             "scenario_id": scenario_id,
+            "prompt_version": tracer.prompt_version,
+            "request_type": request_type,
             "started_at": tracer.start_wall_time,
             "ended_at": now_utc_iso(),
             "elapsed_ms": tracer.elapsed_ms,
@@ -1243,6 +1277,8 @@ def run_agent_loop(
         return {
             "run_id": tracer.run_id,
             "scenario_id": scenario_id,
+            "prompt_version": tracer.prompt_version,
+            "request_type": request_type,
             "started_at": tracer.start_wall_time,
             "ended_at": now_utc_iso(),
             "elapsed_ms": tracer.elapsed_ms,
@@ -1285,6 +1321,7 @@ def run_agent_loop(
     restored_state = memory.get("memory_state")
     if (
         resume_saved_case
+        and not per_request_budget
         and requester_role == "member"
         and memory.get("can_write")
         and isinstance(restored_state, dict)
@@ -1301,6 +1338,9 @@ def run_agent_loop(
         "started_at": datetime.now(
             timezone.utc
         ).isoformat(),
+
+        "prompt_version": tracer.prompt_version,
+        "request_type": request_type,
 
         "steps": [],
         "memory": {
@@ -1365,7 +1405,9 @@ def run_agent_loop(
     if _is_prohibited_action_request(member_message):
         state["stop_reason"] = "prohibited_action_requested"
         state["human_handoff_required"] = True
-        state["case_summary"] = _build_incomplete_case_packet(state)
+        # The refusal is the response. Nothing was gathered, so an empty
+        # case packet would only hide it.
+        state["case_summary"] = PREFLIGHT_REFUSAL
 
         trace["steps"].append(
             {
@@ -1374,10 +1416,7 @@ def run_agent_loop(
                 "state_before": _make_trace_state_snapshot(state),
                 "model_state": None,
                 "tool_calls": [],
-                "final_text": (
-                    "This agent prepares cases only. "
-                    "A Relationship Officer must make loan decisions."
-                ),
+                "final_text": PREFLIGHT_REFUSAL,
                 "state_after": _make_trace_state_snapshot(state),
             }
         )
@@ -1507,11 +1546,35 @@ def run_agent_loop(
                 final_text
             )
 
+            # Output guardrail: a response presenting a lending decision as
+            # made is never shown. Replace it with a notice plus the gathered
+            # facts for the officer, and keep the unsafe text out of the trace.
+            if state["stop_reason"] == "prohibited_action_in_output":
+                _, violation = validate_agent_output(final_text)
+                state["case_summary"] = (
+                    OUTPUT_WITHHELD_NOTICE
+                    + "\n\n"
+                    + _build_incomplete_case_packet(state)
+                )
+                step_record["final_text"] = "[withheld by output guardrail]"
+                step_record["guardrail"] = "output_decision_claim_withheld"
+                tracer.record_event(
+                    "output_guardrail_withheld", {"violation": violation}
+                )
+
+            # An answer to a SACCO question is the response itself; the
+            # case-completeness rules below apply only to case preparation.
+            if request_type == "information" and state["stop_reason"] == "case_complete":
+                state["stop_reason"] = "information_provided"
+                state["human_handoff_required"] = False
+
             # A response can be finished while the case still has outstanding
             # requirements. Do not label that as case_complete or leave the
-            # human handoff flag false.
+            # human handoff flag false. Safety stop reasons are never downgraded.
             if state["missing_requirements"] and state["stop_reason"] not in {
+                "information_provided",
                 "prohibited_action_requested",
+                "prohibited_action_in_output",
                 "tool_failure",
             } and not str(state["stop_reason"]).startswith("tool_failure:"):
                 state["stop_reason"] = "clarification_required"
@@ -1847,6 +1910,19 @@ def run_agent_loop(
             _build_incomplete_case_packet(
                 state
             )
+        )
+
+    # A question that could not be answered (model or tool failure, limits)
+    # is reported as unanswered, not as an incomplete loan case. The stop
+    # reason and handoff flag set by the failure path are kept.
+    if (
+        request_type == "information"
+        and str(state.get("case_summary") or "").startswith(
+            "INCOMPLETE SACCO CASE PREPARATION PACKET"
+        )
+    ):
+        state["case_summary"] = INFORMATION_UNANSWERED.format(
+            stop_reason=state.get("stop_reason")
         )
 
     trace["ended_at"] = (
